@@ -704,6 +704,13 @@ function distributeGamesToSections(games) {
     renderSectionGrid(racingGames, racingGamesGrid, 'racing');
     renderSectionGrid(girlsGames, girlsGamesGrid, 'girls');
     renderSectionGrid(skillGames, skillGamesGrid, 'skill');
+
+    // 8. Tüm Oyunlar
+    const allGames = games.slice(42);
+    const allGamesGrid = document.getElementById('all-games-grid');
+    if (allGamesGrid) {
+        renderSectionGrid(allGames, allGamesGrid, 'allGames');
+    }
 }
 
 function renderSectionGrid(games, gridElement, sectionName = '') {
