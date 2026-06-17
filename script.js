@@ -854,17 +854,28 @@ async function loadGamePixCategories() {
 // Fetch games from GamePix API and map them to our internal portal structure
 async function fetchGamePixGames(limit = 150) {
     try {
-        const url = `https://games.gamepix.com/games?limit=${limit}&order=q`;
+        // Use user's personal sid-monetized feed endpoint: feeds.gamepix.com/v2/json?sid=M4M77
+        const url = `https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=${limit}&page=1`;
         const res = await fetch(url);
         if (!res.ok) throw new Error('GamePix request failed');
         const data = await res.json();
-        const rawGames = Array.isArray(data) ? data : (data.data || []);
+        
+        // GamePix feeds returns array in data or data.data or data.items
+        const rawGames = Array.isArray(data) ? data : (data.data || data.items || []);
+        
         return rawGames.map(g => {
-            const rawCat = gamePixCategories[g.category] || 'Arcade';
+            // Map category dynamically
+            let rawCat = 'Arcade';
+            if (g.categories && g.categories.length > 0) {
+                rawCat = g.categories[0];
+            } else if (g.category) {
+                rawCat = gamePixCategories[g.category] || 'Arcade';
+            }
+            
             return {
                 Title: g.title,
                 Url: g.url,
-                Asset: [g.thumbnailUrl || g.thumbnailUrl100 || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500'],
+                Asset: [g.thumbnailUrl || g.thumbnailUrl100 || g.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500'],
                 Category: [rawCat],
                 Description: g.description || '',
                 Instructions: '',
