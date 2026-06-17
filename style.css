@@ -1558,3 +1558,185 @@ body.dark-mode .game-card::before {
     animation: fadeSlideIn 0.45s cubic-bezier(0.25, 1, 0.5, 1) forwards;
 }
 
+/* ----------------------------------------------------
+   CATEGORY EXPLORER DRAWER (Poki / Oyunskor Style)
+   ---------------------------------------------------- */
+.drawer-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(28, 23, 60, 0.6);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Slide out from right */
+    z-index: 1100;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+.drawer-overlay.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.drawer-container {
+    background: var(--bg-secondary);
+    width: 100%;
+    max-width: 580px;
+    height: 100%;
+    border-left: 3px solid #1c173c;
+    box-shadow: -10px 0 30px rgba(28, 23, 60, 0.15);
+    display: flex;
+    flex-direction: column;
+    transform: translateX(100%);
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.drawer-overlay.active .drawer-container {
+    transform: translateX(0);
+}
+
+body.dark-mode .drawer-container {
+    border-left-color: #27214d;
+    background: #120e2e;
+}
+
+.drawer-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 3px solid #1c173c;
+    background: #f7f5ff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+body.dark-mode .drawer-header {
+    background: #18133a;
+    border-bottom-color: #27214d;
+}
+
+.drawer-title {
+    font-family: var(--font-heading);
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.drawer-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.25rem;
+}
+
+.drawer-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.drawer-group-title {
+    font-family: var(--font-heading);
+    font-size: 1.15rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    border-bottom: 2.5px solid var(--border-color);
+    padding-bottom: 0.4rem;
+}
+
+.drawer-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.85rem;
+}
+
+/* Category card style inside explorer */
+.explorer-card {
+    background: var(--bg-card);
+    border: 2.5px solid #1c173c;
+    border-radius: 16px;
+    padding: 0.9rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1.1rem;
+    cursor: pointer;
+    box-shadow: 0 4px 0px #1c173c;
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    position: relative;
+    overflow: hidden;
+}
+
+body.dark-mode .explorer-card {
+    border-color: #27214d;
+    background: #18133a;
+    box-shadow: 0 4px 0px #27214d;
+}
+
+.explorer-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--card-glow-color, var(--clr-purple));
+    box-shadow: 0 7px 0px #1c173c;
+}
+
+body.dark-mode .explorer-card:hover {
+    box-shadow: 0 7px 0px #27214d;
+}
+
+.explorer-card:active {
+    transform: translateY(-1px);
+    box-shadow: 0 5px 0px #1c173c;
+}
+
+.explorer-icon {
+    font-size: 1.85rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.explorer-card:hover .explorer-icon {
+    transform: scale(1.15) rotate(-5deg);
+}
+
+.explorer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.explorer-info h4 {
+    font-family: var(--font-heading);
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.explorer-info p {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+}
+
+/* Category pill for the 'Dahası...' button in navbar */
+.category-btn.more-btn {
+    background: #fdfcff;
+}
+
+body.dark-mode .category-btn.more-btn {
+    background: #18133a;
+}
+
+@media (max-width: 576px) {
+    .drawer-container {
+        max-width: 100%;
+    }
+}
+
+

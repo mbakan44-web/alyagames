@@ -270,7 +270,19 @@ const CATEGORY_API_MAP = {
     'skill': 'Puzzle',
     'adventure': 'Adventure',
     'girls': 'Girls',
-    'multiplayer': 'Multiplayer'
+    'multiplayer': 'Multiplayer',
+    'sports': 'Sports',
+    'strategy': 'Strategy',
+    'shooting': 'Shooting',
+    'driving': 'Driving',
+    'puzzle': 'Puzzle',
+    'bejeweled': 'Bejeweled',
+    'educational': 'Educational',
+    'arcade': 'Arcade',
+    'clicker': 'Clicker',
+    'io': '.io',
+    'boys': 'Boys',
+    'baby': 'Baby'
 };
 
 // Helper to create clean URL slug from title strings
@@ -486,18 +498,39 @@ function handleRouteChange() {
     // 2. Dynamic Category Route (e.g. #/kategori/sports)
     if (hash.startsWith('#/kategori/')) {
         const categoryParam = hash.substring(11).toLowerCase();
-        activeCategory = 'dynamic';
+        activeCategory = categoryParam;
         dynamicCategoryName = categoryParam;
         
         // Remove active state from standard buttons
         categoryButtons.forEach(btn => btn.classList.remove('active'));
         
-        // Capitalize category title
-        const capitalized = categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1);
-        displayTitle.textContent = `${capitalized} Oyunları`;
+        // Map dynamic category Turkish names
+        const namesMap = {
+            'action': 'Aksiyon',
+            'adventure': 'Macera',
+            'arcade': 'Arcade',
+            'baby': 'Çocuk & Bebek',
+            'bejeweled': 'Eşleştirme',
+            'boys': 'Erkek',
+            'clicker': 'Tıklama',
+            'cooking': 'Yemek Pişirme',
+            'driving': 'Sürüş & Simülasyon',
+            'educational': 'Eğitici',
+            'girls': 'Kız',
+            'multiplayer': 'İki Kişilik',
+            'puzzle': 'Bulmaca',
+            'racing': 'Yarış',
+            'shooting': 'FPS & Nişancı',
+            'soccer': 'Futbol',
+            'sports': 'Spor',
+            'strategy': 'Strateji',
+            'io': '.IO'
+        };
+        const trName = namesMap[categoryParam] || (categoryParam.charAt(0).toUpperCase() + categoryParam.slice(1));
+        displayTitle.textContent = `${trName} Oyunları`;
         
         // SEO update
-        updateSEOTags('dynamic', capitalized);
+        updateSEOTags('dynamic', trName);
         applyFilters();
         return;
     }
@@ -738,6 +771,65 @@ function setupEventListeners() {
         });
         surpriseFab.addEventListener('mouseenter', () => RetroAudio.playHover());
     }
+
+    // Category Explorer Drawer toggles
+    const allCategoriesBtn = document.getElementById('all-categories-btn');
+    const categoryDrawerClose = document.getElementById('category-drawer-close');
+    const categoryExplorerDrawer = document.getElementById('category-explorer-drawer');
+    
+    if (allCategoriesBtn && categoryExplorerDrawer) {
+        allCategoriesBtn.addEventListener('click', () => {
+            RetroAudio.playModal();
+            categoryExplorerDrawer.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        allCategoriesBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
+    }
+    
+    if (categoryDrawerClose && categoryExplorerDrawer) {
+        categoryDrawerClose.addEventListener('click', () => {
+            RetroAudio.playClick();
+            categoryExplorerDrawer.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        categoryDrawerClose.addEventListener('mouseenter', () => RetroAudio.playHover());
+    }
+    
+    // Close drawer on overlay click
+    if (categoryExplorerDrawer) {
+        categoryExplorerDrawer.addEventListener('click', (e) => {
+            if (e.target === categoryExplorerDrawer) {
+                RetroAudio.playClick();
+                categoryExplorerDrawer.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
+    
+    // Drawer Explorer Card Clicks
+    const explorerCards = document.querySelectorAll('.explorer-card');
+    explorerCards.forEach(card => {
+        card.addEventListener('click', () => {
+            RetroAudio.playClick();
+            const cat = card.getAttribute('data-category');
+            
+            // Map main category URLs vs dynamic category URLs
+            const mainCategories = {
+                'action': '#/aksiyon',
+                'racing': '#/yaris',
+                'adventure': '#/macera',
+                'girls': '#/kiz',
+                'multiplayer': '#/iki-kisilik'
+            };
+            
+            const targetHash = mainCategories[cat] || `#/kategori/${cat}`;
+            window.location.hash = targetHash;
+            
+            categoryExplorerDrawer.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        card.addEventListener('mouseenter', () => RetroAudio.playHover());
+    });
 }
 
 
@@ -1034,8 +1126,9 @@ function applyFilters() {
             const tags = game.Tag ? game.Tag.map(t => t.toLowerCase()) : [];
             
             // Check dynamic genre mapping from URL #/kategori/{name}
-            if (activeCategory === 'dynamic') {
-                return categories.includes(dynamicCategoryName) || tags.includes(dynamicCategoryName);
+            if (activeCategory === dynamicCategoryName) {
+                const apiCat = (CATEGORY_API_MAP[activeCategory] || activeCategory).toLowerCase();
+                return categories.includes(apiCat) || tags.includes(apiCat) || categories.includes(activeCategory) || tags.includes(activeCategory);
             }
             
             switch (activeCategory) {
@@ -1054,7 +1147,8 @@ function applyFilters() {
                 case 'multiplayer':
                     return categories.includes('multiplayer') || tags.includes('2-player') || tags.includes('pvp') || tags.includes('co-op') || tags.includes('2player');
                 default:
-                    return false;
+                    const apiCat = (CATEGORY_API_MAP[activeCategory] || activeCategory).toLowerCase();
+                    return categories.includes(apiCat) || tags.includes(apiCat) || categories.includes(activeCategory) || tags.includes(activeCategory);
             }
         });
     }

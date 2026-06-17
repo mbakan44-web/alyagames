@@ -143,10 +143,14 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a5 5 0 0 0-5 5v2a5 5 0 0 0 10 0V7a5 5 0 0 0-5-5z"></path><path d="M12 14a7 7 0 0 0-7 7h14a7 7 0 0 0-7-7z"></path></svg>
                 Kız
             </button>
-            <button class="category-btn" data-category="multiplayer">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-                İki Kişilik
-            </button>
+             <button class="category-btn" data-category="multiplayer">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                 İki Kişilik
+             </button>
+             <button class="category-btn more-btn" id="all-categories-btn" style="border-color: var(--clr-purple);">
+                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1.5"></circle><circle cx="19" cy="12" r="1.5"></circle><circle cx="5" cy="12" r="1.5"></circle></svg>
+                 Tüm Kategoriler
+             </button>
         </div>
     </nav>
 
@@ -328,6 +332,167 @@
         <span class="surprise-icon">🎲</span>
         <span class="surprise-tooltip">Sürpriz Oyun Oyna!</span>
     </button>
+
+    <!-- Category Explorer Drawer Overlay -->
+    <div class="drawer-overlay" id="category-explorer-drawer">
+        <div class="drawer-container">
+            <div class="drawer-header">
+                <h2 class="drawer-title">📂 Oyun Kategorileri</h2>
+                <button class="modal-action-btn close-btn" id="category-drawer-close" title="Kapat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            
+            <div class="drawer-body">
+                <!-- Group 1: Aksiyon & Savaş -->
+                <div class="drawer-group">
+                    <h3 class="drawer-group-title">⚔️ Aksiyon & Savaş</h3>
+                    <div class="drawer-grid">
+                        <div class="explorer-card" data-category="action" style="--card-glow-color: var(--clr-red);">
+                            <span class="explorer-icon">💥</span>
+                            <div class="explorer-info">
+                                <h4>Aksiyon</h4>
+                                <p>Stickman Fighter, Kaçış Oyunları</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="shooting" style="--card-glow-color: var(--clr-orange);">
+                            <span class="explorer-icon">🔫</span>
+                            <div class="explorer-info">
+                                <h4>FPS & Nişancı</h4>
+                                <p>Sniper, Zombie Shooter, Silah</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="strategy" style="--card-glow-color: var(--clr-purple);">
+                            <span class="explorer-icon">👑</span>
+                            <div class="explorer-info">
+                                <h4>Strateji & Savaş</h4>
+                                <p>Kale Savunma, İmparatorluk</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 2: Hız & Sürüş -->
+                <div class="drawer-group">
+                    <h3 class="drawer-group-title">🏎️ Hız & Sürüş</h3>
+                    <div class="drawer-grid">
+                        <div class="explorer-card" data-category="racing" style="--card-glow-color: var(--clr-yellow);">
+                            <span class="explorer-icon">🏎️</span>
+                            <div class="explorer-info">
+                                <h4>Yarış</h4>
+                                <p>Araba Yarışı, Motosiklet, Drift</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="driving" style="--card-glow-color: var(--clr-orange);">
+                            <span class="explorer-icon">🚘</span>
+                            <div class="explorer-info">
+                                <h4>Sürüş & Simülasyon</h4>
+                                <p>Kamyon, Otobüs, Off-road</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 3: Zeka & Macera -->
+                <div class="drawer-group">
+                    <h3 class="drawer-group-title">🧩 Zeka & Macera</h3>
+                    <div class="drawer-grid">
+                        <div class="explorer-card" data-category="puzzle" style="--card-glow-color: var(--clr-green);">
+                            <span class="explorer-icon">🧩</span>
+                            <div class="explorer-info">
+                                <h4>Bulmaca & Zeka</h4>
+                                <p>Mantık Bulmacaları, Sudoku</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="bejeweled" style="--card-glow-color: var(--clr-pink);">
+                            <span class="explorer-icon">💎</span>
+                            <div class="explorer-info">
+                                <h4>Mücevher Eşleştirme</h4>
+                                <p>Match-3 Bulmacalar, Candy Crush</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="adventure" style="--card-glow-color: var(--clr-blue);">
+                            <span class="explorer-icon">🗺️</span>
+                            <div class="explorer-info">
+                                <h4>Macera</h4>
+                                <p>Fireboy and Watergirl, Keşif</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="educational" style="--card-glow-color: var(--clr-green);">
+                            <span class="explorer-icon">📚</span>
+                            <div class="explorer-info">
+                                <h4>Eğitici Oyunlar</h4>
+                                <p>Matematik, IQ ve Hafıza</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 4: Arcade & Özel -->
+                <div class="drawer-group">
+                    <h3 class="drawer-group-title">🕹️ Arcade & Özel</h3>
+                    <div class="drawer-grid">
+                        <div class="explorer-card" data-category="arcade" style="--card-glow-color: var(--clr-blue);">
+                            <span class="explorer-icon">🕹️</span>
+                            <div class="explorer-info">
+                                <h4>Arcade (Klasik)</h4>
+                                <p>Basit Oynanış, Pac-Man Tarzı</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="clicker" style="--card-glow-color: var(--clr-yellow);">
+                            <span class="explorer-icon">🖱️</span>
+                            <div class="explorer-info">
+                                <h4>Hyper Casual / Tıklama</h4>
+                                <p>Flappy Bird, Clicker Oyunları</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="io" style="--card-glow-color: #a855f7;">
+                            <span class="explorer-icon">🔥</span>
+                            <div class="explorer-info">
+                                <h4>Çok Oyunculu .IO</h4>
+                                <p>Agar.io, Slither.io, Krunker</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Group 5: Spor & Hedef Kitle -->
+                <div class="drawer-group">
+                    <h3 class="drawer-group-title">⚽ Spor & Hedef Kitle</h3>
+                    <div class="drawer-grid">
+                        <div class="explorer-card" data-category="sports" style="--card-glow-color: var(--clr-blue);">
+                            <span class="explorer-icon">⚽</span>
+                            <div class="explorer-info">
+                                <h4>Spor & Futbol</h4>
+                                <p>Soccer Skills, Basketbol, Bilardo</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="girls" style="--card-glow-color: var(--clr-pink);">
+                            <span class="explorer-icon">👧</span>
+                            <div class="explorer-info">
+                                <h4>Kız Oyunları</h4>
+                                <p>Makyaj, Giydirme, Yemek Pişirme</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="boys" style="--card-glow-color: var(--clr-blue);">
+                            <span class="explorer-icon">👦</span>
+                            <div class="explorer-info">
+                                <h4>Erkek Oyunları</h4>
+                                <p>Silahlar, Arabalar, Savaşlar</p>
+                            </div>
+                        </div>
+                        <div class="explorer-card" data-category="baby" style="--card-glow-color: var(--clr-green);">
+                            <span class="explorer-icon">👶</span>
+                            <div class="explorer-info">
+                                <h4>Çocuk & Bebek</h4>
+                                <p>Boyama, Sevimli Hayvanlar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- JS Logic -->
     <script src="script.js"></script>
