@@ -269,7 +269,7 @@ const CATEGORY_API_MAP = {
     'racing': 'Racing',
     'skill': 'Puzzle',
     'adventure': 'Adventure',
-    'girls': 'Girls',
+    'girls': 'Casual',
     'multiplayer': 'Multiplayer',
     'sports': 'Sports',
     'strategy': 'Strategy',
@@ -914,11 +914,20 @@ async function fetchGamePixGames(limit = 150) {
             
             const rawCat = mapGamePixCategory(gpCat);
             
+            // Check if it fits the Girls category based on title, category, or description keywords
+            const textToSearch = ((g.title || '') + ' ' + (g.description || '') + ' ' + (gpCat || '')).toLowerCase();
+            const isGirlGame = textToSearch.includes('girl') || textToSearch.includes('dress') || textToSearch.includes('makeup') || textToSearch.includes('fashion') || textToSearch.includes('cooking') || textToSearch.includes('care') || textToSearch.includes('cake') || textToSearch.includes('doll') || textToSearch.includes('salon');
+            
+            const categoryList = [rawCat];
+            if (isGirlGame) {
+                categoryList.push('Girls');
+            }
+            
             return {
                 Title: g.title,
                 Url: g.url,
                 Asset: [g.thumbnailUrl || g.thumbnailUrl100 || g.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500'],
-                Category: [rawCat],
+                Category: categoryList,
                 Description: g.description || '',
                 Instructions: '',
                 Source: 'GamePix'
@@ -1183,7 +1192,7 @@ function distributeGamesToSections(games) {
 
         // Girls
         if (girlsGames.length < 12) {
-            if (categories.includes('girls') || categories.includes('cooking') || tags.includes('girl') || tags.includes('fashion') || tags.includes('dress') || tags.includes('makeup')) {
+            if (categories.includes('girls') || categories.includes('cooking') || categories.includes('casual') || categories.includes('care') || categories.includes('art') || categories.includes('jigsaw') || tags.includes('girl') || tags.includes('fashion') || tags.includes('dress') || tags.includes('makeup')) {
                 if (!editorsChoice.includes(game) && !popular.includes(game) && !newGames.includes(game) && !warGames.includes(game) && !racingGames.includes(game)) {
                     girlsGames.push(game);
                 }
@@ -1296,7 +1305,7 @@ function applyFilters() {
                 case 'adventure':
                     return categories.includes('adventure') || categories.includes('rpg') || categories.includes('platformer') || tags.includes('escape');
                 case 'girls':
-                    return categories.includes('girls') || categories.includes('cooking') || tags.includes('girl') || tags.includes('fashion') || tags.includes('dress') || tags.includes('makeup');
+                    return categories.includes('girls') || categories.includes('cooking') || categories.includes('casual') || categories.includes('care') || categories.includes('art') || categories.includes('jigsaw') || tags.includes('girl') || tags.includes('fashion') || tags.includes('dress') || tags.includes('makeup');
                 case 'multiplayer':
                     return categories.includes('multiplayer') || tags.includes('2-player') || tags.includes('pvp') || tags.includes('co-op') || tags.includes('2player');
                 default:
