@@ -17,6 +17,250 @@ let pendingGameToOpen = null;
 let dynamicCategoryName = '';
 let loadedCategories = new Set();
 
+// Retro Arcade Web Audio Generator
+const RetroAudio = {
+    ctx: null,
+    muted: localStorage.getItem('sound_muted') === 'true',
+    init() {
+        if (!this.ctx) {
+            this.ctx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+    },
+    playHover() {
+        if (this.muted) return;
+        this.init();
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'triangle';
+        const now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(160, now);
+        osc.frequency.exponentialRampToValueAtTime(320, now + 0.07);
+        gain.gain.setValueAtTime(0.06, now);
+        gain.gain.exponentialRampToValueAtTime(0.005, now + 0.07);
+        osc.start(now);
+        osc.stop(now + 0.07);
+    },
+    playClick() {
+        if (this.muted) return;
+        this.init();
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.type = 'square';
+        const now = this.ctx.currentTime;
+        osc.frequency.setValueAtTime(380, now);
+        osc.frequency.setValueAtTime(580, now + 0.04);
+        gain.gain.setValueAtTime(0.05, now);
+        gain.gain.exponentialRampToValueAtTime(0.005, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.1);
+    },
+    playModal() {
+        if (this.muted) return;
+        this.init();
+        if (this.ctx.state === 'suspended') this.ctx.resume();
+        const now = this.ctx.currentTime;
+        const chords = [261.63, 329.63, 392.00, 523.25]; // C major chord arpeggio
+        chords.forEach((freq, index) => {
+            const osc = this.ctx.createOscillator();
+            const gain = this.ctx.createGain();
+            osc.connect(gain);
+            gain.connect(this.ctx.destination);
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, now + index * 0.06);
+            gain.gain.setValueAtTime(0, now);
+            gain.gain.linearRampToValueAtTime(0.04, now + index * 0.06 + 0.02);
+            gain.gain.exponentialRampToValueAtTime(0.002, now + index * 0.06 + 0.22);
+            osc.start(now + index * 0.06);
+            osc.stop(now + index * 0.06 + 0.22);
+        });
+    },
+    toggleMute() {
+        this.muted = !this.muted;
+        localStorage.setItem('sound_muted', this.muted);
+        this.updateUI();
+    },
+    updateUI() {
+        const soundOn = document.getElementById('sound-on-icon');
+        const soundOff = document.getElementById('sound-off-icon');
+        if (soundOn && soundOff) {
+            if (this.muted) {
+                soundOn.style.display = 'none';
+                soundOff.style.display = 'block';
+            } else {
+                soundOn.style.display = 'block';
+                soundOff.style.display = 'none';
+            }
+        }
+    }
+};
+
+// Cosmic Theme Manager
+const ThemeManager = {
+    init() {
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        if (savedTheme === 'dark' || (savedTheme !== 'light' && prefersDark)) {
+            document.body.classList.add('dark-mode');
+        }
+        this.updateIcons();
+        
+        const btn = document.getElementById('theme-toggle');
+        if (btn) {
+            btn.addEventListener('click', () => {
+                RetroAudio.playClick();
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                this.updateIcons();
+            });
+            btn.addEventListener('mouseenter', () => RetroAudio.playHover());
+        }
+    },
+    updateIcons() {
+        const isDark = document.body.classList.contains('dark-mode');
+        const sunIcon = document.getElementById('sun-icon');
+        const moonIcon = document.getElementById('moon-icon');
+        if (sunIcon && moonIcon) {
+            if (isDark) {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            } else {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            }
+        }
+    }
+};
+
+// Interactive 3D Carousel Slider
+const CarouselManager = {
+    currentIdx: 0,
+    items: [],
+    interval: null,
+    init(games) {
+        if (games.length === 0) return;
+        this.items = games.slice(0, 4);
+        this.renderSlides();
+        this.renderDots();
+        this.setupControls();
+        this.startAutoplay();
+    },
+    renderSlides() {
+        const slidesContainer = document.getElementById('hero-carousel-slides');
+        if (!slidesContainer) return;
+        slidesContainer.innerHTML = '';
+        
+        this.items.forEach((game) => {
+            let imageSrc = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1000&auto=format&fit=crop&q=80';
+            if (game.Asset && game.Asset.length > 0) {
+                const preferred = game.Asset.find(url => url.includes('512x384') || url.includes('512x512'));
+                imageSrc = preferred || game.Asset[0];
+            }
+            
+            const slide = document.createElement('div');
+            slide.className = 'carousel-slide';
+            slide.innerHTML = `
+                <div class="hero-card">
+                    <div class="hero-info">
+                        <span class="hero-badge">Günün Oyunu 🌟</span>
+                        <h2 class="hero-title">${game.Title}</h2>
+                        <p class="hero-description">${game.Description || 'Muhteşem grafikleri ve sürükleyici oynanışı ile portalımızın en çok ilgi gören oyunu! Hemen ücretsiz, indirmeden tarayıcında oyna.'}</p>
+                        <button class="hero-cta" data-game-title="${encodeURIComponent(game.Title)}">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.3rem; height: 1.3rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                            Hemen Oyna
+                        </button>
+                    </div>
+                    <div class="hero-media-wrapper">
+                        <img src="${imageSrc}" alt="${game.Title}" class="hero-image">
+                    </div>
+                </div>
+            `;
+            slidesContainer.appendChild(slide);
+        });
+        
+        // CTAs hooks
+        slidesContainer.querySelectorAll('.hero-cta').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                RetroAudio.playClick();
+                const title = decodeURIComponent(btn.getAttribute('data-game-title'));
+                const game = this.items.find(g => g.Title === title);
+                if (game) openGame(game);
+            });
+            btn.addEventListener('mouseenter', () => RetroAudio.playHover());
+        });
+    },
+    renderDots() {
+        const dotsContainer = document.getElementById('carousel-indicators');
+        if (!dotsContainer) return;
+        dotsContainer.innerHTML = '';
+        this.items.forEach((_, idx) => {
+            const dot = document.createElement('span');
+            dot.className = `carousel-dot${idx === 0 ? ' active' : ''}`;
+            dot.addEventListener('click', () => {
+                RetroAudio.playClick();
+                this.goTo(idx);
+                this.resetAutoplay();
+            });
+            dotsContainer.appendChild(dot);
+        });
+    },
+    setupControls() {
+        const prevBtn = document.getElementById('carousel-prev');
+        const nextBtn = document.getElementById('carousel-next');
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                RetroAudio.playClick();
+                this.prev();
+                this.resetAutoplay();
+            });
+            prevBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
+        }
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                RetroAudio.playClick();
+                this.next();
+                this.resetAutoplay();
+            });
+            nextBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
+        }
+    },
+    goTo(idx) {
+        this.currentIdx = idx;
+        const slidesContainer = document.getElementById('hero-carousel-slides');
+        if (slidesContainer) {
+            slidesContainer.style.transform = `translateX(-${this.currentIdx * 100}%)`;
+        }
+        const dots = document.querySelectorAll('.carousel-dot');
+        dots.forEach((dot, dIdx) => {
+            if (dIdx === this.currentIdx) dot.classList.add('active');
+            else dot.classList.remove('active');
+        });
+    },
+    prev() {
+        let idx = this.currentIdx - 1;
+        if (idx < 0) idx = this.items.length - 1;
+        this.goTo(idx);
+    },
+    next() {
+        let idx = this.currentIdx + 1;
+        if (idx >= this.items.length) idx = 0;
+        this.goTo(idx);
+    },
+    startAutoplay() {
+        if (this.interval) clearInterval(this.interval);
+        this.interval = setInterval(() => this.next(), 6000);
+    },
+    resetAutoplay() {
+        this.startAutoplay();
+    }
+};
+
 // Map sitemizdeki kategorileri GameDistribution API kategori parametrelerine bağlar
 const CATEGORY_API_MAP = {
     'all': 'All',
@@ -203,6 +447,8 @@ const SEO_CONFIG = {
 
 // Initialize portal content
 window.addEventListener('DOMContentLoaded', () => {
+    RetroAudio.updateUI();
+    ThemeManager.init();
     setupEventListeners();
     handleRouteChange(); // Trigger initial routing on page load
 });
@@ -359,6 +605,16 @@ function updateSEOTags(categoryKey, customName = '') {
 
 // Setup application event handlers
 function setupEventListeners() {
+    // Sound Toggle handler
+    const soundToggle = document.getElementById('sound-toggle');
+    if (soundToggle) {
+        soundToggle.addEventListener('click', () => {
+            RetroAudio.toggleMute();
+            RetroAudio.playClick();
+        });
+        soundToggle.addEventListener('mouseenter', () => RetroAudio.playHover());
+    }
+
     // Search input handler
     searchInput.addEventListener('input', (e) => {
         searchQuery = e.target.value.toLowerCase().trim();
@@ -368,16 +624,19 @@ function setupEventListeners() {
 
     // Clear search button handler
     clearSearchBtn.addEventListener('click', () => {
+        RetroAudio.playClick();
         searchInput.value = '';
         searchQuery = '';
         clearSearchBtn.style.display = 'none';
         searchInput.focus();
         applyFilters();
     });
+    clearSearchBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
 
     // Category button filters (trigger Hash Change)
     categoryButtons.forEach(button => {
         button.addEventListener('click', () => {
+            RetroAudio.playClick();
             const cat = button.getAttribute('data-category');
             const map = {
                 'all': '',
@@ -391,38 +650,55 @@ function setupEventListeners() {
             };
             window.location.hash = map[cat] ? `#/${map[cat]}` : '#/';
         });
+        button.addEventListener('mouseenter', () => RetroAudio.playHover());
     });
 
     // Logo click returns to all category and resets search
     logoBtn.addEventListener('click', (e) => {
         e.preventDefault();
+        RetroAudio.playClick();
         searchInput.value = '';
         searchQuery = '';
         clearSearchBtn.style.display = 'none';
         window.location.hash = '#/';
     });
+    logoBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
 
     // Load More click handler
     loadMoreBtn.addEventListener('click', () => {
+        RetroAudio.playClick();
         if (!isLoadingMore) {
             currentPage++;
             const apiCategoryName = CATEGORY_API_MAP[activeCategory] || 'All';
             fetchGamesList(currentPage, apiCategoryName);
         }
     });
+    loadMoreBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
 
     // Modal Close
-    closeModelBtn.addEventListener('click', closeModal);
+    closeModelBtn.addEventListener('click', () => {
+        RetroAudio.playClick();
+        closeModal();
+    });
+    closeModelBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
     gameModal.addEventListener('click', (e) => {
-        if (e.target === gameModal) closeModal();
+        if (e.target === gameModal) {
+            RetroAudio.playClick();
+            closeModal();
+        }
     });
 
     // Modal Fullscreen
-    fullscreenBtn.addEventListener('click', toggleFullscreen);
+    fullscreenBtn.addEventListener('click', () => {
+        RetroAudio.playClick();
+        toggleFullscreen();
+    });
+    fullscreenBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
 
     // Modal tab navigation
     tabButtons.forEach(button => {
         button.addEventListener('click', () => {
+            RetroAudio.playClick();
             tabButtons.forEach(btn => btn.classList.remove('active'));
             tabContents.forEach(content => content.classList.remove('active'));
             
@@ -430,6 +706,7 @@ function setupEventListeners() {
             const targetTab = button.getAttribute('data-tab');
             document.getElementById(`tab-${targetTab}`).classList.add('active');
         });
+        button.addEventListener('mouseenter', () => RetroAudio.playHover());
     });
 
     // Iframe load complete
@@ -444,6 +721,7 @@ function setupEventListeners() {
     const surpriseFab = document.getElementById('surprise-fab');
     if (surpriseFab) {
         surpriseFab.addEventListener('click', () => {
+            RetroAudio.playClick();
             if (gamesData.length > 0) {
                 const icon = surpriseFab.querySelector('.surprise-icon');
                 if (icon) {
@@ -458,6 +736,7 @@ function setupEventListeners() {
                 }, 400);
             }
         });
+        surpriseFab.addEventListener('mouseenter', () => RetroAudio.playHover());
     }
 }
 
@@ -540,11 +819,22 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
     }
     const primaryCat = game.Category && game.Category.length > 0 ? game.Category[0] : 'Oyun';
 
+    // Map categories to category type for neon glow coloring
+    const categoryName = primaryCat.toLowerCase();
+    const catMap = {
+        'action': 'action', 'shooter': 'war', 'fighting': 'war',
+        'racing': 'racing', 'driving': 'racing',
+        'skill': 'skill', 'puzzle': 'skill', 'arcade': 'skill', 'educational': 'skill',
+        'adventure': 'adventure', 'platformer': 'adventure',
+        'girls': 'girls', 'cooking': 'girls',
+        'multiplayer': 'multiplayer'
+    };
+    const categoryType = catMap[categoryName] || 'all';
+
     const card = document.createElement('div');
-    card.className = `game-card${isFeatured ? ' featured' : ''}`;
-    card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.03}s`;
-    card.style.opacity = '0';
-    card.style.transform = 'translateY(15px)';
+    card.className = `game-card fade-in-stagger${isFeatured ? ' featured' : ''}`;
+    card.setAttribute('data-category-type', categoryType);
+    card.style.animationDelay = `${index * 0.03}s`;
     card.style.cursor = 'pointer';
 
     let badgeHTML = '';
@@ -562,56 +852,35 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
             <span class="game-card-category">${primaryCat}</span>
             <h3 class="game-card-title">${game.Title}</h3>
             <button class="play-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 Şimdi Oyna
             </button>
         </div>
     `;
 
-    // Clicking anywhere on the card plays the game
-    card.addEventListener('click', () => openGame(game));
+    // Mouse-tracking glow position calculations
+    card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+    });
+
+    // Sound FX on Hover/Click
+    card.addEventListener('mouseenter', () => RetroAudio.playHover());
+    card.addEventListener('click', () => {
+        RetroAudio.playClick();
+        openGame(game);
+    });
 
     return card;
 }
 
-// Generate the Hero Banner Showcase element
-function renderHeroShowcase(games) {
-    const heroCardContainer = document.getElementById('hero-card-container');
-    if (!heroCardContainer || games.length === 0) return;
-    
-    // Select the first editors choice game
-    const featuredGame = games[0];
-    let imageSrc = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1000&auto=format&fit=crop&q=80';
-    if (featuredGame.Asset && featuredGame.Asset.length > 0) {
-        const preferred = featuredGame.Asset.find(url => url.includes('512x384') || url.includes('512x512'));
-        imageSrc = preferred || featuredGame.Asset[0];
-    }
-    
-    heroCardContainer.innerHTML = `
-        <div class="hero-info">
-            <span class="hero-badge">Günün Oyunu 🌟</span>
-            <h2 class="hero-title">${featuredGame.Title}</h2>
-            <p class="hero-description">${featuredGame.Description || 'Muhteşem grafikleri ve sürükleyici oynanışı ile portalımızın en çok ilgi gören oyunu! Hemen ücretsiz, indirmeden tarayıcında oyna.'}</p>
-            <button class="hero-cta" id="hero-play-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 1.3rem; height: 1.3rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                Hemen Oyna
-            </button>
-        </div>
-        <div class="hero-media-wrapper">
-            <img src="${imageSrc}" alt="${featuredGame.Title}" class="hero-image">
-        </div>
-    `;
-    
-    const playBtn = document.getElementById('hero-play-btn');
-    if (playBtn) {
-        playBtn.addEventListener('click', () => openGame(featuredGame));
-    }
-}
-
 // Distribute loaded games to specific sections
 function distributeGamesToSections(games) {
-    // Populate the top hero showcase
-    renderHeroShowcase(games);
+    // Populate the top hero slider showcase
+    CarouselManager.init(games);
 
     // 1. Editors' Choice: first 6 games
     const editorsChoice = games.slice(0, 6);
@@ -830,6 +1099,9 @@ function openGame(game, updateHash = true) {
         window.location.hash = `#/oyun/${slugify(game.Title)}`;
         return; // handleRouteChange will be triggered and open it with updateHash = false
     }
+
+    // Play retro chord sweep on modal popup
+    RetroAudio.playModal();
 
     // Show iframe spinner loader
     iframeLoader.style.display = 'flex';

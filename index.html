@@ -70,6 +70,37 @@
                 <input type="text" id="search-input" placeholder="Oyun ara..." autocomplete="off">
                 <button id="clear-search" class="clear-search-btn" aria-label="Aramayı temizle">&times;</button>
             </div>
+
+            <!-- Header Controls (Theme & Sound) -->
+            <div class="header-controls">
+                <button id="sound-toggle" class="header-control-btn" aria-label="Sesi Kapat/Aç" title="Sesi Kapat/Aç">
+                    <svg id="sound-on-icon" class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                    </svg>
+                    <svg id="sound-off-icon" class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                        <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                        <line x1="23" y1="9" x2="17" y2="15"></line>
+                        <line x1="17" y1="9" x2="23" y2="15"></line>
+                    </svg>
+                </button>
+                <button id="theme-toggle" class="header-control-btn" aria-label="Tema Değiştir" title="Tema Değiştir">
+                    <svg id="sun-icon" class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg id="moon-icon" class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -135,10 +166,23 @@
 
         <!-- Homepage Sections (Lively Oyunskor Style layout) -->
         <div id="homepage-sections" style="display: none;">
-            <!-- Hero Showcase Banner -->
+            <!-- Hero Showcase Banner (Carousel) -->
             <div class="hero-banner" id="hero-banner" style="margin-bottom: 3rem; margin-top: 0;">
-                <div class="hero-card" id="hero-card-container">
-                    <!-- Dynamic Hero Card goes here -->
+                <div class="carousel-container">
+                    <div class="hero-card-carousel" id="hero-carousel-slides">
+                        <!-- Dynamic Carousel Slides go here -->
+                    </div>
+                    <!-- Navigation Arrows -->
+                    <button class="carousel-control prev" id="carousel-prev" aria-label="Önceki Slayt">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                    </button>
+                    <button class="carousel-control next" id="carousel-next" aria-label="Sonraki Slayt">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                    </button>
+                    <!-- Indicators/Dots -->
+                    <div class="carousel-indicators" id="carousel-indicators">
+                        <!-- Dynamic Dots go here -->
+                    </div>
                 </div>
             </div>
 
