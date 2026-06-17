@@ -833,6 +833,46 @@ function setupEventListeners() {
 }
 
 
+// Helper to map GamePix categories to standard GameDistribution categories used in the portal
+function mapGamePixCategory(gpCat) {
+    if (!gpCat) return 'Arcade';
+    const cat = gpCat.toLowerCase();
+    
+    if (cat === 'puzzle' || cat === 'puzzles' || cat === 'memory' || cat === 'drawing' || cat === '2048') {
+        return 'Puzzle';
+    }
+    if (cat === 'strategy' || cat === 'battle') {
+        return 'Strategy';
+    }
+    if (cat === 'sports') {
+        return 'Sports';
+    }
+    if (cat === 'adventure') {
+        return 'Adventure';
+    }
+    if (cat === 'shooter') {
+        return 'Shooting';
+    }
+    if (cat === 'fighting' || cat === 'stickman') {
+        return 'Action';
+    }
+    if (cat === 'simulation') {
+        return 'Driving';
+    }
+    if (cat === 'kids' || cat === 'junior') {
+        return 'Baby';
+    }
+    if (cat === 'match-3') {
+        return 'Bejeweled';
+    }
+    if (cat === 'ball' || cat === 'fun' || cat === 'classics' || cat === 'board') {
+        return 'Arcade';
+    }
+    
+    // Capitalize first letter as fallback
+    return gpCat.charAt(0).toUpperCase() + gpCat.slice(1);
+}
+
 // GamePix category mapping store
 let gamePixCategories = {};
 
@@ -865,12 +905,14 @@ async function fetchGamePixGames(limit = 150) {
         
         return rawGames.map(g => {
             // Map category dynamically
-            let rawCat = 'Arcade';
+            let gpCat = g.category;
             if (g.categories && g.categories.length > 0) {
-                rawCat = g.categories[0];
-            } else if (g.category) {
-                rawCat = gamePixCategories[g.category] || 'Arcade';
+                gpCat = g.categories[0];
+            } else if (g.category && gamePixCategories[g.category]) {
+                gpCat = gamePixCategories[g.category];
             }
+            
+            const rawCat = mapGamePixCategory(gpCat);
             
             return {
                 Title: g.title,
@@ -1038,7 +1080,7 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
     // Map categories to category type for neon glow coloring
     const categoryName = primaryCat.toLowerCase();
     const catMap = {
-        'action': 'action', 'shooter': 'war', 'fighting': 'war',
+        'action': 'action', 'shooter': 'war', 'shooting': 'war', 'fighting': 'war',
         'racing': 'racing', 'driving': 'racing',
         'skill': 'skill', 'puzzle': 'skill', 'arcade': 'skill', 'educational': 'skill',
         'adventure': 'adventure', 'platformer': 'adventure',
@@ -1123,7 +1165,7 @@ function distributeGamesToSections(games) {
 
         // War/Action
         if (warGames.length < 12) {
-            if (categories.includes('shooter') || categories.includes('fighting') || tags.includes('war') || tags.includes('gun') || tags.includes('sniper') || tags.includes('battle') || categories.includes('action')) {
+            if (categories.includes('shooter') || categories.includes('shooting') || categories.includes('fighting') || tags.includes('war') || tags.includes('gun') || tags.includes('sniper') || tags.includes('battle') || categories.includes('action')) {
                 if (!editorsChoice.includes(game) && !popular.includes(game) && !newGames.includes(game)) {
                     warGames.push(game);
                 }
@@ -1244,9 +1286,9 @@ function applyFilters() {
             
             switch (activeCategory) {
                 case 'action':
-                    return categories.includes('action') || categories.includes('shooter') || categories.includes('fighting') || tags.includes('zombie');
+                    return categories.includes('action') || categories.includes('shooter') || categories.includes('shooting') || categories.includes('fighting') || tags.includes('zombie');
                 case 'war':
-                    return categories.includes('shooter') || categories.includes('fighting') || tags.includes('war') || tags.includes('gun') || tags.includes('sniper') || tags.includes('battle');
+                    return categories.includes('shooter') || categories.includes('shooting') || categories.includes('fighting') || tags.includes('war') || tags.includes('gun') || tags.includes('sniper') || tags.includes('battle');
                 case 'racing':
                     return categories.includes('racing') || categories.includes('driving') || tags.includes('car') || tags.includes('moto');
                 case 'skill':
