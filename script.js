@@ -15,6 +15,19 @@ let currentPage = 1;
 let isLoadingMore = false;
 let pendingGameToOpen = null;
 let dynamicCategoryName = '';
+let loadedCategories = new Set();
+
+// Map sitemizdeki kategorileri GameDistribution API kategori parametrelerine bağlar
+const CATEGORY_API_MAP = {
+    'all': 'All',
+    'action': 'Action',
+    'war': 'Shooter',
+    'racing': 'Racing',
+    'skill': 'Puzzle',
+    'adventure': 'Adventure',
+    'girls': 'Girls',
+    'multiplayer': 'Multiplayer'
+};
 
 // Helper to create clean URL slug from title strings
 function slugify(text) {
@@ -190,7 +203,6 @@ const SEO_CONFIG = {
 
 // Initialize portal content
 window.addEventListener('DOMContentLoaded', () => {
-    fetchGamesList(1);
     setupEventListeners();
     handleRouteChange(); // Trigger initial routing on page load
 });
@@ -279,8 +291,16 @@ function handleRouteChange() {
     // Apply SEO dynamic tags update
     updateSEOTags(activeCategory);
 
-    // Apply Filter & Render
-    applyFilters();
+    // Fetch games for this category dynamically if not loaded yet
+    const apiCategoryName = CATEGORY_API_MAP[activeCategory] || 'All';
+    if (!loadedCategories.has(activeCategory)) {
+        currentPage = 1;
+        loadedCategories.add(activeCategory);
+        fetchGamesList(1, apiCategoryName);
+    } else {
+        // Apply Filter & Render
+        applyFilters();
+    }
 }
 
 // Dynamically Update Page SEO Meta Tags and JSON-LD Structured Data
@@ -386,7 +406,8 @@ function setupEventListeners() {
     loadMoreBtn.addEventListener('click', () => {
         if (!isLoadingMore) {
             currentPage++;
-            fetchGamesList(currentPage);
+            const apiCategoryName = CATEGORY_API_MAP[activeCategory] || 'All';
+            fetchGamesList(currentPage, apiCategoryName);
         }
     });
 
@@ -442,7 +463,7 @@ function setupEventListeners() {
 
 
 // Fetch popular games list from GameDistribution JSON API
-async function fetchGamesList(page) {
+async function fetchGamesList(page, apiCategory = 'All') {
     isLoadingMore = true;
     loadMoreBtn.textContent = 'Yükleniyor...';
     
@@ -453,8 +474,13 @@ async function fetchGamesList(page) {
     }
 
     try {
-        const amount = page === 1 ? 120 : 40;
-        const url = `https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=${amount}&page=${page}&format=json`;
+        // Increase limit amounts: loads 250 games on page 1, 100 on load more
+        const amount = page === 1 ? 250 : 100;
+        let url = `https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=${amount}&page=${page}&format=json`;
+        if (apiCategory && apiCategory !== 'All') {
+            url += `&categories=${apiCategory.toUpperCase()}`;
+        }
+        
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`API Network status is not OK: ${response.status}`);
