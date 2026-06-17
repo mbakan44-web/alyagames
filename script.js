@@ -122,6 +122,16 @@ const logoBtn = document.getElementById('logo-btn');
 const loadMoreContainer = document.getElementById('load-more-container');
 const loadMoreBtn = document.getElementById('load-more-btn');
 
+// Homepage Sections Elements
+const homepageSections = document.getElementById('homepage-sections');
+const editorsChoiceGrid = document.getElementById('editors-choice-grid');
+const popularGamesGrid = document.getElementById('popular-games-grid');
+const newGamesGrid = document.getElementById('new-games-grid');
+const warGamesGrid = document.getElementById('war-games-grid');
+const racingGamesGrid = document.getElementById('racing-games-grid');
+const girlsGamesGrid = document.getElementById('girls-games-grid');
+const skillGamesGrid = document.getElementById('skill-games-grid');
+
 // Modal Elements
 const gameModal = document.getElementById('game-modal');
 const gameIframe = document.getElementById('game-iframe');
@@ -419,10 +429,12 @@ async function fetchGamesList(page) {
     if (page === 1) {
         mainLoader.style.display = 'flex';
         gamesContainer.style.display = 'none';
+        homepageSections.style.display = 'none';
     }
 
     try {
-        const url = `https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=20&page=${page}&format=json`;
+        const amount = page === 1 ? 120 : 40;
+        const url = `https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=${amount}&page=${page}&format=json`;
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error(`API Network status is not OK: ${response.status}`);
@@ -473,6 +485,145 @@ async function fetchGamesList(page) {
     }
 }
 
+// Helper function to create game card DOM element
+function createGameCardElement(game, index) {
+    let imageSrc = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60';
+    if (game.Asset && game.Asset.length > 0) {
+        const preferred = game.Asset.find(url => url.includes('512x384') || url.includes('512x512'));
+        imageSrc = preferred || game.Asset[0];
+    }
+    const primaryCat = game.Category && game.Category.length > 0 ? game.Category[0] : 'Oyun';
+
+    const card = document.createElement('div');
+    card.className = 'game-card';
+    card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.03}s`;
+    card.style.opacity = '0';
+    card.style.transform = 'translateY(15px)';
+    card.style.cursor = 'pointer';
+
+    card.innerHTML = `
+        <div class="game-card-img-wrapper">
+            <img src="${imageSrc}" alt="${game.Title}" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">${primaryCat}</span>
+            <h3 class="game-card-title">${game.Title}</h3>
+            <button class="play-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </button>
+        </div>
+    `;
+
+    // Clicking anywhere on the card plays the game
+    card.addEventListener('click', () => openGame(game));
+
+    return card;
+}
+
+// Distribute loaded games to specific sections
+function distributeGamesToSections(games) {
+    // 1. Editors' Choice: first 6 games
+    const editorsChoice = games.slice(0, 6);
+    renderSectionGrid(editorsChoice, editorsChoiceGrid);
+
+    // 2. Popular Games: next 18 games
+    const popular = games.slice(6, 24);
+    renderSectionGrid(popular, popularGamesGrid);
+
+    // 3. New Games: next 18 games
+    const newGames = games.slice(24, 42);
+    renderSectionGrid(newGames, newGamesGrid);
+
+    // Categorized lists
+    const warGames = [];
+    const racingGames = [];
+    const girlsGames = [];
+    const skillGames = [];
+
+    // Filter by type into separate category arrays
+    games.forEach(game => {
+        const categories = game.Category ? game.Category.map(c => c.toLowerCase()) : [];
+        const tags = game.Tag ? game.Tag.map(t => t.toLowerCase()) : [];
+
+        // War/Action
+        if (warGames.length < 12) {
+            if (categories.includes('shooter') || categories.includes('fighting') || tags.includes('war') || tags.includes('gun') || tags.includes('sniper') || tags.includes('battle') || categories.includes('action')) {
+                if (!editorsChoice.includes(game) && !popular.includes(game) && !newGames.includes(game)) {
+                    warGames.push(game);
+                }
+            }
+        }
+
+        // Racing
+        if (racingGames.length < 12) {
+            if (categories.includes('racing') || categories.includes('driving') || tags.includes('car') || tags.includes('moto')) {
+                if (!editorsChoice.includes(game) && !popular.includes(game) && !newGames.includes(game) && !warGames.includes(game)) {
+                    racingGames.push(game);
+                }
+            }
+        }
+
+        // Girls
+        if (girlsGames.length < 12) {
+            if (categories.includes('girls') || categories.includes('cooking') || tags.includes('girl') || tags.includes('fashion') || tags.includes('dress') || tags.includes('makeup')) {
+                if (!editorsChoice.includes(game) && !popular.includes(game) && !newGames.includes(game) && !warGames.includes(game) && !racingGames.includes(game)) {
+                    girlsGames.push(game);
+                }
+            }
+        }
+
+        // Skill
+        if (skillGames.length < 12) {
+            if (categories.includes('skill') || categories.includes('puzzle') || categories.includes('educational') || categories.includes('arcade') || tags.includes('logic')) {
+                if (!editorsChoice.includes(game) && !popular.includes(game) && !newGames.includes(game) && !warGames.includes(game) && !racingGames.includes(game) && !girlsGames.includes(game)) {
+                    skillGames.push(game);
+                }
+            }
+        }
+    });
+
+    // Fill grids up to 12 using remaining items if API didn't return enough specific matches
+    let index = 42;
+    while (warGames.length < 12 && index < games.length) {
+        const g = games[index++];
+        if (!editorsChoice.includes(g) && !popular.includes(g) && !newGames.includes(g) && !racingGames.includes(g) && !girlsGames.includes(g) && !skillGames.includes(g)) {
+            warGames.push(g);
+        }
+    }
+    while (racingGames.length < 12 && index < games.length) {
+        const g = games[index++];
+        if (!editorsChoice.includes(g) && !popular.includes(g) && !newGames.includes(g) && !warGames.includes(g) && !girlsGames.includes(g) && !skillGames.includes(g)) {
+            racingGames.push(g);
+        }
+    }
+    while (girlsGames.length < 12 && index < games.length) {
+        const g = games[index++];
+        if (!editorsChoice.includes(g) && !popular.includes(g) && !newGames.includes(g) && !warGames.includes(g) && !racingGames.includes(g) && !skillGames.includes(g)) {
+            girlsGames.push(g);
+        }
+    }
+    while (skillGames.length < 12 && index < games.length) {
+        const g = games[index++];
+        if (!editorsChoice.includes(g) && !popular.includes(g) && !newGames.includes(g) && !warGames.includes(g) && !racingGames.includes(g) && !girlsGames.includes(g)) {
+            skillGames.push(g);
+        }
+    }
+
+    renderSectionGrid(warGames, warGamesGrid);
+    renderSectionGrid(racingGames, racingGamesGrid);
+    renderSectionGrid(girlsGames, girlsGamesGrid);
+    renderSectionGrid(skillGames, skillGamesGrid);
+}
+
+function renderSectionGrid(games, gridElement) {
+    gridElement.innerHTML = '';
+    games.forEach((game, index) => {
+        const card = createGameCardElement(game, index);
+        gridElement.appendChild(card);
+    });
+}
+
 // Apply Search & Category filters
 function applyFilters() {
     let filtered = gamesData;
@@ -517,13 +668,23 @@ function applyFilters() {
         );
     }
 
-    renderGameGrid(filtered);
-
-    // Hide load more if we are searching, or if no games returned
-    if (searchQuery || filtered.length === 0 || activeCategory === 'dynamic') {
-        loadMoreContainer.style.display = 'none';
-    } else {
+    // Toggle Homepage Sections vs Single Category/Search Grid View
+    if (activeCategory === 'all' && !searchQuery) {
+        gamesContainer.style.display = 'none';
+        noResultsMsg.style.display = 'none';
+        homepageSections.style.display = 'block';
         loadMoreContainer.style.display = 'block';
+        distributeGamesToSections(gamesData);
+    } else {
+        homepageSections.style.display = 'none';
+        renderGameGrid(filtered);
+        
+        // Hide load more if searching or if no games returned
+        if (searchQuery || filtered.length === 0 || activeCategory === 'dynamic') {
+            loadMoreContainer.style.display = 'none';
+        } else {
+            loadMoreContainer.style.display = 'block';
+        }
     }
 }
 
@@ -541,41 +702,7 @@ function renderGameGrid(games) {
     gamesContainer.style.display = 'grid';
 
     games.forEach((game, index) => {
-        // Find best size image from Assets array
-        let imageSrc = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60';
-        if (game.Asset && game.Asset.length > 0) {
-            // Find a medium scale asset (like 512x384 or first item)
-            const preferred = game.Asset.find(url => url.includes('512x384') || url.includes('512x512'));
-            imageSrc = preferred || game.Asset[0];
-        }
-
-        // Get readable primary category string
-        const primaryCat = game.Category && game.Category.length > 0 ? game.Category[0] : 'Oyun';
-
-        // Create card element
-        const card = document.createElement('div');
-        card.className = 'game-card';
-        card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.05}s`;
-        card.style.opacity = '0';
-        card.style.transform = 'translateY(15px)';
-
-        card.innerHTML = `
-            <div class="game-card-img-wrapper">
-                <img src="${imageSrc}" alt="${game.Title}" class="game-card-img" loading="lazy">
-            </div>
-            <div class="game-card-content">
-                <span class="game-card-category">${primaryCat}</span>
-                <h3 class="game-card-title">${game.Title}</h3>
-                <button class="play-btn">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                    Şimdi Oyna
-                </button>
-            </div>
-        `;
-
-        // Event listener to open game in modal
-        card.querySelector('.play-btn').addEventListener('click', () => openGame(game));
-
+        const card = createGameCardElement(game, index);
         gamesContainer.appendChild(card);
     });
 }
