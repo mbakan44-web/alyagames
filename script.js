@@ -741,6 +741,15 @@ function setupEventListeners() {
 }
 
 
+// Helper to shuffle array elements randomly (Fisher-Yates)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+    }
+    return array;
+}
+
 // Fetch popular games list from GameDistribution JSON API
 async function fetchGamesList(page, apiCategory = 'All') {
     isLoadingMore = true;
@@ -777,7 +786,11 @@ async function fetchGamesList(page, apiCategory = 'All') {
         if (newGames.length > 0) {
             // Filter duplicates out (in case API overlaps)
             const existingIds = new Set(gamesData.map(g => g.Url));
-            const uniqueNewGames = newGames.filter(g => !existingIds.has(g.Url));
+            let uniqueNewGames = newGames.filter(g => !existingIds.has(g.Url));
+            if (page === 1) {
+                // Shuffle the first page of games so refresh always shows different games
+                uniqueNewGames = shuffleArray(uniqueNewGames);
+            }
             gamesData = [...gamesData, ...uniqueNewGames];
         }
         
@@ -795,7 +808,7 @@ async function fetchGamesList(page, apiCategory = 'All') {
         console.warn("CORS policy or network failure. Using fallback dataset.", error);
         // Only load fallback on page 1 if list is empty
         if (gamesData.length === 0) {
-            gamesData = FALLBACK_GAMES;
+            gamesData = shuffleArray([...FALLBACK_GAMES]);
             if (pendingGameToOpen) {
                 const game = gamesData.find(g => slugify(g.Title) === pendingGameToOpen || g.Md5 === pendingGameToOpen);
                 if (game) openGame(game, false);
