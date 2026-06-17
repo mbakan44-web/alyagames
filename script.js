@@ -833,6 +833,50 @@ function setupEventListeners() {
 }
 
 
+// GamePix category mapping store
+let gamePixCategories = {};
+
+// Load GamePix categories list to map category IDs dynamically
+async function loadGamePixCategories() {
+    try {
+        const res = await fetch('https://games.gamepix.com/categories');
+        const data = await res.json();
+        const cats = Array.isArray(data) ? data : (data.data || []);
+        cats.forEach(c => {
+            gamePixCategories[c.id] = c.name;
+        });
+        console.log('GamePix categories loaded:', gamePixCategories);
+    } catch (e) {
+        console.warn('Could not load GamePix categories:', e);
+    }
+}
+
+// Fetch games from GamePix API and map them to our internal portal structure
+async function fetchGamePixGames(limit = 150) {
+    try {
+        const url = `https://games.gamepix.com/games?limit=${limit}&order=q`;
+        const res = await fetch(url);
+        if (!res.ok) throw new Error('GamePix request failed');
+        const data = await res.json();
+        const rawGames = Array.isArray(data) ? data : (data.data || []);
+        return rawGames.map(g => {
+            const rawCat = gamePixCategories[g.category] || 'Arcade';
+            return {
+                Title: g.title,
+                Url: g.url,
+                Asset: [g.thumbnailUrl || g.thumbnailUrl100 || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500'],
+                Category: [rawCat],
+                Description: g.description || '',
+                Instructions: '',
+                Source: 'GamePix'
+            };
+        });
+    } catch (e) {
+        console.warn('Could not load GamePix games:', e);
+        return [];
+    }
+}
+
 // Helper to shuffle array elements randomly (Fisher-Yates)
 function shuffleArray(array) {
     for (let i = array.length - 1; i > 0; i--) {
@@ -842,7 +886,7 @@ function shuffleArray(array) {
     return array;
 }
 
-// Fetch popular games list from GameDistribution JSON API
+// Fetch games list (Concurrently fetches GameDistribution and GamePix on page 1)
 async function fetchGamesList(page, apiCategory = 'All') {
     isLoadingMore = true;
     loadMoreBtn.textContent = 'Yükleniyor...';
@@ -854,39 +898,96 @@ async function fetchGamesList(page, apiCategory = 'All') {
     }
 
     try {
-        // Increase limit amounts: loads 250 games on page 1, 100 on load more
+        // Fetch categories for GamePix if not loaded yet
+        if (page === 1 && Object.keys(gamePixCategories).length === 0) {
+            await loadGamePixCategories();
+        }
+
         const amount = page === 1 ? 250 : 100;
-        let url = `https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=${amount}&page=${page}&format=json`;
+        let gdUrl = `https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=${amount}&page=${page}&format=json`;
         if (apiCategory && apiCategory !== 'All') {
-            url += `&categories=${apiCategory.toUpperCase()}`;
+            gdUrl += `&categories=${apiCategory.toUpperCase()}`;
         }
         
-        const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`API Network status is not OK: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        let newGames = [];
-        
-        if (Array.isArray(data)) {
-            newGames = data;
-        } else if (data.items && Array.isArray(data.items)) {
-            newGames = data.items;
-        }
-        
-        if (newGames.length > 0) {
-            // Filter duplicates out (in case API overlaps)
-            const existingIds = new Set(gamesData.map(g => g.Url));
-            let uniqueNewGames = newGames.filter(g => !existingIds.has(g.Url));
+        let uniqueNewGames = [];
+
+        // Concurrently fetch both catalogs on main page load
+        if (page === 1 && apiCategory === 'All') {
+            const [gdResult, gpResult] = await Promise.allSettled([
+                fetch(gdUrl).then(res => res.json()),
+                fetchGamePixGames(150)
+            ]);
+
+            let gdGames = [];
+            if (gdResult.status === 'fulfilled') {
+                const data = gdResult.value;
+                gdGames = Array.isArray(data) ? data : (data.items || []);
+            }
+
+            let gpGames = [];
+            if (gpResult.status === 'fulfilled') {
+                gpGames = gpResult.value;
+            }
+
+            // Map GameDistribution games
+            const mappedGdGames = gdGames.map(g => ({
+                Title: g.Title,
+                Url: g.Url,
+                Asset: g.Asset,
+                Category: g.Category,
+                Description: g.Description || '',
+                Instructions: g.Instructions || '',
+                Source: 'GameDistribution'
+            }));
+
+            // Merge both API arrays
+            const merged = [...mappedGdGames, ...gpGames];
+            
+            // Filter duplicates
+            const existingUrls = new Set(gamesData.map(g => g.Url));
+            uniqueNewGames = merged.filter(g => !existingUrls.has(g.Url));
+            
+            // Randomize order on load
+            uniqueNewGames = shuffleArray(uniqueNewGames);
+        } else {
+            // Standard fetch (category filtering or pagination)
+            const response = await fetch(gdUrl);
+            if (!response.ok) {
+                throw new Error(`API Network status is not OK: ${response.status}`);
+            }
+            
+            const data = await response.json();
+            let newGames = [];
+            
+            if (Array.isArray(data)) {
+                newGames = data;
+            } else if (data.items && Array.isArray(data.items)) {
+                newGames = data.items;
+            }
+            
+            const existingUrls = new Set(gamesData.map(g => g.Url));
+            uniqueNewGames = newGames
+                .map(g => ({
+                    Title: g.Title,
+                    Url: g.Url,
+                    Asset: g.Asset,
+                    Category: g.Category,
+                    Description: g.Description || '',
+                    Instructions: g.Instructions || '',
+                    Source: 'GameDistribution'
+                }))
+                .filter(g => !existingUrls.has(g.Url));
+
             if (page === 1) {
-                // Shuffle the first page of games so refresh always shows different games
                 uniqueNewGames = shuffleArray(uniqueNewGames);
             }
+        }
+        
+        if (uniqueNewGames.length > 0) {
             gamesData = [...gamesData, ...uniqueNewGames];
         }
         
-        console.log(`Successfully loaded page ${page}`, newGames);
+        console.log(`Successfully loaded page ${page}`, uniqueNewGames);
         
         // If we have a pending game route loaded, open it now
         if (pendingGameToOpen) {
@@ -897,8 +998,7 @@ async function fetchGamesList(page, apiCategory = 'All') {
             }
         }
     } catch (error) {
-        console.warn("CORS policy or network failure. Using fallback dataset.", error);
-        // Only load fallback on page 1 if list is empty
+        console.warn("API network failure. Using fallback dataset.", error);
         if (gamesData.length === 0) {
             gamesData = shuffleArray([...FALLBACK_GAMES]);
             if (pendingGameToOpen) {
