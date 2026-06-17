@@ -418,6 +418,26 @@ function setupEventListeners() {
             iframeLoader.style.display = 'none';
         }, 300);
     });
+
+    // Surprise Game FAB Listener
+    const surpriseFab = document.getElementById('surprise-fab');
+    if (surpriseFab) {
+        surpriseFab.addEventListener('click', () => {
+            if (gamesData.length > 0) {
+                const icon = surpriseFab.querySelector('.surprise-icon');
+                if (icon) {
+                    icon.style.animation = 'none';
+                    void icon.offsetWidth; // Trigger reflow
+                    icon.style.animation = 'rotateIcon 0.8s ease-out';
+                }
+                const randomIndex = Math.floor(Math.random() * gamesData.length);
+                const game = gamesData[randomIndex];
+                setTimeout(() => {
+                    openGame(game);
+                }, 400);
+            }
+        });
+    }
 }
 
 
@@ -486,7 +506,7 @@ async function fetchGamesList(page) {
 }
 
 // Helper function to create game card DOM element
-function createGameCardElement(game, index) {
+function createGameCardElement(game, index, isFeatured = false, badgeText = '') {
     let imageSrc = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500&auto=format&fit=crop&q=60';
     if (game.Asset && game.Asset.length > 0) {
         const preferred = game.Asset.find(url => url.includes('512x384') || url.includes('512x512'));
@@ -495,13 +515,20 @@ function createGameCardElement(game, index) {
     const primaryCat = game.Category && game.Category.length > 0 ? game.Category[0] : 'Oyun';
 
     const card = document.createElement('div');
-    card.className = 'game-card';
+    card.className = `game-card${isFeatured ? ' featured' : ''}`;
     card.style.animation = `fadeSlideIn 0.4s ease forwards ${index * 0.03}s`;
     card.style.opacity = '0';
     card.style.transform = 'translateY(15px)';
     card.style.cursor = 'pointer';
 
+    let badgeHTML = '';
+    if (badgeText) {
+        const badgeClass = badgeText === 'YENİ' ? 'badge-new' : (badgeText === 'POPÜLER' ? 'badge-hot' : 'badge-best');
+        badgeHTML = `<span class="card-badge ${badgeClass}">${badgeText}</span>`;
+    }
+
     card.innerHTML = `
+        ${badgeHTML}
         <div class="game-card-img-wrapper">
             <img src="${imageSrc}" alt="${game.Title}" class="game-card-img" loading="lazy">
         </div>
@@ -521,19 +548,56 @@ function createGameCardElement(game, index) {
     return card;
 }
 
+// Generate the Hero Banner Showcase element
+function renderHeroShowcase(games) {
+    const heroCardContainer = document.getElementById('hero-card-container');
+    if (!heroCardContainer || games.length === 0) return;
+    
+    // Select the first editors choice game
+    const featuredGame = games[0];
+    let imageSrc = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1000&auto=format&fit=crop&q=80';
+    if (featuredGame.Asset && featuredGame.Asset.length > 0) {
+        const preferred = featuredGame.Asset.find(url => url.includes('512x384') || url.includes('512x512'));
+        imageSrc = preferred || featuredGame.Asset[0];
+    }
+    
+    heroCardContainer.innerHTML = `
+        <div class="hero-info">
+            <span class="hero-badge">Günün Oyunu 🌟</span>
+            <h2 class="hero-title">${featuredGame.Title}</h2>
+            <p class="hero-description">${featuredGame.Description || 'Muhteşem grafikleri ve sürükleyici oynanışı ile portalımızın en çok ilgi gören oyunu! Hemen ücretsiz, indirmeden tarayıcında oyna.'}</p>
+            <button class="hero-cta" id="hero-play-btn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" style="width: 1.3rem; height: 1.3rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Hemen Oyna
+            </button>
+        </div>
+        <div class="hero-media-wrapper">
+            <img src="${imageSrc}" alt="${featuredGame.Title}" class="hero-image">
+        </div>
+    `;
+    
+    const playBtn = document.getElementById('hero-play-btn');
+    if (playBtn) {
+        playBtn.addEventListener('click', () => openGame(featuredGame));
+    }
+}
+
 // Distribute loaded games to specific sections
 function distributeGamesToSections(games) {
+    // Populate the top hero showcase
+    renderHeroShowcase(games);
+
     // 1. Editors' Choice: first 6 games
     const editorsChoice = games.slice(0, 6);
-    renderSectionGrid(editorsChoice, editorsChoiceGrid);
+    renderSectionGrid(editorsChoice, editorsChoiceGrid, 'editorsChoice');
 
     // 2. Popular Games: next 18 games
     const popular = games.slice(6, 24);
-    renderSectionGrid(popular, popularGamesGrid);
+    renderSectionGrid(popular, popularGamesGrid, 'popular');
 
     // 3. New Games: next 18 games
     const newGames = games.slice(24, 42);
-    renderSectionGrid(newGames, newGamesGrid);
+    renderSectionGrid(newGames, newGamesGrid, 'new');
 
     // Categorized lists
     const warGames = [];
@@ -610,16 +674,36 @@ function distributeGamesToSections(games) {
         }
     }
 
-    renderSectionGrid(warGames, warGamesGrid);
-    renderSectionGrid(racingGames, racingGamesGrid);
-    renderSectionGrid(girlsGames, girlsGamesGrid);
-    renderSectionGrid(skillGames, skillGamesGrid);
+    renderSectionGrid(warGames, warGamesGrid, 'war');
+    renderSectionGrid(racingGames, racingGamesGrid, 'racing');
+    renderSectionGrid(girlsGames, girlsGamesGrid, 'girls');
+    renderSectionGrid(skillGames, skillGamesGrid, 'skill');
 }
 
-function renderSectionGrid(games, gridElement) {
+function renderSectionGrid(games, gridElement, sectionName = '') {
     gridElement.innerHTML = '';
     games.forEach((game, index) => {
-        const card = createGameCardElement(game, index);
+        let isFeatured = false;
+        let badgeText = '';
+        
+        if (sectionName === 'editorsChoice') {
+            if (index < 2) isFeatured = true;
+            badgeText = 'EDİTÖR';
+        } else if (sectionName === 'popular') {
+            if (index % 5 === 0) badgeText = 'POPÜLER';
+        } else if (sectionName === 'new') {
+            if (index % 4 === 0) badgeText = 'YENİ';
+        } else if (sectionName === 'war') {
+            if (index % 6 === 0) badgeText = 'AKSİYON';
+        } else if (sectionName === 'racing') {
+            if (index % 6 === 0) badgeText = 'YARIŞ';
+        } else if (sectionName === 'girls') {
+            if (index % 6 === 0) badgeText = 'KIZ';
+        } else if (sectionName === 'skill') {
+            if (index % 6 === 0) badgeText = 'ZEKA';
+        }
+        
+        const card = createGameCardElement(game, index, isFeatured, badgeText);
         gridElement.appendChild(card);
     });
 }
