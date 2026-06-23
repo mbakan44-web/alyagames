@@ -9,6 +9,7 @@ indexexchange.com, 194018, DIRECT, 50b1c356f2c5c8fc
 google.com, pub-6672729658077061, DIRECT, f08c47fec0942fa0
 google.com, pub-4996167737872209, DIRECT, f08c47fec0942fa0
 google.com, pub-4440077550203864, DIRECT, f08c47fec0942fa0
+google.com, pub-7980209202674588, DIRECT, f08c47fec0942fa0
 rubiconproject.com, 20474, DIRECT, 0bfd66d529a55807
 rubiconproject.com, 20476, DIRECT, 0bfd66d529a55807
 appnexus.com, 11995, DIRECT, f5ab79cb980f11d1
