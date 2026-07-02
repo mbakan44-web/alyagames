@@ -830,6 +830,28 @@ function setupEventListeners() {
         });
         card.addEventListener('mouseenter', () => RetroAudio.playHover());
     });
+
+    // FAQ Accordion Toggle Interaction
+    const faqQuestions = document.querySelectorAll('.faq-question');
+    faqQuestions.forEach(q => {
+        q.addEventListener('click', () => {
+            RetroAudio.playClick();
+            const parent = q.parentElement;
+            const isActive = parent.classList.contains('active');
+            
+            // Close other FAQ items for a clean accordion effect
+            document.querySelectorAll('.faq-item').forEach(item => {
+                item.classList.remove('active');
+                item.querySelector('.faq-answer').style.maxHeight = null;
+            });
+            
+            if (!isActive) {
+                parent.classList.add('active');
+                const answer = parent.querySelector('.faq-answer');
+                answer.style.maxHeight = answer.scrollHeight + 'px';
+            }
+        });
+    });
 }
 
 
