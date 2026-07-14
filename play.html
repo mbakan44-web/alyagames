@@ -271,8 +271,7 @@
             const gameSlug = urlParams.get('game');
             
             if (gameSlug) {
-                // Let script.js handle the fetch when it initializes
-                // or we can call a function explicitly
+                loadSpecificGame(gameSlug);
             } else {
                 window.location.href = 'index.html';
             }

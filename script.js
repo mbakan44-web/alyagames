@@ -461,8 +461,10 @@ const SEO_CONFIG = {
 window.addEventListener('DOMContentLoaded', () => {
     RetroAudio.updateUI();
     ThemeManager.init();
-    setupEventListeners();
-    handleRouteChange(); // Trigger initial routing on page load
+    if (document.getElementById('editors-choice-grid')) {
+        setupEventListeners();
+        handleRouteChange(); // Trigger initial routing on page load
+    }
 });
 
 // Watch route changes
@@ -491,7 +493,7 @@ function handleRouteChange() {
     }
 
     // Close modal if route is not an play route
-    if (gameModal.classList.contains('active')) {
+    if (gameModal && gameModal.classList.contains('active')) {
         closeModal(false); // Close modal without changing hash (since hash is already changed)
     }
 
@@ -1346,21 +1348,25 @@ function applyFilters() {
     }
 
     // Toggle Homepage Sections vs Single Category/Search Grid View
-    if (activeCategory === 'all' && !searchQuery) {
-        gamesContainer.style.display = 'none';
-        noResultsMsg.style.display = 'none';
-        homepageSections.style.display = 'block';
-        loadMoreContainer.style.display = 'block';
-        distributeGamesToSections(gamesData);
-    } else {
-        homepageSections.style.display = 'none';
-        renderGameGrid(filtered);
-        
-        // Hide load more if searching or if no games returned
-        if (searchQuery || filtered.length === 0 || activeCategory === 'dynamic') {
-            loadMoreContainer.style.display = 'none';
+    if (gamesContainer && homepageSections) {
+        if (activeCategory === 'all' && !searchQuery) {
+            gamesContainer.style.display = 'none';
+            noResultsMsg.style.display = 'none';
+            homepageSections.style.display = 'block';
+            if(loadMoreContainer) loadMoreContainer.style.display = 'block';
+            distributeGamesToSections(gamesData);
         } else {
-            loadMoreContainer.style.display = 'block';
+            homepageSections.style.display = 'none';
+            renderGameGrid(filtered);
+            
+            // Hide load more if searching or if no games returned
+            if (loadMoreContainer) {
+                if (searchQuery || filtered.length === 0 || activeCategory === 'dynamic') {
+                    loadMoreContainer.style.display = 'none';
+                } else {
+                    loadMoreContainer.style.display = 'block';
+                }
+            }
         }
     }
 }
