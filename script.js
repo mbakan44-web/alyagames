@@ -916,10 +916,10 @@ async function loadGamePixCategories() {
 }
 
 // Fetch games from GamePix API and map them to our internal portal structure
-async function fetchGamePixGames(limit = 150) {
+async function fetchGamePixGames(limit = 250, page = 1) {
     try {
-        // Use user's personal sid-monetized feed endpoint: feeds.gamepix.com/v2/json?sid=M4M77
-        const url = `https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=${limit}&page=1`;
+        // Use user's personal sid-monetized feed endpoint
+        const url = `https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=${limit}&page=${page}`;
         const res = await fetch(url);
         if (!res.ok) throw new Error('GamePix request failed');
         const data = await res.json();
@@ -989,7 +989,8 @@ async function fetchGamesList(page, apiCategory = 'All') {
             await loadGamePixCategories();
         }
 
-        const amount = page === 1 ? 250 : 100;
+        const amount = page === 1 ? 200 : 100;
+        const gpAmount = page === 1 ? 200 : 100;
         let gdUrl = `https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=${amount}&page=${page}&format=json`;
         if (apiCategory && apiCategory !== 'All') {
             gdUrl += `&categories=${apiCategory.toUpperCase()}`;
@@ -997,76 +998,47 @@ async function fetchGamesList(page, apiCategory = 'All') {
         
         let uniqueNewGames = [];
 
-        // Concurrently fetch both catalogs on main page load
-        if (page === 1 && apiCategory === 'All') {
-            const [gdResult, gpResult] = await Promise.allSettled([
-                fetch(gdUrl).then(res => res.json()),
-                fetchGamePixGames(150)
-            ]);
+        // Concurrently fetch both catalogs
+        const [gdResult, gpResult] = await Promise.allSettled([
+            fetch(gdUrl).then(res => {
+                if(!res.ok) throw new Error("GD API Error");
+                return res.json();
+            }),
+            fetchGamePixGames(gpAmount, page)
+        ]);
 
-            let gdGames = [];
-            if (gdResult.status === 'fulfilled') {
-                const data = gdResult.value;
-                gdGames = Array.isArray(data) ? data : (data.items || []);
-            }
+        let gdGames = [];
+        if (gdResult.status === 'fulfilled') {
+            const data = gdResult.value;
+            gdGames = Array.isArray(data) ? data : (data.items || []);
+        }
 
-            let gpGames = [];
-            if (gpResult.status === 'fulfilled') {
-                gpGames = gpResult.value;
-            }
+        let gpGames = [];
+        if (gpResult.status === 'fulfilled') {
+            gpGames = gpResult.value;
+        }
 
-            // Map GameDistribution games
-            const mappedGdGames = gdGames.map(g => ({
-                Title: g.Title,
-                Url: g.Url,
-                Asset: g.Asset,
-                Category: g.Category,
-                Description: g.Description || '',
-                Instructions: g.Instructions || '',
-                Source: 'GameDistribution'
-            }));
+        // Map GameDistribution games
+        const mappedGdGames = gdGames.map(g => ({
+            Title: g.Title,
+            Url: g.Url,
+            Asset: g.Asset,
+            Category: g.Category,
+            Description: g.Description || '',
+            Instructions: g.Instructions || '',
+            Source: 'GameDistribution'
+        }));
 
-            // Merge both API arrays
-            const merged = [...mappedGdGames, ...gpGames];
-            
-            // Filter duplicates
-            const existingUrls = new Set(gamesData.map(g => g.Url));
-            uniqueNewGames = merged.filter(g => !existingUrls.has(g.Url));
-            
-            // Randomize order on load
+        // Merge both API arrays
+        const merged = [...mappedGdGames, ...gpGames];
+        
+        // Filter duplicates
+        const existingUrls = new Set(gamesData.map(g => g.Url));
+        uniqueNewGames = merged.filter(g => !existingUrls.has(g.Url));
+        
+        // Randomize order on first load to mix them well
+        if (page === 1) {
             uniqueNewGames = shuffleArray(uniqueNewGames);
-        } else {
-            // Standard fetch (category filtering or pagination)
-            const response = await fetch(gdUrl);
-            if (!response.ok) {
-                throw new Error(`API Network status is not OK: ${response.status}`);
-            }
-            
-            const data = await response.json();
-            let newGames = [];
-            
-            if (Array.isArray(data)) {
-                newGames = data;
-            } else if (data.items && Array.isArray(data.items)) {
-                newGames = data.items;
-            }
-            
-            const existingUrls = new Set(gamesData.map(g => g.Url));
-            uniqueNewGames = newGames
-                .map(g => ({
-                    Title: g.Title,
-                    Url: g.Url,
-                    Asset: g.Asset,
-                    Category: g.Category,
-                    Description: g.Description || '',
-                    Instructions: g.Instructions || '',
-                    Source: 'GameDistribution'
-                }))
-                .filter(g => !existingUrls.has(g.Url));
-
-            if (page === 1) {
-                uniqueNewGames = shuffleArray(uniqueNewGames);
-            }
         }
         
         if (uniqueNewGames.length > 0) {
