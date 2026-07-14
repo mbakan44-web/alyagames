@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" id="meta-description" content="AlyaGames'te ücretsiz oyun oyna.">
+    <title id="meta-title">Oyun Oyna | AlyaGames</title>
+    
+    <!-- Open Graph SEO Metadata -->
+    <meta property="og:title" id="og-title" content="Oyun Oyna | AlyaGames">
+    <meta property="og:description" id="og-description" content="AlyaGames'te ücretsiz oyun oyna.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" id="og-url" content="https://alyagames.com/play.html">
+    <meta property="og:image" id="og-image" content="">
+
+    <!-- Structured JSON-LD Data for Google Rich Snippets -->
+    <script type="application/ld+json" id="seo-schema">
+    {
+      "@context": "https://schema.org",
+      "@type": "VideoGame",
+      "name": "Oyun",
+      "url": "https://alyagames.com/play.html",
+      "description": "AlyaGames'te ücretsiz oyun oyna",
+      "playMode": "SinglePlayer",
+      "applicationCategory": "Game"
+    }
+    </script>
+
+    <script async custom-element="amp-auto-ads"
+        src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js">
+    </script>
+    
+    <!-- Google Fonts: Outfit (Header) & Plus Jakarta Sans (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .play-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+        @media (max-width: 992px) {
+            .play-container {
+                grid-template-columns: 1fr;
+            }
+        }
+        .game-area {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .iframe-wrapper {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            background: #000;
+        }
+        .iframe-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        .game-controls {
+            padding: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+        }
+        .game-title {
+            font-family: var(--font-header);
+            font-size: 1.5rem;
+            color: var(--text-primary);
+            margin: 0;
+        }
+        .fullscreen-play-btn {
+            background: var(--clr-purple);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .fullscreen-play-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+        }
+        .game-details-content {
+            padding: 1.5rem;
+        }
+        .game-details-content h2 {
+            font-size: 1.25rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+        .game-details-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        .related-games {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+        }
+        .related-games h3 {
+            font-family: var(--font-header);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            margin-top: 0;
+            color: var(--text-primary);
+        }
+        .related-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        @media (max-width: 992px) {
+            .related-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+        }
+    </style>
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7980209202674588"
+         crossorigin="anonymous"></script>
+</head>
+<body>
+    <!-- Background glow elements -->
+    <div class="glow-bg glow-bg-1"></div>
+    <div class="glow-bg glow-bg-2"></div>
+
+    <!-- Header & Navigation -->
+    <header class="main-header">
+        <div class="header-container">
+            <!-- Brand Logo -->
+            <a href="index.html" class="logo" id="logo-btn">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-accent">Alya</span>Games
+            </a>
+
+            <!-- Header Controls (Theme Only) -->
+            <div class="header-controls">
+                <button id="theme-toggle" class="header-control-btn" aria-label="Tema Değiştir" title="Tema Değiştir">
+                    <svg id="sun-icon" class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg id="moon-icon" class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Google AdSense - Top Banner Placeholder -->
+    <div class="adsense-banner-container top-ads">
+        <div class="adsense-placeholder">
+            <span>REKLAM (Google AdSense - 728x90)</span>
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7980209202674588"
+                 data-ad-slot="1234567890"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="play-container">
+            <!-- Left: Game Area -->
+            <div class="game-area">
+                <div class="game-controls">
+                    <h1 class="game-title" id="page-game-title">Oyun Yükleniyor...</h1>
+                    <button class="fullscreen-play-btn" id="play-fullscreen-btn" title="Tam Ekran Yap">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.2rem; height: 1.2rem;"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+                        Tam Ekran
+                    </button>
+                </div>
+                <div class="iframe-wrapper">
+                    <iframe id="page-game-iframe" src="" frameborder="0" allowfullscreen allow="autoplay; gamepad; fullscreen"></iframe>
+                </div>
+                <div class="game-details-content">
+                    <h2>Oyun Hakkında</h2>
+                    <p id="page-game-description">Oyun açıklaması yükleniyor...</p>
+                    <h2>Nasıl Oynanır?</h2>
+                    <p id="page-game-instructions">Talimatlar yükleniyor...</p>
+                    
+                    <!-- AdSense Article Ads -->
+                    <div style="margin-top: 2rem;">
+                        <ins class="adsbygoogle"
+                             style="display:block; text-align:center;"
+                             data-ad-layout="in-article"
+                             data-ad-format="fluid"
+                             data-ad-client="ca-pub-7980209202674588"
+                             data-ad-slot="0987654321"></ins>
+                        <script>
+                             (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right: Related Games -->
+            <aside class="related-games">
+                <h3>Benzer Oyunlar</h3>
+                <div class="related-grid" id="related-games-grid">
+                    <!-- Dynamic related games -->
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-accent">Alya</span>Games
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Anasayfa</a>
+                <a href="blog.html">Blog & Makaleler</a>
+                <a href="about.html">Hakkımızda</a>
+                <a href="privacy.html">Gizlilik Politikası</a>
+                <a href="terms.html">Kullanım Koşulları</a>
+                <a href="contact.html">İletişim</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 AlyaGames. Tüm Hakları Saklıdır. GameDistribution API ile güçlendirilmiştir.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        // Specific logic for play.html
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const gameSlug = urlParams.get('game');
+            
+            if (gameSlug) {
+                // Let script.js handle the fetch when it initializes
+                // or we can call a function explicitly
+            } else {
+                window.location.href = 'index.html';
+            }
+
+            const playFullscreenBtn = document.getElementById('play-fullscreen-btn');
+            if (playFullscreenBtn) {
+                playFullscreenBtn.addEventListener('click', () => {
+                    const iframe = document.getElementById('page-game-iframe');
+                    if (iframe.requestFullscreen) {
+                        iframe.requestFullscreen();
+                    } else if (iframe.webkitRequestFullscreen) {
+                        iframe.webkitRequestFullscreen();
+                    } else if (iframe.msRequestFullscreen) {
+                        iframe.msRequestFullscreen();
+                    }
+                });
+            }
+        });
+    </script>
+    <amp-auto-ads type="adsense"
+        data-ad-client="ca-pub-7980209202674588">
+    </amp-auto-ads>
+</body>
+</html>

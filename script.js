@@ -1384,69 +1384,68 @@ function renderGameGrid(games) {
     });
 }
 
-// Open modal and load game iframe
+// Open game in play.html
 function openGame(game, updateHash = true) {
-    if (updateHash) {
-        window.location.hash = `#/oyun/${slugify(game.Title)}`;
-        return; // handleRouteChange will be triggered and open it with updateHash = false
-    }
-
-    // Play retro chord sweep on modal popup
     RetroAudio.playModal();
-
-    // Show iframe spinner loader
-    iframeLoader.style.display = 'flex';
-    iframeLoader.style.opacity = '1';
-
-    // Populate game metadata details
-    modalGameTitle.textContent = game.Title;
-    modalGameDescription.textContent = game.Description || "Bu oyun hakkında detaylı bir açıklama bulunmuyor.";
-    modalGameInstructions.textContent = game.Instructions || "Oyunu yönlendirmek için ekrandaki butonları, fareyi veya yön tuşlarını (WASD) kullanabilirsiniz.";
-
-    // Update game SEO tags
-    updateSEOTags('game', game.Title);
-
-    // Reset tabs back to "Description" (Açıklama)
-    tabButtons.forEach(btn => btn.classList.remove('active'));
-    tabContents.forEach(content => content.classList.remove('active'));
-    document.querySelector('[data-tab="description"]').classList.add('active');
-    document.getElementById('tab-description').classList.add('active');
-
-    // Trigger opening the modal
-    gameModal.classList.add('active');
-    document.body.style.overflow = 'hidden';
-
-    // Set game URL to start loading inside the iframe
-    gameIframe.src = game.Url;
+    window.location.href = `play.html?game=${encodeURIComponent(slugify(game.Title))}`;
 }
 
-// Close game modal and reset state
+// Close game modal and reset state (kept for backward compatibility if needed)
 function closeModal(updateHash = true) {
-    gameModal.classList.remove('active');
+    if(gameModal) gameModal.classList.remove('active');
     document.body.style.overflow = '';
+    if(gameIframe) gameIframe.src = '';
     
-    // Stop the game audio/play by emptying iframe source
-    gameIframe.src = '';
-    
-    // Reset fullscreen mode if active
     if (document.body.classList.contains('fullscreen-active')) {
         document.body.classList.remove('fullscreen-active');
     }
+}
 
-    if (updateHash) {
-        // Restore hash back to active category
-        const map = {
-            'all': '',
-            'action': 'aksiyon',
-            'war': 'savas',
-            'racing': 'yaris',
-            'skill': 'beceri',
-            'adventure': 'macera',
-            'girls': 'kiz',
-            'multiplayer': 'iki-kisilik',
-            'dynamic': `kategori/${dynamicCategoryName}`
-        };
-        window.location.hash = map[activeCategory] ? `#/${map[activeCategory]}` : '#/';
+// Specific logic for play.html to load a game
+async function loadSpecificGame(gameSlug) {
+    // If games data is not loaded yet, fetch it
+    if (gamesData.length === 0) {
+        await fetchGamesList(1, 'All');
+    }
+
+    const game = gamesData.find(g => slugify(g.Title) === gameSlug || g.Md5 === gameSlug);
+    
+    if (game) {
+        document.getElementById('page-game-title').textContent = game.Title;
+        document.getElementById('page-game-description').textContent = game.Description || "Bu oyun hakkında detaylı bir açıklama bulunmuyor.";
+        document.getElementById('page-game-instructions').textContent = game.Instructions || "Oyunu yönlendirmek için ekrandaki butonları, fareyi veya yön tuşlarını (WASD) kullanabilirsiniz.";
+        document.getElementById('page-game-iframe').src = game.Url;
+
+        // Set page title for SEO
+        document.title = `${game.Title} Oyunu - Şimdi Ücretsiz Oyna | AlyaGames`;
+        document.getElementById('meta-title').textContent = `${game.Title} Oyunu - Şimdi Ücretsiz Oyna | AlyaGames`;
+        const metaDesc = document.getElementById('meta-description');
+        if (metaDesc) metaDesc.setAttribute('content', `${game.Title} oyununu AlyaGames ile tarayıcınızda online ve ücretsiz oynayın.`);
+
+        // Render some related games
+        const relatedGrid = document.getElementById('related-games-grid');
+        if (relatedGrid) {
+            let relatedGames = gamesData.filter(g => g.Title !== game.Title);
+            // Optionally filter by same category
+            if (game.Category && game.Category.length > 0) {
+                const primaryCat = game.Category[0];
+                const catGames = relatedGames.filter(g => g.Category && g.Category.includes(primaryCat));
+                if (catGames.length >= 4) {
+                    relatedGames = catGames;
+                }
+            }
+            // Shuffle and pick 6
+            relatedGames = shuffleArray(relatedGames).slice(0, 6);
+            
+            relatedGrid.innerHTML = '';
+            relatedGames.forEach((relGame, idx) => {
+                const card = createGameCardElement(relGame, idx);
+                relatedGrid.appendChild(card);
+            });
+        }
+    } else {
+        // Fallback if game not found
+        window.location.href = 'index.html';
     }
 }
 

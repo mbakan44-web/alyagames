@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="AlyaGames Blog ve Makaleler. En popüler HTML5 oyunları, tarayıcı oyunlarının faydaları ve oyun dünyasından haberler.">
+    <title>Blog ve Makaleler | AlyaGames</title>
+    
+    <meta property="og:title" content="Blog ve Makaleler | AlyaGames">
+    <meta property="og:description" content="En popüler HTML5 oyunları, tarayıcı oyunlarının faydaları ve oyun dünyasından son haberler.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://alyagames.com/blog.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .blog-container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        .blog-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+        .blog-header h1 {
+            font-size: 2.5rem;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            font-family: var(--font-header);
+        }
+        .blog-header p {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+        }
+        .article-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+        }
+        .article-card h2 {
+            font-family: var(--font-header);
+            color: var(--clr-purple);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+        .article-meta {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            gap: 1rem;
+        }
+        .article-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            font-size: 1.05rem;
+        }
+        .article-content h3 {
+            color: var(--text-primary);
+            margin: 2rem 0 1rem 0;
+            font-family: var(--font-header);
+        }
+        .article-content ul {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7980209202674588"
+         crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="glow-bg glow-bg-1"></div>
+    <div class="glow-bg glow-bg-2"></div>
+
+    <header class="main-header">
+        <div class="header-container">
+            <a href="index.html" class="logo" id="logo-btn">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-accent">Alya</span>Games
+            </a>
+            <div class="header-controls">
+                <button id="theme-toggle" class="header-control-btn" aria-label="Tema Değiştir">
+                    <svg id="sun-icon" class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                    <svg id="moon-icon" class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="display: none;">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Top Ad -->
+    <div class="adsense-banner-container top-ads">
+        <div class="adsense-placeholder">
+            <ins class="adsbygoogle"
+                 style="display:block"
+                 data-ad-client="ca-pub-7980209202674588"
+                 data-ad-slot="1111111111"
+                 data-ad-format="auto"
+                 data-full-width-responsive="true"></ins>
+            <script>
+                 (adsbygoogle = window.adsbygoogle || []).push({});
+            </script>
+        </div>
+    </div>
+
+    <main class="main-content">
+        <div class="blog-container">
+            <div class="blog-header">
+                <h1>AlyaGames Blog</h1>
+                <p>Oyun dünyası hakkında güncel makaleler, ipuçları ve incelemeler.</p>
+            </div>
+
+            <!-- Article 1 -->
+            <article class="article-card">
+                <h2>HTML5 Oyunlar Neden Bu Kadar Popüler Oldu?</h2>
+                <div class="article-meta">
+                    <span>Yazar: AlyaGames Editör</span>
+                    <span>Tarih: 14 Temmuz 2026</span>
+                    <span>Kategori: Teknoloji & Oyun</span>
+                </div>
+                <div class="article-content">
+                    <p>Günümüzde oyun oynamak için devasa dosyalar indirmek, uzun kurulum süreleri beklemek veya yüksek donanımlı bilgisayarlara sahip olmak gerekmiyor. HTML5 teknolojisinin web tarayıcılarına entegre olmasıyla birlikte, oyun dünyasında büyük bir devrim yaşandı. Peki, tarayıcı tabanlı HTML5 oyunlar neden bu kadar popüler?</p>
+                    
+                    <h3>İndirme ve Kurulum Derdi Yok</h3>
+                    <p>Önceden bir oyun oynamak istediğinizde saatlerce dosya inmesini beklerdik. Flash oyunlar dönemi de bittiğine göre, günümüzün yıldızı HTML5. Herhangi bir ekstra eklentiye, Flash Player'a veya uygulama mağazasından indirmeye gerek kalmadan oyunlar saniyeler içinde tarayıcı üzerinden açılır. Bu da oyunculara muazzam bir pratiklik sağlar.</p>
+
+                    <h3>Cihazlar Arası Kusursuz Uyumluluk (Cross-Platform)</h3>
+                    <p>HTML5 oyunları sadece bilgisayarlarda (Windows, Mac, Linux) değil; aynı zamanda akıllı telefonlarda (iOS, Android) ve tabletlerde de sorunsuz çalışır. Kodlama mimarisi gereği Responsive (duyarlı) bir yapıya sahip olan bu oyunlar, telefonunuzun küçük ekranına da bilgisayarınızın geniş monitörüne de anında uyum sağlar. Siz sadece "Oyna" tuşuna basarsınız.</p>
+
+                    <h3>Güvenlik ve Performans</h3>
+                    <p>Uygulama indirirken her zaman virüs veya kötü amaçlı yazılım (malware) bulaşma riski vardır. Ancak HTML5 oyunları tarayıcının güvenli sanal alanında (sandbox) çalışır, cihazınıza dosya kopyalamaz veya sistem dosyalarına erişmez. Ayrıca WebGL desteği sayesinde, tarayıcı üzerinden 3 boyutlu (3D) ve yüksek grafikli oyunlar bile akıcı bir şekilde 60 FPS değerlerinde oynanabilmektedir.</p>
+                    
+                    <p>AlyaGames olarak biz de sizlere bu avantajları sunmak için en iyi HTML5 oyunları derliyor, tamamen ücretsiz ve anında erişilebilir şekilde platformumuzda yayınlıyoruz. Tek yapmanız gereken bir oyun seçip eğlenceye dahil olmak!</p>
+                </div>
+            </article>
+
+            <!-- In-Article Ad -->
+            <div style="margin-bottom: 2rem;">
+                <ins class="adsbygoogle"
+                     style="display:block; text-align:center;"
+                     data-ad-layout="in-article"
+                     data-ad-format="fluid"
+                     data-ad-client="ca-pub-7980209202674588"
+                     data-ad-slot="2222222222"></ins>
+                <script>
+                     (adsbygoogle = window.adsbygoogle || []).push({});
+                </script>
+            </div>
+
+            <!-- Article 2 -->
+            <article class="article-card">
+                <h2>Oyun Oynamanın Zihinsel Gelişime Faydaları</h2>
+                <div class="article-meta">
+                    <span>Yazar: AlyaGames Psikoloji ve Oyun Ekibi</span>
+                    <span>Tarih: 10 Temmuz 2026</span>
+                    <span>Kategori: Gelişim & Sağlık</span>
+                </div>
+                <div class="article-content">
+                    <p>Video oyunlarının yalnızca boş zaman öldürmek için oynandığı algısı çok gerilerde kaldı. Özellikle bulmaca (puzzle), strateji ve zeka kategorisindeki oyunların zihinsel gelişime, odaklanmaya ve problem çözme becerilerine doğrudan olumlu katkıları olduğu bilimsel olarak kanıtlanmıştır.</p>
+                    
+                    <h3>Problem Çözme ve Analitik Düşünme</h3>
+                    <p>Sitemizde yer alan zeka ve beceri oyunlarında, kullanıcılar genellikle kısıtlı bir süre içinde engelleri aşmak veya bir bulmacayı çözmek zorundadır. Bu tür oyunlar beynin analitik düşünme merkezini çalıştırır. Hızlı karar verme, ihtimalleri değerlendirme ve strateji kurma becerileri oyun oynadıkça güçlenir.</p>
+                    
+                    <h3>El-Göz Koordinasyonu ve Refleksler</h3>
+                    <p>Aksiyon, yarış ve macera oyunları, refleksleri inanılmaz derecede hızlandırır. Ekranda aniden beliren bir engele karşı klavyede doğru tuşa basmak veya fareyi anında hareket ettirmek, el-göz koordinasyonunu artırır. Araştırmalar, düzenli olarak aksiyon oyunu oynayan kişilerin günlük hayatta da görsel ipuçlarına daha hızlı tepki verdiğini göstermektedir.</p>
+                    
+                    <h3>Stres Atma ve Psikolojik Rahatlama</h3>
+                    <p>Günlük hayatın koşuşturmacası içinde hepimiz yoruluyoruz. İş molalarında veya okuldan sonra oynayacağınız 15-20 dakikalık eğlenceli bir HTML5 oyunu, zihninizin dağılmasına, stres hormonu olan kortizolün düşmesine ve keyif almanıza yardımcı olur. Kendinize ayırdığınız bu kısa eğlence anları, odaklanma sürenizi yeniler.</p>
+
+                    <p>Sonuç olarak, bilinçli ve ölçülü bir şekilde oynanan oyunlar, hem eğlence sağlar hem de beyni aktif tutar. AlyaGames'teki geniş oyun yelpazemizden kendinize en uygun kategoriyi seçerek bu deneyimi hemen yaşamaya başlayabilirsiniz.</p>
+                </div>
+            </article>
+
+        </div>
+    </main>
+
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-accent">Alya</span>Games
+            </div>
+            <div class="footer-links">
+                <a href="index.html">Anasayfa</a>
+                <a href="blog.html">Blog & Makaleler</a>
+                <a href="about.html">Hakkımızda</a>
+                <a href="privacy.html">Gizlilik Politikası</a>
+                <a href="terms.html">Kullanım Koşulları</a>
+                <a href="contact.html">İletişim</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 AlyaGames. Tüm Hakları Saklıdır. GameDistribution API ile güçlendirilmiştir.</p>
+        </div>
+    </footer>
+    <script>
+        const ThemeManager = {
+            init() {
+                const savedTheme = localStorage.getItem('theme') || 'light';
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                }
+                this.updateIcons();
+                
+                const btn = document.getElementById('theme-toggle');
+                if (btn) {
+                    btn.addEventListener('click', () => {
+                        document.body.classList.toggle('dark-mode');
+                        const isDark = document.body.classList.contains('dark-mode');
+                        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+                        this.updateIcons();
+                    });
+                }
+            },
+            updateIcons() {
+                const isDark = document.body.classList.contains('dark-mode');
+                const sunIcon = document.getElementById('sun-icon');
+                const moonIcon = document.getElementById('moon-icon');
+                if (sunIcon && moonIcon) {
+                    if (isDark) {
+                        sunIcon.style.display = 'none';
+                        moonIcon.style.display = 'block';
+                    } else {
+                        sunIcon.style.display = 'block';
+                        moonIcon.style.display = 'none';
+                    }
+                }
+            }
+        };
+        window.addEventListener('DOMContentLoaded', () => {
+            ThemeManager.init();
+        });
+    </script>
+</body>
+</html>
