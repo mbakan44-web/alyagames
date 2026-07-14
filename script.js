@@ -975,12 +975,12 @@ function shuffleArray(array) {
 // Fetch games list (Concurrently fetches GameDistribution and GamePix on page 1)
 async function fetchGamesList(page, apiCategory = 'All') {
     isLoadingMore = true;
-    loadMoreBtn.textContent = 'Yükleniyor...';
+    if (loadMoreBtn) loadMoreBtn.textContent = 'Yükleniyor...';
     
     if (page === 1) {
-        mainLoader.style.display = 'flex';
-        gamesContainer.style.display = 'none';
-        homepageSections.style.display = 'none';
+        if (mainLoader) mainLoader.style.display = 'flex';
+        if (gamesContainer) gamesContainer.style.display = 'none';
+        if (homepageSections) homepageSections.style.display = 'none';
     }
 
     try {
@@ -1095,8 +1095,8 @@ async function fetchGamesList(page, apiCategory = 'All') {
         }
     } finally {
         isLoadingMore = false;
-        loadMoreBtn.innerHTML = `Daha Fazla Oyun Yükle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
-        mainLoader.style.display = 'none';
+        if (loadMoreBtn) loadMoreBtn.innerHTML = `Daha Fazla Oyun Yükle <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polyline points="6 9 12 15 18 9"></polyline></svg>`;
+        if (mainLoader) mainLoader.style.display = 'none';
         applyFilters();
     }
 }
