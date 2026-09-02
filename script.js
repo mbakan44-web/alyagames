@@ -454,8 +454,98 @@ const SEO_CONFIG = {
         title: "İki Kişilik Oyunlar - Arkadaşınla Birlikte Oyna | AlyaGames",
         description: "Aynı ekranda veya online olarak arkadaşınızla oynayabileceğiniz en popüler 2 kişilik oyunları keşfedin.",
         keywords: "iki kişilik oyunlar, 2 kişilik oyunlar, multiplayer oyunlar, pvp oyunlar"
+    },
+    unblocked: {
+        title: "Okul Oyunları (Engelsiz) - Unblocked Games | AlyaGames",
+        description: "Okulda veya iş yerinde kısıtlama olmadan açılan en popüler engelsiz HTML5 oyunlarını ücretsiz oyna.",
+        keywords: "okul oyunları, engelsiz oyunlar, unblocked games, okulda açılan oyunlar"
+    },
+    favorites: {
+        title: "Favori Oyunlarım | AlyaGames",
+        description: "AlyaGames üzerinde favorilerinize eklediğiniz en popüler oyunların listesi.",
+        keywords: "favori oyunlar, favorilerim, kaydedilen oyunlar"
     }
 };
+
+// Gamification Badges Manager
+const BadgesManager = {
+    badges: [
+        { id: 'first_game', icon: '🎮', name: 'İlk Macera', desc: 'İlk oyununu oynadın' },
+        { id: 'five_games', icon: '🔥', name: 'Oyun Canavarı', desc: '5 farklı oyun oynadın' },
+        { id: 'ten_games', icon: '👑', name: 'Efsane Oyuncu', desc: '10 oyun deneyimledin' },
+        { id: 'first_fav', icon: '⭐', name: 'Koleksiyoncu', desc: 'İlk favori oyununu ekledin' },
+        { id: 'night_owl', icon: '🌙', name: 'Gece Kuşu', desc: 'Karanlık modda oyun oynadın' },
+        { id: 'unblocked', icon: '🎯', name: 'Okul Şampiyonu', desc: 'Okul oyunları kategorisini keşfettin' }
+    ],
+    getUnlocked() {
+        try {
+            return JSON.parse(localStorage.getItem('alyagames_badges') || '[]');
+        } catch (e) {
+            return [];
+        }
+    },
+    unlock(id) {
+        const unlocked = this.getUnlocked();
+        if (!unlocked.includes(id)) {
+            unlocked.push(id);
+            localStorage.setItem('alyagames_badges', JSON.stringify(unlocked));
+            const badge = this.badges.find(b => b.id === id);
+            if (badge) {
+                this.showToast(badge);
+            }
+        }
+    },
+    showToast(badge) {
+        const toast = document.getElementById('achievement-toast');
+        if (!toast) return;
+        const iconEl = document.getElementById('toast-icon');
+        const titleEl = document.getElementById('toast-title');
+        const descEl = document.getElementById('toast-desc');
+        if (iconEl) iconEl.textContent = badge.icon;
+        if (titleEl) titleEl.textContent = `Rozet: ${badge.name}!`;
+        if (descEl) descEl.textContent = badge.desc;
+        toast.classList.add('show');
+        RetroAudio.playModal();
+        setTimeout(() => toast.classList.remove('show'), 4000);
+    },
+    renderModal() {
+        const container = document.getElementById('user-badges-grid');
+        if (!container) return;
+        const unlocked = this.getUnlocked();
+        container.innerHTML = this.badges.map(b => {
+            const isUnlocked = unlocked.includes(b.id);
+            return `
+                <div class="badge-item ${isUnlocked ? 'unlocked' : 'locked'}">
+                    <span class="badge-icon">${b.icon}</span>
+                    <div class="badge-name">${b.name}</div>
+                    <div class="badge-desc">${isUnlocked ? '✅ Kazanıldı' : b.desc}</div>
+                </div>
+            `;
+        }).join('');
+    }
+};
+
+// PWA Installer Listener
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    deferredPrompt = e;
+    const pwaBtn = document.getElementById('pwa-install-btn');
+    if (pwaBtn) {
+        pwaBtn.style.display = 'inline-flex';
+        pwaBtn.addEventListener('click', async () => {
+            RetroAudio.playClick();
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    pwaBtn.style.display = 'none';
+                }
+                deferredPrompt = null;
+            }
+        });
+    }
+});
 
 // Initialize portal content
 window.addEventListener('DOMContentLoaded', () => {
@@ -548,7 +638,9 @@ function handleRouteChange() {
             'beceri': 'skill',
             'macera': 'adventure',
             'kiz': 'girls',
-            'iki-kisilik': 'multiplayer'
+            'iki-kisilik': 'multiplayer',
+            'okul-oyunlari': 'unblocked',
+            'favoriler': 'favorites'
         };
         routeCategory = map[path] || 'all';
     }
@@ -675,6 +767,8 @@ function setupEventListeners() {
             const cat = button.getAttribute('data-category');
             const map = {
                 'all': '',
+                'unblocked': 'okul-oyunlari',
+                'favorites': 'favoriler',
                 'action': 'aksiyon',
                 'war': 'savas',
                 'racing': 'yaris',
@@ -687,6 +781,37 @@ function setupEventListeners() {
         });
         button.addEventListener('mouseenter', () => RetroAudio.playHover());
     });
+
+    // Badges Modal open/close
+    const badgesBtn = document.getElementById('badges-btn');
+    const badgesModal = document.getElementById('badges-modal');
+    const closeBadgesModalBtn = document.getElementById('close-badges-modal-btn');
+    if (badgesBtn && badgesModal) {
+        badgesBtn.addEventListener('click', () => {
+            RetroAudio.playModal();
+            BadgesManager.renderModal();
+            badgesModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        badgesBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
+    }
+    if (closeBadgesModalBtn && badgesModal) {
+        closeBadgesModalBtn.addEventListener('click', () => {
+            RetroAudio.playClick();
+            badgesModal.classList.remove('active');
+            document.body.style.overflow = '';
+        });
+        closeBadgesModalBtn.addEventListener('mouseenter', () => RetroAudio.playHover());
+    }
+    if (badgesModal) {
+        badgesModal.addEventListener('click', (e) => {
+            if (e.target === badgesModal) {
+                RetroAudio.playClick();
+                badgesModal.classList.remove('active');
+                document.body.style.overflow = '';
+            }
+        });
+    }
 
     // Logo click returns to all category and resets search
     logoBtn.addEventListener('click', (e) => {
@@ -1081,6 +1206,7 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
         imageSrc = preferred || game.Asset[0];
     }
     const primaryCat = game.Category && game.Category.length > 0 ? game.Category[0] : 'Oyun';
+    const gameSlug = slugify(game.Title);
 
     // Map categories to category type for neon glow coloring
     const categoryName = primaryCat.toLowerCase();
@@ -1093,6 +1219,13 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
         'multiplayer': 'multiplayer'
     };
     const categoryType = catMap[categoryName] || 'all';
+
+    // Check favorite status
+    let isFav = false;
+    try {
+        const favs = JSON.parse(localStorage.getItem('alyagames_favorites') || '[]');
+        isFav = favs.some(f => f.slug === gameSlug);
+    } catch (e) {}
 
     const card = document.createElement('div');
     card.className = `game-card fade-in-stagger${isFeatured ? ' featured' : ''}`;
@@ -1108,6 +1241,9 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
 
     card.innerHTML = `
         ${badgeHTML}
+        <button class="card-fav-btn ${isFav ? 'active' : ''}" title="Favorilere Ekle" data-slug="${gameSlug}">
+            ${isFav ? '❤️' : '🤍'}
+        </button>
         <div class="game-card-img-wrapper">
             <img src="${imageSrc}" alt="${game.Title}" class="game-card-img" loading="lazy">
         </div>
@@ -1120,6 +1256,37 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
             </button>
         </div>
     `;
+
+    // Heart button click handler (prevents card click)
+    const heartBtn = card.querySelector('.card-fav-btn');
+    if (heartBtn) {
+        heartBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            RetroAudio.playClick();
+            try {
+                let favs = JSON.parse(localStorage.getItem('alyagames_favorites') || '[]');
+                const favIndex = favs.findIndex(f => f.slug === gameSlug);
+                if (favIndex > -1) {
+                    favs.splice(favIndex, 1);
+                    heartBtn.classList.remove('active');
+                    heartBtn.textContent = '🤍';
+                } else {
+                    favs.push({
+                        Title: game.Title,
+                        slug: gameSlug,
+                        Asset: game.Asset,
+                        Category: game.Category,
+                        Url: game.Url,
+                        Description: game.Description
+                    });
+                    heartBtn.classList.add('active');
+                    heartBtn.textContent = '❤️';
+                    BadgesManager.unlock('first_fav');
+                }
+                localStorage.setItem('alyagames_favorites', JSON.stringify(favs));
+            } catch (err) {}
+        });
+    }
 
     // Mouse-tracking glow position calculations
     card.addEventListener('mousemove', (e) => {
@@ -1144,6 +1311,42 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
 function distributeGamesToSections(games) {
     // Populate the top hero slider showcase
     CarouselManager.init(games);
+
+    // Populate Recently Played if any
+    try {
+        const recent = JSON.parse(localStorage.getItem('alyagames_recent') || '[]');
+        const recentSection = document.getElementById('recently-played-section');
+        const recentGrid = document.getElementById('recently-played-grid');
+        if (recent.length > 0 && recentSection && recentGrid) {
+            recentSection.style.display = 'block';
+            recentGrid.innerHTML = '';
+            const recentGames = recent.map(r => {
+                const found = games.find(g => slugify(g.Title) === r.slug);
+                return found || { Title: r.title, Asset: [r.img], Category: [r.cat || 'Oyun'], Url: '' };
+            });
+            recentGames.slice(0, 6).forEach((g, idx) => {
+                recentGrid.appendChild(createGameCardElement(g, idx));
+            });
+        } else if (recentSection) {
+            recentSection.style.display = 'none';
+        }
+    } catch (e) {}
+
+    // Populate Favorites if any
+    try {
+        const favs = JSON.parse(localStorage.getItem('alyagames_favorites') || '[]');
+        const favSection = document.getElementById('favorites-section');
+        const favGrid = document.getElementById('favorites-grid');
+        if (favs.length > 0 && favSection && favGrid) {
+            favSection.style.display = 'block';
+            favGrid.innerHTML = '';
+            favs.slice(0, 6).forEach((g, idx) => {
+                favGrid.appendChild(createGameCardElement(g, idx));
+            });
+        } else if (favSection) {
+            favSection.style.display = 'none';
+        }
+    } catch (e) {}
 
     // 1. Editors' Choice: first 6 games
     const editorsChoice = games.slice(0, 6);
@@ -1290,6 +1493,15 @@ function applyFilters() {
             }
             
             switch (activeCategory) {
+                case 'unblocked':
+                    return categories.includes('racing') || categories.includes('skill') || categories.includes('action') || categories.includes('puzzle') || categories.includes('arcade') || tags.includes('unblocked') || tags.includes('car');
+                case 'favorites':
+                    try {
+                        const favs = JSON.parse(localStorage.getItem('alyagames_favorites') || '[]');
+                        return favs.some(f => f.slug === slugify(game.Title));
+                    } catch (e) {
+                        return false;
+                    }
                 case 'action':
                     return categories.includes('action') || categories.includes('shooter') || categories.includes('shooting') || categories.includes('fighting') || tags.includes('zombie');
                 case 'war':
@@ -1333,7 +1545,7 @@ function applyFilters() {
             
             // Hide load more if searching or if no games returned
             if (loadMoreContainer) {
-                if (searchQuery || filtered.length === 0 || activeCategory === 'dynamic') {
+                if (searchQuery || filtered.length === 0 || activeCategory === 'dynamic' || activeCategory === 'favorites') {
                     loadMoreContainer.style.display = 'none';
                 } else {
                     loadMoreContainer.style.display = 'block';
@@ -1362,10 +1574,41 @@ function renderGameGrid(games) {
     });
 }
 
-// Open game in play.html
+// Open game in Static SEO Landing Page
 function openGame(game, updateHash = true) {
     RetroAudio.playModal();
-    window.location.href = `play.html?game=${encodeURIComponent(slugify(game.Title))}`;
+    const gameSlug = slugify(game.Title);
+    
+    // Save to recently played and check badges
+    try {
+        const recent = JSON.parse(localStorage.getItem('alyagames_recent') || '[]');
+        let img = 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500';
+        if (game.Asset && game.Asset.length > 0) {
+            img = game.Asset[0];
+        }
+        const currentGame = { 
+            slug: gameSlug, 
+            title: game.Title, 
+            img: img, 
+            cat: (game.Category && game.Category.length > 0) ? game.Category[0] : 'Oyun' 
+        };
+        const filtered = recent.filter(g => g.slug !== gameSlug);
+        filtered.unshift(currentGame);
+        localStorage.setItem('alyagames_recent', JSON.stringify(filtered.slice(0, 12)));
+        
+        // Track games played count for badges
+        const playCount = (parseInt(localStorage.getItem('alyagames_play_count') || '0', 10)) + 1;
+        localStorage.setItem('alyagames_play_count', playCount.toString());
+        
+        BadgesManager.unlock('first_game');
+        if (playCount >= 5) BadgesManager.unlock('five_games');
+        if (playCount >= 10) BadgesManager.unlock('ten_games');
+        if (document.body.classList.contains('dark-mode')) BadgesManager.unlock('night_owl');
+        if (activeCategory === 'unblocked') BadgesManager.unlock('unblocked');
+    } catch (e) {}
+
+    // Navigate to Static SEO page
+    window.location.href = `/oyun/${encodeURIComponent(gameSlug)}/`;
 }
 
 // Close game modal and reset state (kept for backward compatibility if needed)

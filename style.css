@@ -2084,4 +2084,143 @@ body.dark-mode .compliance-card h1 {
     }
 }
 
+/* ==========================================================
+   PWA, Gamification Badges, Favorites & Engagement Styles
+   ========================================================== */
+
+/* PWA Install Button */
+.pwa-btn {
+    background: linear-gradient(135deg, #6366f1, #8b5cf6) !important;
+    color: #ffffff !important;
+    font-weight: 700 !important;
+    border: none !important;
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4) !important;
+    animation: pulseGlow 2.5s infinite;
+}
+
+@keyframes pulseGlow {
+    0%, 100% { box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4); transform: scale(1); }
+    50% { box-shadow: 0 6px 18px rgba(99, 102, 241, 0.7); transform: scale(1.03); }
+}
+
+/* Gamification Toast Notification */
+.achievement-toast {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: var(--bg-card);
+    border: 2px solid var(--clr-yellow);
+    border-radius: var(--radius-md);
+    padding: 1rem 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+    z-index: 9999;
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.achievement-toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.achievement-icon {
+    font-size: 2rem;
+    background: rgba(251, 191, 36, 0.15);
+    padding: 0.5rem;
+    border-radius: var(--radius-sm);
+}
+
+.achievement-info h4 {
+    margin: 0;
+    font-size: 0.95rem;
+    color: var(--clr-yellow);
+    font-family: var(--font-heading);
+}
+
+.achievement-info p {
+    margin: 0.2rem 0 0 0;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+/* Favorite Heart Button on Cards */
+.card-fav-btn {
+    position: absolute;
+    top: 0.6rem;
+    left: 0.6rem;
+    background: rgba(15, 23, 42, 0.75);
+    backdrop-filter: blur(4px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 50%;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+    cursor: pointer;
+    z-index: 5;
+    transition: all 0.2s ease;
+}
+
+.card-fav-btn:hover {
+    transform: scale(1.15);
+    background: rgba(239, 68, 68, 0.9);
+}
+
+.card-fav-btn.active {
+    background: #ef4444;
+    border-color: #ef4444;
+}
+
+/* Badges Modal */
+.badges-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.badge-item {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    padding: 1rem;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.badge-item.unlocked {
+    border-color: var(--clr-yellow);
+    background: rgba(251, 191, 36, 0.08);
+}
+
+.badge-item.locked {
+    opacity: 0.45;
+    filter: grayscale(1);
+}
+
+.badge-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+    display: block;
+}
+
+.badge-name {
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+}
+
+.badge-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 0.25rem;
+}
+
+
 

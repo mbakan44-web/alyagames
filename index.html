@@ -13,6 +13,11 @@
     <meta property="og:url" id="og-url" content="https://alyagames.com">
     <meta property="og:image" content="https://img.gamedistribution.com/24c4d87d116e4521aaeecd12b413c56f-512x384.jpg">
 
+    <!-- PWA Web App Support -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="apple-touch-icon" href="https://img.gamedistribution.com/24c4d87d116e4521aaeecd12b413c56f-512x384.jpg">
+
     <!-- Structured JSON-LD Data for Google Rich Snippets -->
     <script type="application/ld+json" id="seo-schema">
     {
@@ -74,8 +79,14 @@
                 <button id="clear-search" class="clear-search-btn" aria-label="Aramayı temizle">&times;</button>
             </div>
 
-            <!-- Header Controls (Theme & Sound) -->
+            <!-- Header Controls (Theme & Sound & PWA & Badges) -->
             <div class="header-controls">
+                <button id="pwa-install-btn" class="header-control-btn pwa-btn" style="display: none;" title="AlyaGames'i Telefona / PC'ye Yükle">
+                    📱 Yükle
+                </button>
+                <button id="badges-btn" class="header-control-btn" aria-label="Rozetlerim" title="Kazanılan Rozetler">
+                    🏆
+                </button>
                 <button id="sound-toggle" class="header-control-btn" aria-label="Sesi Kapat/Aç" title="Sesi Kapat/Aç">
                     <svg id="sound-on-icon" class="control-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
@@ -121,6 +132,12 @@
             <button class="category-btn active" data-category="all">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="9"></rect><rect x="14" y="3" width="7" height="5"></rect><rect x="14" y="12" width="7" height="9"></rect><rect x="3" y="16" width="7" height="5"></rect></svg>
                 Tümü
+            </button>
+            <button class="category-btn" data-category="unblocked" style="border-color: var(--clr-yellow); color: var(--clr-yellow);">
+                🎯 Okulda Oyna
+            </button>
+            <button class="category-btn" data-category="favorites" style="border-color: var(--clr-red);">
+                ⭐ Favorilerim
             </button>
             <button class="category-btn" data-category="action">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
@@ -192,6 +209,24 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Recently Played Section -->
+            <section class="home-section" id="recently-played-section" style="display: none;">
+                <div class="home-section-header">
+                    <h2 class="home-section-title">🕒 Son Oynadıklarım</h2>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.95rem;">En son oynadığınız oyunlara kaldığınız yerden anında devam edin.</p>
+                </div>
+                <div class="games-grid" id="recently-played-grid"></div>
+            </section>
+
+            <!-- Favorites Section -->
+            <section class="home-section" id="favorites-section" style="display: none;">
+                <div class="home-section-header">
+                    <h2 class="home-section-title">⭐ Favori Oyunlarım</h2>
+                    <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.95rem;">Favorilerinize eklediğiniz en sevdiğiniz oyunlar.</p>
+                </div>
+                <div class="games-grid" id="favorites-grid"></div>
+            </section>
 
             <!-- 1. Editors' Choice -->
             <section class="home-section featured-section">
@@ -578,8 +613,43 @@
         </div>
     </div>
 
+    <!-- Gamification Badges Modal -->
+    <div class="modal-overlay" id="badges-modal">
+        <div class="modal-container" style="max-width: 550px;">
+            <div class="modal-header">
+                <h2 class="modal-title">🏆 Kazanılan Rozetler</h2>
+                <button class="modal-action-btn close-btn" id="close-badges-modal-btn" title="Kapat">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                </button>
+            </div>
+            <div class="modal-body" style="padding: 1.5rem; background: var(--bg-card);">
+                <p style="color: var(--text-secondary); font-size: 0.95rem; margin-bottom: 1rem;">Oyun oynayarak ve favorilere ekleyerek yeni rozetlerin kilidini açın!</p>
+                <div class="badges-grid" id="user-badges-grid">
+                    <!-- Dynamic badges populated by JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Achievement Toast -->
+    <div class="achievement-toast" id="achievement-toast">
+        <span class="achievement-icon" id="toast-icon">🏆</span>
+        <div class="achievement-info">
+            <h4 id="toast-title">Yeni Rozet Kazanıldı!</h4>
+            <p id="toast-desc">Tebrikler, yeni bir başarım açtınız.</p>
+        </div>
+    </div>
+
     <!-- JS Logic -->
     <script src="script.js"></script>
+    <script>
+        // Register Service Worker for PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(err => console.warn('SW registration warning:', err));
+            });
+        }
+    </script>
 </body>
     <amp-auto-ads type="adsense"
         data-ad-client="ca-pub-7980209202674588">
