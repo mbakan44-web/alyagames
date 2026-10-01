@@ -98,11 +98,13 @@ def generate_game_page(game, cat_key, related_games):
     instructions = (game.get('Instructions') or "Oyunu fare, dokunmatik ekran veya klavye yön tuşları (WASD / Ok Tuşları) ile kolayca yönlendirebilirsiniz.").strip()
     image = get_best_image(game)
     url = game.get('Url', '')
-    
     cat_info = CATEGORY_MAP.get(cat_key, CATEGORY_MAP['action'])
     cat_name = cat_info['name']
     cat_slug = cat_info['slug']
     canonical_url = f"{SITE_URL}/oyun/{slug}/"
+    if 'html5.gamedistribution.com' in url and 'gd_sdk_referrer_url' not in url:
+        sep = '&' if '?' in url else '?'
+        url = f"{url.rstrip('/')}/{sep}gd_sdk_referrer_url={urllib.parse.quote(canonical_url)}"
 
     # Schema JSON-LD Data
     schema_video_game = {

@@ -493,8 +493,13 @@
             document.getElementById('dyn-game-desc').textContent = desc;
             document.getElementById('dyn-game-instr').textContent = instr;
 
-            // Load iframe
-            document.getElementById('dyn-game-frame').src = url;
+            // Load iframe with gd_sdk_referrer_url parameter for GameDistribution
+            let finalUrl = url;
+            if (finalUrl.includes('html5.gamedistribution.com') && !finalUrl.includes('gd_sdk_referrer_url')) {
+                const separator = finalUrl.includes('?') ? '&' : '?';
+                finalUrl = `${finalUrl}${separator}gd_sdk_referrer_url=${encodeURIComponent(`https://alyagames.com/oyun/${slug}/`)}`;
+            }
+            document.getElementById('dyn-game-frame').src = finalUrl;
 
             // Save to recent
             try {
