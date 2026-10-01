@@ -1,0 +1,602 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title id="page-title">AlyaGames - Ücretsiz Online Oyunlar</title>
+    <meta name="description" id="page-desc" content="AlyaGames'te en popüler ücretsiz online HTML5 oyunları indirmeden hemen oynayın!">
+    <link rel="canonical" id="page-canonical" href="https://alyagames.com/">
+
+    <!-- PWA & Theme -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="/style.css">
+
+    <style>
+        /* Fallback Game Stage & 404 Styles */
+        .dynamic-game-container {
+            max-width: 1300px;
+            margin: 1.5rem auto;
+            padding: 0 1.25rem;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 2rem;
+        }
+        @media (max-width: 1024px) {
+            .dynamic-game-container { grid-template-columns: 1fr; }
+        }
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumbs a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+        .breadcrumbs a:hover { color: var(--clr-primary); }
+        .game-stage {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+        .game-stage-header {
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .game-stage-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-primary);
+        }
+        .game-stage-actions {
+            display: flex;
+            gap: 0.75rem;
+        }
+        .stage-btn {
+            background: var(--bg-surface);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            transition: all 0.2s;
+        }
+        .stage-btn:hover {
+            background: var(--clr-primary);
+            color: white;
+            border-color: var(--clr-primary);
+        }
+        .stage-btn.active {
+            background: #ef4444;
+            color: white;
+            border-color: #ef4444;
+        }
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            background: #000;
+        }
+        .iframe-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+        .game-info-card {
+            padding: 1.5rem;
+        }
+        .game-info-card h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.3rem;
+            margin: 1.5rem 0 0.75rem 0;
+            color: var(--text-primary);
+        }
+        .game-info-card h2:first-of-type { margin-top: 0; }
+        .game-info-card p {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1rem;
+            font-size: 0.96rem;
+            white-space: pre-line;
+        }
+        .play-btn-pill {
+            display: inline-block;
+            background: var(--clr-primary);
+            color: white;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-top: 0.4rem;
+        }
+
+        /* 404 Screen Styles */
+        .notfound-wrapper {
+            max-width: 680px;
+            margin: 4rem auto;
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-card);
+        }
+        .notfound-code {
+            font-family: 'Outfit', sans-serif;
+            font-size: 5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--clr-primary), var(--clr-purple), #ec4899);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 0;
+            line-height: 1;
+        }
+        .notfound-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 1rem 0 0.5rem;
+            color: var(--text-primary);
+        }
+        .notfound-text {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+        .notfound-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: linear-gradient(135deg, var(--clr-primary), var(--clr-purple));
+            color: white;
+            padding: 0.85rem 2rem;
+            border-radius: 999px;
+            font-weight: 700;
+            font-size: 1rem;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .notfound-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+        }
+        .loader-spinner {
+            display: inline-block;
+            width: 45px;
+            height: 45px;
+            border: 4px solid rgba(99, 102, 241, 0.2);
+            border-top-color: var(--clr-primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin-bottom: 1rem;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-bg glow-bg-1"></div>
+    <div class="glow-bg glow-bg-2"></div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-accent">Alya</span>Games
+            </a>
+
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="header-search-input" placeholder="Oyun ara..." autocomplete="off">
+            </div>
+
+            <div class="header-controls">
+                <button id="sound-toggle" class="header-control-btn" aria-label="Sesi Aç/Kapat">🔊</button>
+                <button id="theme-toggle" class="header-control-btn" aria-label="Tema Değiştir">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Categories Navigation Bar -->
+    <nav class="categories-nav">
+        <div class="categories-container">
+            <a href="/" class="category-btn">Tümü</a>
+            <a href="/kategori/aksiyon/" class="category-btn">Aksiyon</a>
+            <a href="/kategori/savas/" class="category-btn">Savaş</a>
+            <a href="/kategori/yaris/" class="category-btn">Yarış</a>
+            <a href="/kategori/beceri/" class="category-btn">Beceri & Zeka</a>
+            <a href="/kategori/macera/" class="category-btn">Macera</a>
+            <a href="/kategori/kiz/" class="category-btn">Kız</a>
+            <a href="/kategori/iki-kisilik/" class="category-btn">2 Kişilik</a>
+            <a href="/kategori/okul-oyunlari/" class="category-btn">🎯 Okulda Oyna</a>
+        </div>
+    </nav>
+
+    <!-- Dynamic Game Loading View (Hidden by default) -->
+    <main id="game-view" class="dynamic-game-container" style="display: none;">
+        <div class="game-main-col">
+            <div class="breadcrumbs">
+                <a href="/">Anasayfa</a> <span>&gt;</span>
+                <a href="/" id="crumb-category">Oyunlar</a> <span>&gt;</span>
+                <span id="crumb-title">Oyun Yükleniyor...</span>
+            </div>
+
+            <div class="game-stage">
+                <div class="game-stage-header">
+                    <h1 class="game-stage-title" id="dyn-game-title">Oyun Yükleniyor...</h1>
+                    <div class="game-stage-actions">
+                        <button class="stage-btn" id="fav-btn" title="Favorilere Ekle">
+                            <span id="fav-icon">🤍</span> Favori
+                        </button>
+                        <button class="stage-btn" id="share-btn" title="Oyunu Paylaş">
+                            🔗 Paylaş
+                        </button>
+                        <button class="stage-btn" id="fullscreen-btn" title="Tam Ekran Oyna">
+                            ⛶ Tam Ekran
+                        </button>
+                    </div>
+                </div>
+
+                <div class="iframe-container" id="dyn-iframe-box">
+                    <iframe id="dyn-game-frame" src="" frameborder="0" allowfullscreen allow="autoplay; gamepad; fullscreen"></iframe>
+                </div>
+
+                <div class="game-info-card">
+                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 0.85rem 1.25rem; background: var(--bg-surface); border-radius: 8px; margin-bottom: 1.5rem; border: 1px solid var(--border-color);">
+                        <div>
+                            <strong>Oyuncu Puanı:</strong>
+                            <span style="color: #fbbf24; font-size: 1.2rem; letter-spacing: 2px;">★★★★★</span>
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary);">
+                            4.8 / 5 (Popüler Oyun)
+                        </div>
+                    </div>
+
+                    <h2>📖 Oyun Hakkında</h2>
+                    <p id="dyn-game-desc">AlyaGames ile hemen ücretsiz ve indirmeden online oyna!</p>
+
+                    <h2>🕹️ Nasıl Oynanır ve Kontroller</h2>
+                    <p id="dyn-game-instr">Oyunu fare, dokunmatik ekran veya klavye yön tuşları (WASD / Ok Tuşları) ile kolayca oynayabilirsiniz.</p>
+                </div>
+            </div>
+        </div>
+
+        <aside class="game-sidebar">
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin-bottom: 1rem; color: var(--text-primary);">🔥 Popüler Oyunlar</h3>
+            <div id="dyn-sidebar-games" style="display: flex; flex-direction: column; gap: 1rem;">
+                <!-- Populated by script -->
+            </div>
+        </aside>
+    </main>
+
+    <!-- Loading Screen for Games -->
+    <div id="loading-view" class="notfound-wrapper" style="display: none;">
+        <div class="loader-spinner"></div>
+        <h2 class="notfound-title" id="loading-status-text">Oyun Hazırlanıyor...</h2>
+        <p class="notfound-text">Lütfen bekleyin, oyun başlatılıyor.</p>
+    </div>
+
+    <!-- Generic 404 View (Default if not an /oyun/ route) -->
+    <main id="notfound-view" class="notfound-wrapper">
+        <h1 class="notfound-code">404</h1>
+        <h2 class="notfound-title">Aradığınız Sayfa Bulunamadı!</h2>
+        <p class="notfound-text">
+            Gitmek istediğiniz sayfa taşınmış, silinmiş veya adı değişmiş olabilir.
+            AlyaGames ana sayfasındaki yüzlerce harika oyunu hemen oynamaya başlayabilirsiniz!
+        </p>
+        <a href="/" class="notfound-btn">
+            <span>🎮</span> Ana Sayfaya Dön
+        </a>
+    </main>
+
+    <!-- Footer -->
+    <footer class="main-footer" style="margin-top: 4rem;">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-accent">Alya</span>Games
+            </div>
+            <div class="footer-links">
+                <a href="/">Anasayfa</a>
+                <a href="/blog.html">Blog & Makaleler</a>
+                <a href="/about.html">Hakkımızda</a>
+                <a href="/privacy.html">Gizlilik Politikası</a>
+                <a href="/terms.html">Kullanım Koşulları</a>
+                <a href="/contact.html">İletişim</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 AlyaGames. Tüm Hakları Saklıdır.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Slugify helper
+        function slugify(text) {
+            if (!text) return '';
+            return text.toString().toLowerCase().trim()
+                .replace(/&/g, '-and-')
+                .replace(/ı/g, 'i').replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ö/g, 'o').replace(/ç/g, 'c')
+                .replace(/[\s\W-]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+        }
+
+        // Router Detection
+        const path = window.location.pathname;
+        const oyunMatch = path.match(/\/oyun\/([^\/]+)/);
+        const kategoriMatch = path.match(/\/kategori\/([^\/]+)/);
+
+        if (kategoriMatch) {
+            // Redirect /kategori/<slug> to home hash router
+            const cat = kategoriMatch[1];
+            window.location.replace('/#/?cat=' + encodeURIComponent(cat));
+        } else if (oyunMatch) {
+            const rawSlug = decodeURIComponent(oyunMatch[1]);
+            const gameSlug = slugify(rawSlug);
+
+            // Show loading view
+            document.getElementById('notfound-view').style.display = 'none';
+            document.getElementById('loading-view').style.display = 'block';
+
+            // Attempt to load game
+            resolveAndLaunchGame(gameSlug, rawSlug);
+        }
+
+        async function resolveAndLaunchGame(slug, rawSlug) {
+            let foundGame = null;
+
+            // 1. Try sessionStorage cache first
+            try {
+                const cached = sessionStorage.getItem('game_' + slug) || sessionStorage.getItem('current_active_game');
+                if (cached) {
+                    const parsed = JSON.parse(cached);
+                    if (slugify(parsed.Title) === slug || parsed.slug === slug) {
+                        foundGame = parsed;
+                    }
+                }
+            } catch (e) {}
+
+            // 2. Try localStorage favorites/recent
+            if (!foundGame) {
+                try {
+                    const favs = JSON.parse(localStorage.getItem('alyagames_favorites') || '[]');
+                    const recent = JSON.parse(localStorage.getItem('alyagames_recent') || '[]');
+                    const match = [...favs, ...recent].find(g => slugify(g.Title || g.title || '') === slug || g.slug === slug);
+                    if (match && match.Url) {
+                        foundGame = match;
+                    }
+                } catch (e) {}
+            }
+
+            // 3. Known quick-lookup map for popular latest games
+            if (!foundGame) {
+                const knownMap = {
+                    'bike-obby-draw-pencil': {
+                        Title: 'Bike Obby Draw Pencil',
+                        Url: 'https://html5.gamedistribution.com/ccb3b200322c4779957dfee55c68f3fc/',
+                        Asset: ['https://img.gamedistribution.com/ccb3b200322c4779957dfee55c68f3fc-512x384.jpg'],
+                        Category: ['Beceri & Zeka'],
+                        Description: 'Use your creativity and reflexes to complete the missing paths in 3D Side Platform Obby Draw Pencil! Draw paths with your pencil across the gaps between platforms to help your character move forward safely.',
+                        Instructions: 'W tuşu ile zıplayın, A/D ile ilerleyin. Boşluklara farenizle çizgi çekerek köprü kurun.'
+                    }
+                };
+                if (knownMap[slug]) {
+                    foundGame = knownMap[slug];
+                }
+            }
+
+            // 4. Fetch from GameDistribution API
+            if (!foundGame) {
+                try {
+                    document.getElementById('loading-status-text').textContent = 'Oyun kataloğu taranıyor...';
+                    const res = await fetch('https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=100&page=1&format=json');
+                    if (res.ok) {
+                        const data = await res.json();
+                        const list = Array.isArray(data) ? data : (data.items || []);
+                        const match = list.find(g => slugify(g.Title) === slug);
+                        if (match) {
+                            foundGame = match;
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            // 5. Fetch from GamePix API
+            if (!foundGame) {
+                try {
+                    const res = await fetch('https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=250&page=1');
+                    if (res.ok) {
+                        const data = await res.json();
+                        const list = Array.isArray(data) ? data : (data.data || data.items || []);
+                        const match = list.find(g => slugify(g.title) === slug || g.id === slug);
+                        if (match) {
+                            foundGame = {
+                                Title: match.title,
+                                Url: match.url,
+                                Asset: [match.thumbnailUrl || match.image || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500'],
+                                Category: [match.category || 'Oyun'],
+                                Description: match.description || '',
+                                Instructions: 'Oyunu fare veya yön tuşlarıyla oynayabilirsiniz.'
+                            };
+                        }
+                    }
+                } catch (e) {}
+            }
+
+            // If game found, render stage
+            if (foundGame && foundGame.Url) {
+                renderGameStage(foundGame, slug);
+            } else {
+                // Not found anywhere -> show 404 view
+                document.getElementById('loading-view').style.display = 'none';
+                document.getElementById('notfound-view').style.display = 'block';
+            }
+        }
+
+        function renderGameStage(game, slug) {
+            document.getElementById('loading-view').style.display = 'none';
+            document.getElementById('game-view').style.display = 'grid';
+
+            const title = game.Title || game.title || 'Oyun';
+            const url = game.Url || game.url;
+            const desc = game.Description || game.description || `${title} oyununu AlyaGames ile hemen ücretsiz ve indirmeden oyna!`;
+            const instr = game.Instructions || game.instructions || 'Oyunu fare, dokunmatik ekran veya klavye yön tuşları ile kolayca oynayabilirsiniz.';
+            const cat = (game.Category && game.Category.length > 0) ? game.Category[0] : 'Oyun';
+            const img = (game.Asset && game.Asset.length > 0) ? game.Asset[0] : 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500';
+
+            // Set Meta & Titles
+            document.title = `${title} Oyunu Oyna - Ücretsiz Online | AlyaGames`;
+            document.getElementById('page-title').textContent = `${title} Oyunu Oyna - AlyaGames`;
+            document.getElementById('page-desc').setAttribute('content', desc.slice(0, 160));
+            document.getElementById('page-canonical').setAttribute('href', `https://alyagames.com/oyun/${slug}/`);
+
+            document.getElementById('crumb-title').textContent = title;
+            document.getElementById('crumb-category').textContent = cat;
+            document.getElementById('dyn-game-title').textContent = title;
+            document.getElementById('dyn-game-desc').textContent = desc;
+            document.getElementById('dyn-game-instr').textContent = instr;
+
+            // Load iframe
+            document.getElementById('dyn-game-frame').src = url;
+
+            // Save to recent
+            try {
+                const recent = JSON.parse(localStorage.getItem('alyagames_recent') || '[]');
+                const currentGame = { slug: slug, title: title, img: img, cat: cat };
+                const filtered = recent.filter(g => g.slug !== slug);
+                filtered.unshift(currentGame);
+                localStorage.setItem('alyagames_recent', JSON.stringify(filtered.slice(0, 12)));
+            } catch (e) {}
+
+            // Fullscreen
+            document.getElementById('fullscreen-btn').onclick = () => {
+                const iframe = document.getElementById('dyn-game-frame');
+                if (iframe.requestFullscreen) iframe.requestFullscreen();
+                else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+                else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+            };
+
+            // Favorite button
+            const favBtn = document.getElementById('fav-btn');
+            const favIcon = document.getElementById('fav-icon');
+            function updateFavUI() {
+                const favs = JSON.parse(localStorage.getItem('alyagames_favorites') || '[]');
+                const isFav = favs.some(f => f.slug === slug);
+                if (isFav) {
+                    favBtn.classList.add('active');
+                    favIcon.textContent = '❤️';
+                } else {
+                    favBtn.classList.remove('active');
+                    favIcon.textContent = '🤍';
+                }
+            }
+            updateFavUI();
+            favBtn.onclick = () => {
+                let favs = JSON.parse(localStorage.getItem('alyagames_favorites') || '[]');
+                const isFav = favs.some(f => f.slug === slug);
+                if (isFav) {
+                    favs = favs.filter(f => f.slug !== slug);
+                } else {
+                    favs.push({ slug: slug, title: title, img: img, cat: cat, Url: url });
+                }
+                localStorage.setItem('alyagames_favorites', JSON.stringify(favs));
+                updateFavUI();
+            };
+
+            // Share button
+            document.getElementById('share-btn').onclick = () => {
+                if (navigator.share) {
+                    navigator.share({ title: `${title} - AlyaGames`, url: window.location.href });
+                } else {
+                    navigator.clipboard.writeText(window.location.href);
+                    alert("Oyun linki kopyalandı!");
+                }
+            };
+
+            // Populate Sidebar
+            renderSidebarGames();
+        }
+
+        function renderSidebarGames() {
+            const sidebar = document.getElementById('dyn-sidebar-games');
+            const popular = [
+                { slug: 'bike-obby-draw-pencil', title: 'Bike Obby Draw Pencil', cat: 'Beceri', img: 'https://img.gamedistribution.com/ccb3b200322c4779957dfee55c68f3fc-512x384.jpg' },
+                { slug: 'vex-x3m-3', title: 'Vex X3M 3', cat: 'Yarış', img: 'https://img.gamedistribution.com/ce1b2e5eabe44debb11bf77cd04c0f85-512x384.jpg' },
+                { slug: 'obby-escape-barry-s-jail-parkour', title: 'Obby Escape Barry Jail', cat: 'Macera', img: 'https://img.gamedistribution.com/3bbe72ba374644f5b7360a993fa8bc46-512x384.jpg' },
+                { slug: 'moto-race-city', title: 'Moto Race City', cat: 'Yarış', img: 'https://img.gamedistribution.com/ee9daf29916348fb8f4450f2c387bf6a-512x384.jpg' },
+                { slug: 'doodle-dino-run', title: 'Doodle Dino Run', cat: 'Beceri', img: 'https://img.gamedistribution.com/aa13da3aeb294f50ae6f1148483f3f01-512x384.jpg' }
+            ];
+
+            sidebar.innerHTML = '';
+            popular.forEach(g => {
+                const a = document.createElement('a');
+                a.href = `/oyun/${g.slug}/`;
+                a.className = 'game-card';
+                a.title = `${g.title} Oyna`;
+                a.innerHTML = `
+                    <div class="game-card-img-wrapper">
+                        <img src="${g.img}" alt="${g.title}" class="game-card-img" loading="lazy">
+                    </div>
+                    <div class="game-card-content">
+                        <span class="game-card-category">${g.cat}</span>
+                        <h3 class="game-card-title">${g.title}</h3>
+                        <span class="play-btn-pill">Oyna</span>
+                    </div>
+                `;
+                sidebar.appendChild(a);
+            });
+        }
+
+        // Header controls (Theme & Sound)
+        const themeBtn = document.getElementById('theme-toggle');
+        if (themeBtn) {
+            themeBtn.onclick = () => {
+                document.body.classList.toggle('dark-mode');
+                const isDark = document.body.classList.contains('dark-mode');
+                localStorage.setItem('theme', isDark ? 'dark' : 'light');
+            };
+            if (localStorage.getItem('theme') === 'dark') {
+                document.body.classList.add('dark-mode');
+            }
+        }
+
+        const searchInput = document.getElementById('header-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && searchInput.value.trim()) {
+                    window.location.href = '/#/?q=' + encodeURIComponent(searchInput.value.trim());
+                }
+            });
+        }
+    </script>
+</body>
+</html>

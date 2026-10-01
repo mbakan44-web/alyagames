@@ -1607,6 +1607,12 @@ function openGame(game, updateHash = true) {
         if (activeCategory === 'unblocked') BadgesManager.unlock('unblocked');
     } catch (e) {}
 
+    // Save game data to sessionStorage for zero-latency load and fallback compatibility
+    try {
+        sessionStorage.setItem('current_active_game', JSON.stringify(game));
+        sessionStorage.setItem('game_' + gameSlug, JSON.stringify(game));
+    } catch (e) {}
+
     // Navigate to Static SEO page
     window.location.href = `/oyun/${encodeURIComponent(gameSlug)}/`;
 }

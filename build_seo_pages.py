@@ -24,7 +24,7 @@ def slugify(text):
     text = text.strip('-')
     return text or 'oyun'
 
-def fetch_games(max_pages=5):
+def fetch_games(max_pages=15):
     all_games = []
     seen_titles = set()
     print(f"[*] Fetching games from GameDistribution API (pages 1 to {max_pages})...")
