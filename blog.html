@@ -763,6 +763,29 @@
                 console.warn('Could not load community_blog_data.json:', e);
             }
 
+            // Auto-clean requested deleted post ("bu oyun nasıl oynanır?") & deleted IDs from localStorage
+            try {
+                const deletedIds = JSON.parse(localStorage.getItem('alyagames_deleted_post_ids') || '[]');
+                const shouldDelete = (p) => {
+                    if (!p) return true;
+                    if (deletedIds.includes(p.id)) return true;
+                    const t = (p.title || '').toLocaleLowerCase('tr-TR').trim();
+                    return t.includes('bu oyun nasıl oynanır') || t.includes('bu oyun nasil oynanir');
+                };
+
+                const pendingRaw = JSON.parse(localStorage.getItem('alyagames_my_pending_posts') || '[]');
+                const cleanedPending = pendingRaw.filter(p => !shouldDelete(p));
+                localStorage.setItem('alyagames_my_pending_posts', JSON.stringify(cleanedPending));
+
+                const localApprovedRaw = JSON.parse(localStorage.getItem('alyagames_mod_approved_posts') || '[]');
+                const cleanedApproved = localApprovedRaw.filter(p => !shouldDelete(p));
+                localStorage.setItem('alyagames_mod_approved_posts', JSON.stringify(cleanedApproved));
+
+                if (communityData && Array.isArray(communityData.posts)) {
+                    communityData.posts = communityData.posts.filter(p => !shouldDelete(p));
+                }
+            } catch (e) {}
+
             // Merge any locally approved items saved by moderator in this browser
             try {
                 const localApproved = JSON.parse(localStorage.getItem('alyagames_mod_approved_posts') || '[]');
@@ -857,7 +880,8 @@
                     ? `<a href="/oyun/${escapeHtml(post.gameSlug)}/" class="meta-pill" style="color: var(--clr-primary); text-decoration: none;">🎮 Oyunu Oyna: ${escapeHtml(post.gameName || post.gameSlug)}</a>`
                     : '';
                 const pendingHtml = post.pending
-                    ? `<span class="pending-badge">⏳ Moderatör Onayı Bekliyor</span>`
+                    ? `<span class="pending-badge">⏳ Moderatör Onayı Bekliyor</span>
+                       <button type="button" onclick="deleteCommunityPost('${escapeHtml(post.id)}')" style="background: rgba(239,68,68,0.12); color: #ef4444; border: 1px solid rgba(239,68,68,0.35); border-radius: 999px; padding: 0.2rem 0.65rem; font-size: 0.78rem; font-weight: 700; cursor: pointer;">🗑️ Sil</button>`
                     : '';
 
                 return `
@@ -889,6 +913,25 @@
                 sec.innerHTML = renderInteractionHTML(targetId, targetTitle, comments, 18);
             });
         }
+
+        window.deleteCommunityPost = function(postId) {
+            try {
+                const deletedIds = JSON.parse(localStorage.getItem('alyagames_deleted_post_ids') || '[]');
+                if (!deletedIds.includes(postId)) deletedIds.push(postId);
+                localStorage.setItem('alyagames_deleted_post_ids', JSON.stringify(deletedIds));
+
+                const pendingRaw = JSON.parse(localStorage.getItem('alyagames_my_pending_posts') || '[]');
+                localStorage.setItem('alyagames_my_pending_posts', JSON.stringify(pendingRaw.filter(p => p.id !== postId)));
+
+                const approvedRaw = JSON.parse(localStorage.getItem('alyagames_mod_approved_posts') || '[]');
+                localStorage.setItem('alyagames_mod_approved_posts', JSON.stringify(approvedRaw.filter(p => p.id !== postId)));
+
+                if (communityData && Array.isArray(communityData.posts)) {
+                    communityData.posts = communityData.posts.filter(p => p.id !== postId);
+                }
+                renderCommunityPosts();
+            } catch (e) {}
+        };
 
         window.togglePostLike = function(targetId, baseLikes, btnEl) {
             const likedPosts = JSON.parse(localStorage.getItem('alyagames_blog_likes') || '{}');
