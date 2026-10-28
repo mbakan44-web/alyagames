@@ -1,14 +1,68 @@
 {
   "posts": [
     {
+      "id": "konu-rehber-1",
+      "pinned": true,
+      "title": "Okulda ve Akıllı Tahtada Engel Takılmadan Oynanan En İyi Oyunlar (2026 Liste)",
+      "author": "AlyaGames_Mod",
+      "role": "Moderatör",
+      "category": "Rehber",
+      "gameName": "Ultimate TicTacToe",
+      "gameSlug": "ultimate-tictactoe",
+      "date": "26 Ekim 2026",
+      "views": 412,
+      "likes": 38,
+      "content": "Merhaba arkadaşlar,\n\nOkul bilgisayarlarında veya sınıftaki akıllı tahtalarda teneffüslerde hızlıca açılan, kurulum gerektirmeyen ve dokunmatik ekranla tam uyumlu oyunları bu konuda topladık.\n\n1. Ultimate TicTacToe: Klasik XOX oyununun stratejik versiyonu. Akıllı tahtada iki kişi karşılıklı oynamak için birebir.\n2. Klumen: Sakin ve mantık odaklı bulmaca arayanlar için harika bir zeka oyunu.\n3. Bike Obby Draw Pencil: Kendi yolunuzu kalemle çizerek engelleri aştığınız eğlenceli bir parkur oyunu.\n4. Sumo Shove: Aynı ekranda arkadaşınızla oynayabileceğiniz hızlı refleks oyunu.\n\nSizin sınıfça en çok oynadığınız oyun hangisi? Yanıt olarak yazabilirsiniz!",
+      "comments": [
+        {
+          "id": "c-1",
+          "author": "Efe_Yilmaz",
+          "date": "27 Ekim 2026",
+          "text": "Okul bilgisayarında kasmadan açılan nadir sitelerden biri, elinize sağlık."
+        },
+        {
+          "id": "c-2",
+          "author": "MertCan",
+          "date": "28 Ekim 2026",
+          "text": "Ultimate TicTacToe akıllı tahtada efsane oluyor, biz de her cuma sınıfta turnuva yapıyoruz."
+        }
+      ]
+    },
+    {
+      "id": "konu-rehber-2",
+      "pinned": true,
+      "title": "Aynı Klavyeden 2 Kişilik Oynanabilen En İyi Oyunlar (WASD + Yön Tuşları)",
+      "author": "AlyaGames_Mod",
+      "role": "Moderatör",
+      "category": "Oyun Önerisi",
+      "gameName": "Sumo Shove",
+      "gameSlug": "sumo-shove",
+      "date": "26 Ekim 2026",
+      "views": 329,
+      "likes": 29,
+      "content": "Evde kardeşinizle veya okulda sıra arkadaşınızla tek bilgisayardan iki kişilik oynayabileceğiniz en iyi oyunları listeledik:\n\n• 1. Oyuncu: W, A, S, D tuşları\n• 2. Oyuncu: Yön (Ok) tuşları\n\nÖne Çıkan 2 Kişilik Oyunlar:\n- Sumo Shove (Arena itme mücadelesi)\n- Beach Volleyball 2D (2 kişilik plaj voleybolu)\n- Stickman Duelist (Çöp adam düellosu)\n\nİki kişilik kategorimizdeki diğer favorilerinizi aşağıda paylaşabilirsiniz.",
+      "comments": [
+        {
+          "id": "c-3",
+          "author": "Caner_Berk",
+          "date": "27 Ekim 2026",
+          "text": "Kardeşimle aynı klavyede Sumo Shove ve Beach Volleyball oynuyoruz çok sarıyor."
+        }
+      ]
+    },
+    {
       "id": "post-topluluk-1",
-      "title": "Bike Obby Draw Pencil'da Zorlu Bölümleri Geçme Taktikleri",
+      "pinned": false,
+      "title": "Bike Obby Draw Pencil'da 10. bölümden sonrasını geçme taktiği",
       "author": "Emirhan_Pro",
-      "category": "Obby ve Parkur Oyunları",
+      "role": "Oyuncu",
+      "category": "Taktik & Rehber",
+      "gameName": "Bike Obby Draw Pencil",
       "gameSlug": "bike-obby-draw-pencil",
       "date": "28 Ekim 2026",
+      "views": 184,
       "likes": 24,
-      "content": "Bike Obby Draw Pencil oynarken özellikle 10. bölümden sonra uçurumlar genişliyor ve hareketli engeller çıkıyor. Çizgi çizerken mürekkebinizi tek bir düz çizgi yerine hafif yukarı eğimli rampa şeklinde çizerseniz bisikletin hızı kesilmiyor ve zıplama tuşuna (W) bastığınızda çok daha uzağa uçabiliyorsunuz. Ayrıca tekerleğin takılmaması için köprü uçlarını platformun tam üst hizasına bağlamaya dikkat edin!",
+      "content": "Bike Obby Draw Pencil oynarken özellikle 10. bölümden sonra uçurumlar genişliyor ve hareketli engeller çıkıyor.\n\nÇizgi çizerken mürekkebinizi tek bir düz çizgi yerine hafif yukarı eğimli rampa şeklinde çizerseniz bisikletin hızı kesilmiyor ve zıplama tuşuna (W) bastığınızda çok daha uzağa uçabiliyorsunuz. Ayrıca tekerleğin takılmaması için köprü uçlarını platformun tam üst hizasına bağlamaya dikkat edin!",
       "comments": [
         {
           "id": "c-101",
@@ -26,53 +80,48 @@
     },
     {
       "id": "post-topluluk-2",
-      "title": "Teneffüste Akıllı Tahtada Sınıfça Oynadığımız En Eğlenceli 3 Oyun",
-      "author": "Bora & 10-B Sınıfı",
-      "category": "Akıllı Tahta ve Sınıf Oyunları",
-      "gameSlug": "ultimate-tictactoe",
+      "pinned": false,
+      "title": "Teneffüste akıllı tahtada sınıfça oynadığımız 3 oyun",
+      "author": "Bora_10B",
+      "role": "Oyuncu",
+      "category": "Oyun Önerisi",
+      "gameName": "Klumen",
+      "gameSlug": "klumen",
       "date": "27 Ekim 2026",
-      "likes": 31,
-      "content": "Sınıfta öğle arasında akıllı tahtada indirmeden açılan oyunlar ararken AlyaGames'i keşfettik. Sınıfça turnuva yaptığımız ilk oyun Ultimate TicTacToe oldu çünkü dokunmatik ekranda iki kişi karşılıklı çok hızlı oynayabiliyor. İkinci favorimiz 12 MiniBattles Two Players, üçüncüsü ise Klumen bulmaca oyunu. Öğretmenimiz bile Klumen'de son bölümleri bizimle beraber çözdü!",
+      "views": 146,
+      "likes": 19,
+      "content": "Sınıfta öğle arasında akıllı tahtada indirmeden açılan oyunlar ararken burayı keşfettik. Sınıfça turnuva yaptığımız ilk oyun Ultimate TicTacToe oldu çünkü dokunmatik ekranda iki kişi karşılıklı çok hızlı oynayabiliyor. İkinci favorimiz Klumen bulmaca oyunu, üçüncüsü ise 2048 Bubble Shoot. Sizin önerdiğiniz başka dokunmatik uyumlu oyun var mı?",
       "comments": [
         {
           "id": "c-103",
-          "author": "MertCan",
+          "author": "SelinK",
           "date": "28 Ekim 2026",
-          "text": "12 MiniBattles akıllı tahtada efsane oluyor, biz de her cuma turnuva yapıyoruz :)"
+          "text": "Klumen ve 2048 Bubble Shoot gerçekten çok dinlendirici, kesinlikle tavsiye ederim."
+        }
+      ]
+    },
+    {
+      "id": "post-topluluk-3",
+      "pinned": false,
+      "title": "SWAT Ops Bodycamera oynayan var mı? Refleksleri çok zorluyor",
+      "author": "Arda_G",
+      "role": "Oyuncu",
+      "category": "Sohbet",
+      "gameName": "SWAT Ops Bodycamera",
+      "gameSlug": "swat-ops-bodycamera",
+      "date": "28 Ekim 2026",
+      "views": 98,
+      "likes": 15,
+      "content": "Aksiyon kategorisindeki SWAT Ops Bodycamera oyununda kamera açısı gerçek vücut kamerası gibi olduğu için kapılardan girerken köşeleri kontrol etmek çok heyecanlı oluyor. Köşelerden çıkmadan önce nişangahı kapı hizasında tutunca çok daha hızlı tepki veriliyor. Oynayanlar kaçıncı bölüme kadar gelebildi?",
+      "comments": [
+        {
+          "id": "c-104",
+          "author": "BurakFPS",
+          "date": "28 Ekim 2026",
+          "text": "Mouse hassasiyetini biraz düşürünce isabet oranı çok artıyor, 8. göreve kadar geldim."
         }
       ]
     }
   ],
-  "articleComments": {
-    "article-1": [
-      {
-        "id": "ac-1",
-        "author": "Arda_G",
-        "date": "28 Ekim 2026",
-        "text": "Listedeki Vex 10 ve SWAT Ops Bodycamera favorim! İndirmeden açılması çok iyi."
-      },
-      {
-        "id": "ac-2",
-        "author": "SelinK",
-        "date": "28 Ekim 2026",
-        "text": "Klumen ve 2048 Bubble Shoot gerçekten çok dinlendirici, akşamları telefondan oynuyorum."
-      }
-    ],
-    "article-2": [
-      {
-        "id": "ac-3",
-        "author": "Efe_Yılmaz",
-        "date": "28 Ekim 2026",
-        "text": "Okul bilgisayarında kasmadan açılan nadir sitelerden biri, elinize sağlık."
-      }
-    ],
-    "article-3": [
-      {
-        "id": "ac-4",
-        "author": "Caner & Berk",
-        "date": "28 Ekim 2026",
-        "text": "Kardeşimle aynı klavyede Sumo Shove ve Beach Volleyball oynuyoruz çok sarıyor."
-      }
-    ]
-  }
+  "articleComments": {}
 }
