@@ -419,6 +419,16 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
+        <a href="/oyun/klumen/" class="game-card" title="Klumen Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/e24064f9b2594b189a8f504970436040-512x384.jpg" alt="Klumen" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">Puzzle</span>
+                <h3 class="game-card-title">Klumen</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
         <a href="/oyun/prism-match-3d/" class="game-card" title="Prism Match 3D Oyunu Oyna">
             <div class="game-card-img-wrapper">
                 <img src="https://img.gamepix.com/games/prism-match-3d/icon/prism-match-3d.png?w=105" alt="Prism Match 3D" class="game-card-img" loading="lazy">
@@ -439,16 +449,6 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
-        <a href="/oyun/flag-memory-match/" class="game-card" title="Flag Memory Match Oyunu Oyna">
-            <div class="game-card-img-wrapper">
-                <img src="https://img.gamepix.com/games/flag-memory-match/icon/flag-memory-match.png?w=105" alt="Flag Memory Match" class="game-card-img" loading="lazy">
-            </div>
-            <div class="game-card-content">
-                <span class="game-card-category">Puzzle</span>
-                <h3 class="game-card-title">Flag Memory Match</h3>
-                <span class="play-btn-pill">Oyna</span>
-            </div>
-        </a>
         </div>
     </section>
 
@@ -461,13 +461,22 @@
             </div>
             <div class="footer-links">
                 <a href="/">Anasayfa</a>
-                <a href="/kategori/aksiyon/">Aksiyon Oyunları</a>
-                <a href="/kategori/savas/">Savaş Oyunları</a>
-                <a href="/kategori/yaris/">Yarış Oyunları</a>
+                <a href="/kategori/aksiyon/">Aksiyon</a>
+                <a href="/kategori/savas/">Savaş</a>
+                <a href="/kategori/yaris/">Yarış</a>
                 <a href="/kategori/beceri/">Zeka &amp; Beceri</a>
-                <a href="/kategori/macera/">Macera Oyunları</a>
-                <a href="/kategori/kiz/">Kız Oyunları</a>
-                <a href="/kategori/iki-kisilik/">2 Kişilik Oyunlar</a>
+                <a href="/kategori/macera/">Macera</a>
+                <a href="/kategori/kiz/">Kız</a>
+                <a href="/kategori/iki-kisilik/">2 Kişilik</a>
+                <a href="/kategori/okul-oyunlari/">Okul Oyunları</a>
+                <a href="/kategori/obby-oyunlari/">Obby Oyunları</a>
+                <a href="/kategori/stickman-oyunlari/">Stickman</a>
+                <a href="/kategori/zombi-oyunlari/">Zombi</a>
+                <a href="/kategori/futbol-oyunlari/">Futbol</a>
+                <a href="/kategori/akilli-tahta-oyunlari/">Akıllı Tahta</a>
+                <a href="/kategori/drift-oyunlari/">Drift</a>
+                <a href="/kategori/makyaj-oyunlari/">Makyaj</a>
+                <a href="/kategori/strateji-oyunlari/">Strateji</a>
                 <a href="/blog.html">Blog</a>
                 <a href="/about.html">Hakkımızda</a>
                 <a href="/privacy.html">Gizlilik</a>
@@ -479,7 +488,6 @@
     </footer>
 
     <script>
-        // Track recently played game
         try {
             const recent = JSON.parse(localStorage.getItem('alyagames_recent') || '[]');
             const currentGame = { slug: "word-search-universe-animals", title: "Word Search Universe Animals", img: "https://img.gamedistribution.com/bd685997d9824a07b1e79aa2753e2b48-512x384.jpg", cat: "Zeka ve Beceri Oyunları" };
@@ -488,7 +496,6 @@
             localStorage.setItem('alyagames_recent', JSON.stringify(filtered.slice(0, 12)));
         } catch (e) {}
 
-        // Fullscreen Toggle
         document.getElementById('fullscreen-btn').addEventListener('click', () => {
             const iframe = document.getElementById('game-frame');
             if (iframe.requestFullscreen) iframe.requestFullscreen();
@@ -496,7 +503,6 @@
             else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
         });
 
-        // Favorite Toggle
         const favBtn = document.getElementById('fav-btn');
         const favIcon = document.getElementById('fav-icon');
         const slug = "word-search-universe-animals";
@@ -526,7 +532,6 @@
             updateFavUI();
         });
 
-        // Share Button
         document.getElementById('share-btn').addEventListener('click', () => {
             if (navigator.share) {
                 navigator.share({ title: "Word Search Universe Animals - AlyaGames", url: window.location.href });
@@ -536,7 +541,6 @@
             }
         });
 
-        // Theme Toggle
         const themeBtn = document.getElementById('theme-toggle');
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
@@ -548,7 +552,6 @@
             });
         }
 
-        // Search Input Redirect
         const searchInput = document.getElementById('header-search-input');
         if (searchInput) {
             searchInput.addEventListener('keydown', (e) => {
@@ -558,7 +561,6 @@
             });
         }
 
-        // Register Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').catch(console.warn);

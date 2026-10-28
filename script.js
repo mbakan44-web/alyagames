@@ -1105,7 +1105,8 @@ async function fetchGamesList(page, apiCategory = 'All') {
     isLoadingMore = true;
     if (loadMoreBtn) loadMoreBtn.textContent = 'Yükleniyor...';
     
-    if (page === 1) {
+    const hasPreRendered = (typeof editorsChoiceGrid !== 'undefined' && editorsChoiceGrid && editorsChoiceGrid.children.length > 0);
+    if (page === 1 && !hasPreRendered) {
         if (mainLoader) mainLoader.style.display = 'flex';
         if (gamesContainer) gamesContainer.style.display = 'none';
         if (homepageSections) homepageSections.style.display = 'none';
@@ -1157,17 +1158,12 @@ async function fetchGamesList(page, apiCategory = 'All') {
             Source: 'GameDistribution'
         }));
 
-        // Merge both API arrays
-        const merged = [...mappedGdGames, ...gpGames];
+        // Put GamePix games FIRST so homepage showcase sections display GamePix games
+        const merged = [...gpGames, ...mappedGdGames];
         
         // Filter duplicates
         const existingUrls = new Set(gamesData.map(g => g.Url));
         uniqueNewGames = merged.filter(g => !existingUrls.has(g.Url));
-        
-        // Randomize order on first load to mix them well
-        if (page === 1) {
-            uniqueNewGames = shuffleArray(uniqueNewGames);
-        }
         
         if (uniqueNewGames.length > 0) {
             gamesData = [...gamesData, ...uniqueNewGames];

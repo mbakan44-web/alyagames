@@ -30,6 +30,9 @@
       "description": "Popüler ücretsiz online HTML5 oyunları portalı"
     }
     </script>
+    <!-- Home ItemList & FAQPage JSON-LD -->
+    <script type="application/ld+json" id="home-itemlist-schema">{"@context": "https://schema.org", "@type": "ItemList", "name": "AlyaGames Popüler Ücretsiz Online Oyunlar", "itemListOrder": "https://schema.org/ItemListOrderDescending", "numberOfItems": 24, "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Bike Obby Draw Pencil", "url": "https://alyagames.com/oyun/bike-obby-draw-pencil/"}, {"@type": "ListItem", "position": 2, "name": "Prism Match 3D", "url": "https://alyagames.com/oyun/prism-match-3d/"}, {"@type": "ListItem", "position": 3, "name": "Drop Planets", "url": "https://alyagames.com/oyun/drop-planets/"}, {"@type": "ListItem", "position": 4, "name": "Defend the Castle", "url": "https://alyagames.com/oyun/defend-the-castle/"}, {"@type": "ListItem", "position": 5, "name": "Garden Master", "url": "https://alyagames.com/oyun/garden-master/"}, {"@type": "ListItem", "position": 6, "name": "Quarantine Zombies", "url": "https://alyagames.com/oyun/quarantine-zombies/"}, {"@type": "ListItem", "position": 7, "name": "Stack Rocket", "url": "https://alyagames.com/oyun/stack-rocket/"}, {"@type": "ListItem", "position": 8, "name": "Nova Hop", "url": "https://alyagames.com/oyun/nova-hop/"}, {"@type": "ListItem", "position": 9, "name": "Boost Balloon", "url": "https://alyagames.com/oyun/boost-balloon/"}, {"@type": "ListItem", "position": 10, "name": "Billiards on Ice", "url": "https://alyagames.com/oyun/billiards-on-ice/"}, {"@type": "ListItem", "position": 11, "name": "Combat Landing", "url": "https://alyagames.com/oyun/combat-landing/"}, {"@type": "ListItem", "position": 12, "name": "Vegan Quest", "url": "https://alyagames.com/oyun/vegan-quest/"}, {"@type": "ListItem", "position": 13, "name": "Kobadoo Emojis", "url": "https://alyagames.com/oyun/kobadoo-emojis/"}, {"@type": "ListItem", "position": 14, "name": "Skater Kitty", "url": "https://alyagames.com/oyun/skater-kitty/"}, {"@type": "ListItem", "position": 15, "name": "Ancient Armies vs Modern Weapons", "url": "https://alyagames.com/oyun/ancient-armies-vs-modern-weapons/"}, {"@type": "ListItem", "position": 16, "name": "Flag Memory Match", "url": "https://alyagames.com/oyun/flag-memory-match/"}, {"@type": "ListItem", "position": 17, "name": "Memory Cards", "url": "https://alyagames.com/oyun/memory-cards/"}, {"@type": "ListItem", "position": 18, "name": "Sumo Shove", "url": "https://alyagames.com/oyun/sumo-shove/"}, {"@type": "ListItem", "position": 19, "name": "Seat the Guests", "url": "https://alyagames.com/oyun/seat-the-guests/"}, {"@type": "ListItem", "position": 20, "name": "Dodge the Bull", "url": "https://alyagames.com/oyun/dodge-the-bull/"}, {"@type": "ListItem", "position": 21, "name": "Math Fight Club", "url": "https://alyagames.com/oyun/math-fight-club/"}, {"@type": "ListItem", "position": 22, "name": "Merge Royal", "url": "https://alyagames.com/oyun/merge-royal/"}, {"@type": "ListItem", "position": 23, "name": "Kobadoo Numbers", "url": "https://alyagames.com/oyun/kobadoo-numbers/"}, {"@type": "ListItem", "position": 24, "name": "Kobadoo Shapes", "url": "https://alyagames.com/oyun/kobadoo-shapes/"}]}</script>
+    <script type="application/ld+json" id="home-faq-schema">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "AlyaGames'teki oyunlar gerçekten ücretsiz mi?", "acceptedAnswer": {"@type": "Answer", "text": "Evet! AlyaGames portalında yer alan tüm HTML5 oyunlar tamamen ücretsizdir. Hiçbir gizli ücret, abonelik veya oyun içi satın alma zorunluluğu olmadan dilediğiniz kadar oyun oynayabilirsiniz."}}, {"@type": "Question", "name": "Oyunları oynamak için dosya indirmem gerekiyor mu?", "acceptedAnswer": {"@type": "Answer", "text": "Hayır, kesinlikle gerekmiyor. AlyaGames bulut tabanlı tarayıcı teknolojisini kullanır. Oyunlar doğrudan web tarayıcınız (Chrome, Safari, Firefox, Edge) üzerinden yüklenir ve kuruluma ihtiyaç duyulmadan anında çalışır."}}, {"@type": "Question", "name": "Oyunlar mobil cihazlarda (telefon/tablet) ve akıllı tahtada çalışır mı?", "acceptedAnswer": {"@type": "Answer", "text": "Evet. Web sitemizdeki tüm oyunlar mobil uyumlu (responsive) HTML5 teknolojisiyle kodlanmıştır. Android veya iOS telefonlarınız, tabletleriniz ve okul akıllı tahtaları üzerinden kesintisiz oynayabilirsiniz."}}, {"@type": "Question", "name": "AlyaGames çocuk oyunları için güvenli mi?", "acceptedAnswer": {"@type": "Answer", "text": "Evet, sitemizdeki tüm içerikler editörlerimiz tarafından filtrelenmekte ve test edilmektedir. Çocukların gelişimine uygun, eğlenceli ve eğitici oyunlara öncelik verilmektedir."}}]}</script>
 
     <!-- Google Analytics (GA4) Placeholder -->
     <!-- 
@@ -185,19 +188,83 @@
         </div>
 
         <!-- Initial Loader -->
-        <div class="loader-container" id="main-loader">
+        <div class="loader-container" id="main-loader" style="display: none;">
             <div class="loader-spinner"></div>
             <p>Oyunlar yükleniyor...</p>
         </div>
 
         <!-- Homepage Sections (Lively Oyunskor Style layout) -->
-        <div id="homepage-sections" style="display: none;">
+        <div id="homepage-sections" style="display: block;">
             <!-- Hero Showcase Banner (Carousel) -->
             <div class="hero-banner" id="hero-banner" style="margin-bottom: 3rem; margin-top: 0;">
                 <div class="carousel-container">
                     <div class="hero-card-carousel" id="hero-carousel-slides">
-                        <!-- Dynamic Carousel Slides go here -->
-                    </div>
+
+                        <div class="carousel-slide">
+                            <div class="hero-card">
+                                <div class="hero-info">
+                                    <span class="hero-badge">Günün Oyunu 🌟</span>
+                                    <h2 class="hero-title">Bike Obby Draw Pencil</h2>
+                                    <p class="hero-description">Bike Obby Draw Pencil ile yaratıcılığınızı ve reflekslerinizi konuşturun! Platformlar arasındaki boşluklara kaleminizle köprüler ve yollar çizerek bisikletli karakterinizi düşmeden bitiş çizgisine ulaştırın.</p>
+                                    <a href="/oyun/bike-obby-draw-pencil/" class="hero-cta" data-game-title="Bike%20Obby%20Draw%20Pencil" style="text-decoration: none;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.3rem; height: 1.3rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        Hemen Oyna
+                                    </a>
+                                </div>
+                                <div class="hero-media-wrapper">
+                                    <img src="https://img.gamedistribution.com/ccb3b200322c4779957dfee55c68f3fc-512x384.jpg" alt="Bike Obby Draw Pencil" class="hero-image" fetchpriority="high">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="hero-card">
+                                <div class="hero-info">
+                                    <span class="hero-badge">Günün Oyunu 🌟</span>
+                                    <h2 class="hero-title">Prism Match 3D</h2>
+                                    <p class="hero-description">Dive into a mesmerizing 3D cube universe where vibrant prisms challenge your logic and timing. Rotate and explore intricately designed levels while relaxing your mind. Perfect your skills to conquer endless creative stages, offering a refreshing blend of relaxation and mental exercise.</p>
+                                    <a href="/oyun/prism-match-3d/" class="hero-cta" data-game-title="Prism%20Match%203D" style="text-decoration: none;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.3rem; height: 1.3rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        Hemen Oyna
+                                    </a>
+                                </div>
+                                <div class="hero-media-wrapper">
+                                    <img src="https://img.gamepix.com/games/prism-match-3d/icon/prism-match-3d.png?w=105" alt="Prism Match 3D" class="hero-image" fetchpriority="auto">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="hero-card">
+                                <div class="hero-info">
+                                    <span class="hero-badge">Günün Oyunu 🌟</span>
+                                    <h2 class="hero-title">Drop Planets</h2>
+                                    <p class="hero-description">Drop Planets oyununu AlyaGames'te ücretsiz ve indirmeden hemen tarayıcında oyna!</p>
+                                    <a href="/oyun/drop-planets/" class="hero-cta" data-game-title="Drop%20Planets" style="text-decoration: none;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.3rem; height: 1.3rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        Hemen Oyna
+                                    </a>
+                                </div>
+                                <div class="hero-media-wrapper">
+                                    <img src="https://img.gamepix.com/games/drop-planets/icon/drop-planets.png?w=105" alt="Drop Planets" class="hero-image" fetchpriority="auto">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="carousel-slide">
+                            <div class="hero-card">
+                                <div class="hero-info">
+                                    <span class="hero-badge">Günün Oyunu 🌟</span>
+                                    <h2 class="hero-title">Defend the Castle</h2>
+                                    <p class="hero-description">Fortify your kingdom in Defend the Castle! Strategically build and upgrade defenses with gold and wood to resist relentless enemy waves. Deploy cunning tactics with cannons and archers. Can you protect the King and let your stronghold stand the test of time?</p>
+                                    <a href="/oyun/defend-the-castle/" class="hero-cta" data-game-title="Defend%20the%20Castle" style="text-decoration: none;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.3rem; height: 1.3rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        Hemen Oyna
+                                    </a>
+                                </div>
+                                <div class="hero-media-wrapper">
+                                    <img src="https://img.gamepix.com/games/defend-the-castle/icon/defend-the-castle.png?w=105" alt="Defend the Castle" class="hero-image" fetchpriority="auto">
+                                </div>
+                            </div>
+                        </div>
+</div>
                     <!-- Navigation Arrows -->
                     <button class="carousel-control prev" id="carousel-prev" aria-label="Önceki Slayt">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
@@ -236,7 +303,98 @@
                     <h2 class="home-section-title"><span class="section-badge editor-badge">Seçilmiş</span> Editörün Seçimi</h2>
                     <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.95rem;">Ekibimiz tarafından özenle seçilmiş, en yüksek kaliteye ve eğlenceye sahip popüler HTML5 oyunları. Bilgisayarda veya telefonda ücretsiz oynayın.</p>
                 </div>
-                <div class="games-grid" id="editors-choice-grid"></div>
+                <div class="games-grid" id="editors-choice-grid">
+<div class="game-card fade-in-stagger featured" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-best">EDİTÖR</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="bike-obby-draw-pencil">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamedistribution.com/ccb3b200322c4779957dfee55c68f3fc-512x384.jpg" alt="Bike Obby Draw Pencil" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Bike Obby Draw Pencil</h3>
+            <a href="/oyun/bike-obby-draw-pencil/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger featured" data-category-type="all" style="cursor: pointer;">
+        <span class="card-badge badge-best">EDİTÖR</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="prism-match-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/prism-match-3d/icon/prism-match-3d.png?w=105" alt="Prism Match 3D" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Bejeweled</span>
+            <h3 class="game-card-title">Prism Match 3D</h3>
+            <a href="/oyun/prism-match-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-best">EDİTÖR</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="drop-planets">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/drop-planets/icon/drop-planets.png?w=105" alt="Drop Planets" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Drop Planets</h3>
+            <a href="/oyun/drop-planets/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        <span class="card-badge badge-best">EDİTÖR</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="defend-the-castle">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/defend-the-castle/icon/defend-the-castle.png?w=105" alt="Defend the Castle" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Strategy</span>
+            <h3 class="game-card-title">Defend the Castle</h3>
+            <a href="/oyun/defend-the-castle/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        <span class="card-badge badge-best">EDİTÖR</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="garden-master">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/garden-master/icon/garden-master.png?w=105" alt="Garden Master" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Farming</span>
+            <h3 class="game-card-title">Garden Master</h3>
+            <a href="/oyun/garden-master/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        <span class="card-badge badge-best">EDİTÖR</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="quarantine-zombies">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/quarantine-zombies/icon/quarantine-zombies.png?w=105" alt="Quarantine Zombies" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Zombie</span>
+            <h3 class="game-card-title">Quarantine Zombies</h3>
+            <a href="/oyun/quarantine-zombies/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+</div>
             </section>
 
             <!-- 2. Popular Games -->
@@ -245,7 +403,278 @@
                     <h2 class="home-section-title"><span class="section-badge popular-badge">Popüler</span> En Çok Oynananlar</h2>
                     <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.95rem;">Oyunskor tarzı yüzlerce ziyaretçinin günlük olarak tercih ettiği en çok oynanan trend oyunlar. İndirme yapmadan doğrudan web tarayıcınızdan oynayın.</p>
                 </div>
-                <div class="games-grid" id="popular-games-grid"></div>
+                <div class="games-grid" id="popular-games-grid">
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        <span class="card-badge badge-hot">POPÜLER</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="stack-rocket">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/stack-rocket/icon/stack-rocket.png?w=105" alt="Stack Rocket" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Building</span>
+            <h3 class="game-card-title">Stack Rocket</h3>
+            <a href="/oyun/stack-rocket/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="nova-hop">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/nova-hop/icon/nova-hop.png?w=105" alt="Nova Hop" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Hyper-casual</span>
+            <h3 class="game-card-title">Nova Hop</h3>
+            <a href="/oyun/nova-hop/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="boost-balloon">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/boost-balloon/icon/boost-balloon.png?w=105" alt="Boost Balloon" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Casual</span>
+            <h3 class="game-card-title">Boost Balloon</h3>
+            <a href="/oyun/boost-balloon/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="billiards-on-ice">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/billiards-on-ice/icon/billiards-on-ice.png?w=105" alt="Billiards on Ice" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Sports</span>
+            <h3 class="game-card-title">Billiards on Ice</h3>
+            <a href="/oyun/billiards-on-ice/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="combat-landing">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/combat-landing/icon/combat-landing.png?w=105" alt="Combat Landing" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Airplane</span>
+            <h3 class="game-card-title">Combat Landing</h3>
+            <a href="/oyun/combat-landing/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-hot">POPÜLER</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="vegan-quest">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/vegan-quest/icon/vegan-quest.png?w=105" alt="Vegan Quest" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Vegan Quest</h3>
+            <a href="/oyun/vegan-quest/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="kobadoo-emojis">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/kobadoo-emojis/icon/kobadoo-emojis.png?w=105" alt="Kobadoo Emojis" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Trivia</span>
+            <h3 class="game-card-title">Kobadoo Emojis</h3>
+            <a href="/oyun/kobadoo-emojis/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="skater-kitty">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/skater-kitty/icon/skater-kitty.png?w=105" alt="Skater Kitty" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Cats</span>
+            <h3 class="game-card-title">Skater Kitty</h3>
+            <a href="/oyun/skater-kitty/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="ancient-armies-vs-modern-weapons">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/ancient-armies-vs-modern-weapons/icon/ancient-armies-vs-modern-weapons.png?w=105" alt="Ancient Armies vs Modern Weapons" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Strategy</span>
+            <h3 class="game-card-title">Ancient Armies vs Modern Weapons</h3>
+            <a href="/oyun/ancient-armies-vs-modern-weapons/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="flag-memory-match">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/flag-memory-match/icon/flag-memory-match.png?w=105" alt="Flag Memory Match" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Flag Memory Match</h3>
+            <a href="/oyun/flag-memory-match/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-hot">POPÜLER</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="memory-cards">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/memory-cards/icon/memory-cards.png?w=105" alt="Memory Cards" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Memory Cards</h3>
+            <a href="/oyun/memory-cards/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="sumo-shove">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/sumo-shove/icon/sumo-shove.png?w=105" alt="Sumo Shove" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">Sumo Shove</h3>
+            <a href="/oyun/sumo-shove/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="seat-the-guests">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/seat-the-guests/icon/seat-the-guests.png?w=105" alt="Seat the Guests" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Seat the Guests</h3>
+            <a href="/oyun/seat-the-guests/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="dodge-the-bull">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/dodge-the-bull/icon/dodge-the-bull.png?w=105" alt="Dodge the Bull" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Casual</span>
+            <h3 class="game-card-title">Dodge the Bull</h3>
+            <a href="/oyun/dodge-the-bull/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="math-fight-club">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/math-fight-club/icon/math-fight-club.png?w=105" alt="Math Fight Club" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Math</span>
+            <h3 class="game-card-title">Math Fight Club</h3>
+            <a href="/oyun/math-fight-club/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-hot">POPÜLER</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="merge-royal">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/merge-royal/icon/merge-royal.png?w=105" alt="Merge Royal" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Merge Royal</h3>
+            <a href="/oyun/merge-royal/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="kobadoo-numbers">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/kobadoo-numbers/icon/kobadoo-numbers.png?w=105" alt="Kobadoo Numbers" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Kobadoo Numbers</h3>
+            <a href="/oyun/kobadoo-numbers/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="kobadoo-shapes">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/kobadoo-shapes/icon/kobadoo-shapes.png?w=105" alt="Kobadoo Shapes" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Trivia</span>
+            <h3 class="game-card-title">Kobadoo Shapes</h3>
+            <a href="/oyun/kobadoo-shapes/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+</div>
             </section>
 
             <!-- 3. New Games -->
@@ -253,7 +682,278 @@
                 <div class="home-section-header">
                     <h2 class="home-section-title"><span class="section-badge new-badge">Yeni</span> Yeni Eklenenler</h2>
                 </div>
-                <div class="games-grid" id="new-games-grid"></div>
+                <div class="games-grid" id="new-games-grid">
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-new">YENİ</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="my-first-100-words">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/my-100-first-words/icon/my-100-first-words.png?w=105" alt="My First 100 Words" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Educational</span>
+            <h3 class="game-card-title">My First 100 Words</h3>
+            <a href="/oyun/my-first-100-words/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="trap-the-convoy">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/trap-the-convoy/icon/trap-the-convoy.png?w=105" alt="Trap the Convoy" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Tanks</span>
+            <h3 class="game-card-title">Trap the Convoy</h3>
+            <a href="/oyun/trap-the-convoy/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="yenemy">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/yenemy-io/icon/yenemy-io.png?w=105" alt="Yenemy" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Io</span>
+            <h3 class="game-card-title">Yenemy</h3>
+            <a href="/oyun/yenemy/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="kobadoo-arithmetic">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/kobadoo-arithmetic/icon/kobadoo-arithmetic.png?w=105" alt="Kobadoo Arithmetic" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Math</span>
+            <h3 class="game-card-title">Kobadoo Arithmetic</h3>
+            <a href="/oyun/kobadoo-arithmetic/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        <span class="card-badge badge-new">YENİ</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="kobadoo-flags">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/kobadoo-flags/icon/kobadoo-flags.png?w=105" alt="Kobadoo Flags" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Trivia</span>
+            <h3 class="game-card-title">Kobadoo Flags</h3>
+            <a href="/oyun/kobadoo-flags/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="war-the-knights">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/war-the-knights/icon/war-the-knights.png?w=105" alt="War the Knights" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Strategy</span>
+            <h3 class="game-card-title">War the Knights</h3>
+            <a href="/oyun/war-the-knights/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="dispatch-panic">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/dispatch-panic/icon/dispatch-panic.png?w=105" alt="Dispatch Panic" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Casual</span>
+            <h3 class="game-card-title">Dispatch Panic</h3>
+            <a href="/oyun/dispatch-panic/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="bus-driver-simulator-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/bus-driver-simulator-3d/icon/bus-driver-simulator-3d.png?w=105" alt="Bus Driver Simulator 3D" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Driving</span>
+            <h3 class="game-card-title">Bus Driver Simulator 3D</h3>
+            <a href="/oyun/bus-driver-simulator-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-new">YENİ</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="three-cups-game">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/three-cups-game/icon/three-cups-game.png?w=105" alt="Three Cups Game" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Three Cups Game</h3>
+            <a href="/oyun/three-cups-game/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="body-drop-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/body-drop-3d/icon/body-drop-3d.png?w=105" alt="Body Drop 3D" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Driving</span>
+            <h3 class="game-card-title">Body Drop 3D</h3>
+            <a href="/oyun/body-drop-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="parmesan-partisan">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/parmesan-partisan/icon/parmesan-partisan.png?w=105" alt="Parmesan Partisan" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Parmesan Partisan</h3>
+            <a href="/oyun/parmesan-partisan/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="hoops-and-fruits">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/hoops-and-fruits/icon/hoops-and-fruits.png?w=105" alt="Hoops & Fruits" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Hoops & Fruits</h3>
+            <a href="/oyun/hoops-and-fruits/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-new">YENİ</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="cerkio">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/cerkio/icon/cerkio.png?w=105" alt="Cerkio" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Cerkio</h3>
+            <a href="/oyun/cerkio/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="twin-peeks">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/twin-peeks/icon/twin-peeks.png?w=105" alt="Twin Peeks" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Hidden-object</span>
+            <h3 class="game-card-title">Twin Peeks</h3>
+            <a href="/oyun/twin-peeks/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="gelatino">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/gelatino/icon/gelatino.png?w=105" alt="Gelatino" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Gelatino</h3>
+            <a href="/oyun/gelatino/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="turbo-crash-test">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/turbo-dismounting/icon/turbo-dismounting.png?w=105" alt="Turbo Crash Test" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">Turbo Crash Test</h3>
+            <a href="/oyun/turbo-crash-test/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        <span class="card-badge badge-new">YENİ</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="penalty-kick-wiz">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/penalty-kick-wiz/icon/penalty-kick-wiz.png?w=105" alt="Penalty Kick Wiz" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Sports</span>
+            <h3 class="game-card-title">Penalty Kick Wiz</h3>
+            <a href="/oyun/penalty-kick-wiz/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="stickman-warriors">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/stickman-warriors-1/icon/stickman-warriors-1.png?w=105" alt="Stickman Warriors" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">Stickman Warriors</h3>
+            <a href="/oyun/stickman-warriors/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+</div>
             </section>
 
             <!-- 4. Savaş & Aksiyon -->
@@ -262,7 +962,188 @@
                     <h2 class="home-section-title">⚔️ Savaş ve Aksiyon</h2>
                     <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.95rem;">Heyecan verici maceralara atılın, nişancı (FPS) oyunlarıyla rakiplerinizi alt edin ve aksiyonun tadını çıkarın. Silah oyunları ve daha fazlası burada.</p>
                 </div>
-                <div class="games-grid" id="war-games-grid"></div>
+                <div class="games-grid" id="war-games-grid">
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        <span class="card-badge badge-best">AKSİYON</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="stickman-street-fighting-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/stickman-street-fighting/icon/stickman-street-fighting.png?w=105" alt="Stickman Street Fighting 3D" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">Stickman Street Fighting 3D</h3>
+            <a href="/oyun/stickman-street-fighting-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="war" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="funny-shooter-2">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/funny-shooter-2/icon/funny-shooter-2.png?w=105" alt="Funny Shooter 2" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Shooting</span>
+            <h3 class="game-card-title">Funny Shooter 2</h3>
+            <a href="/oyun/funny-shooter-2/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="morphit">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/morphit/icon/morphit.png?w=105" alt="Morphit" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Morphit</h3>
+            <a href="/oyun/morphit/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="going-right">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/going-right/icon/going-right.png?w=105" alt="Going Right" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Animal</span>
+            <h3 class="game-card-title">Going Right</h3>
+            <a href="/oyun/going-right/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="knockback-knights">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/knockback-knights/icon/knockback-knights.png?w=105" alt="Knockback Knights" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">Knockback Knights</h3>
+            <a href="/oyun/knockback-knights/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="epic-duck">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/epic-duck/icon/epic-duck.png?w=105" alt="Epic Duck" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Epic Duck</h3>
+            <a href="/oyun/epic-duck/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-best">AKSİYON</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="injection-invasion">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/injection-invasion/icon/injection-invasion.png?w=105" alt="Injection Invasion" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Injection Invasion</h3>
+            <a href="/oyun/injection-invasion/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="santabalt">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/santabalt/icon/santabalt.png?w=105" alt="Santabalt" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Christmas</span>
+            <h3 class="game-card-title">Santabalt</h3>
+            <a href="/oyun/santabalt/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="evo-pit">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/evo-pit/icon/evo-pit.png?w=105" alt="Evo Pit" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Io</span>
+            <h3 class="game-card-title">Evo Pit</h3>
+            <a href="/oyun/evo-pit/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="hoop-world">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/hoop-world/icon/hoop-world.png?w=105" alt="Hoop World" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Basketball</span>
+            <h3 class="game-card-title">Hoop World</h3>
+            <a href="/oyun/hoop-world/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="commando-force-2">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/commando-force-2/icon/commando-force-2.png?w=105" alt="Commando Force 2" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">First-person-shooter</span>
+            <h3 class="game-card-title">Commando Force 2</h3>
+            <a href="/oyun/commando-force-2/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="lotl-spa">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/lotl-spa/icon/lotl-spa.png?w=105" alt="Lotl Spa" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Clicker</span>
+            <h3 class="game-card-title">Lotl Spa</h3>
+            <a href="/oyun/lotl-spa/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+</div>
             </section>
 
             <!-- 5. Araba & Yarış -->
@@ -270,7 +1151,188 @@
                 <div class="home-section-header">
                     <h2 class="home-section-title">🏎️ Araba ve Yarış</h2>
                 </div>
-                <div class="games-grid" id="racing-games-grid"></div>
+                <div class="games-grid" id="racing-games-grid">
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        <span class="card-badge badge-best">YARIŞ</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="moto-x3m-spooky-land">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/moto-x3m-spooky-land/icon/moto-x3m-spooky-land.png?w=105" alt="Moto X3M: Spooky Land" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Racing</span>
+            <h3 class="game-card-title">Moto X3M: Spooky Land</h3>
+            <a href="/oyun/moto-x3m-spooky-land/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="slope-racing-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/slope-racing-3d/icon/slope-racing-3d.png?w=105" alt="Slope Racing 3D" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Slope Racing 3D</h3>
+            <a href="/oyun/slope-racing-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="val-d-agri-race">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/val-d-agri-race/icon/val-d-agri-race.png?w=105" alt="Val d'Agri Race" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Car</span>
+            <h3 class="game-card-title">Val d'Agri Race</h3>
+            <a href="/oyun/val-d-agri-race/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="endless-car-chase">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/endless-car-chase/icon/endless-car-chase.png?w=105" alt="Endless Car Chase" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Racing</span>
+            <h3 class="game-card-title">Endless Car Chase</h3>
+            <a href="/oyun/endless-car-chase/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="car-crash-test">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/car-crash-test/icon/car-crash-test.png?w=105" alt="Car Crash Test" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Car Crash Test</h3>
+            <a href="/oyun/car-crash-test/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="cauldron-counter">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/cauldron-counter/icon/cauldron-counter.png?w=105" alt="Cauldron Counter" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Driving</span>
+            <h3 class="game-card-title">Cauldron Counter</h3>
+            <a href="/oyun/cauldron-counter/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        <span class="card-badge badge-best">YARIŞ</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="demolition-derby-life">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/demolition-derby-life/icon/demolition-derby-life.png?w=105" alt="Demolition Derby Life" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Racing</span>
+            <h3 class="game-card-title">Demolition Derby Life</h3>
+            <a href="/oyun/demolition-derby-life/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="emberdeck">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/emberdeck/icon/emberdeck.png?w=105" alt="Emberdeck" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Card</span>
+            <h3 class="game-card-title">Emberdeck</h3>
+            <a href="/oyun/emberdeck/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="ultimate-flying-car">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/ultimate-flying-car/icon/ultimate-flying-car.png?w=105" alt="Ultimate Flying Car" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Sports</span>
+            <h3 class="game-card-title">Ultimate Flying Car</h3>
+            <a href="/oyun/ultimate-flying-car/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="drink-drive-survive">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/drink-drive-survive/icon/drink-drive-survive.png?w=105" alt="Drink Drive Survive" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Racing</span>
+            <h3 class="game-card-title">Drink Drive Survive</h3>
+            <a href="/oyun/drink-drive-survive/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="wear-the-helmet">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/wear-the-helmet/icon/wear-the-helmet.png?w=105" alt="Wear the Helmet" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Racing</span>
+            <h3 class="game-card-title">Wear the Helmet</h3>
+            <a href="/oyun/wear-the-helmet/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="adventure" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="supercars-zombie-driving">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/supercars-zombie-driving/icon/supercars-zombie-driving.png?w=105" alt="Supercars Zombie Driving" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Adventure</span>
+            <h3 class="game-card-title">Supercars Zombie Driving</h3>
+            <a href="/oyun/supercars-zombie-driving/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+</div>
             </section>
 
             <!-- 6. Kız Oyunları -->
@@ -278,7 +1340,188 @@
                 <div class="home-section-header">
                     <h2 class="home-section-title">🎀 Kız Oyunları</h2>
                 </div>
-                <div class="games-grid" id="girls-games-grid"></div>
+                <div class="games-grid" id="girls-games-grid">
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-best">KIZ</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="sokoballs">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/sokoballs/icon/sokoballs.png?w=105" alt="Sokoballs" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Sokoballs</h3>
+            <a href="/oyun/sokoballs/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="royal-couple-halloween-party">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/royal-couple-halloween-party/icon/royal-couple-halloween-party.png?w=105" alt="Royal Couple Halloween Party" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Games-for-girls</span>
+            <h3 class="game-card-title">Royal Couple Halloween Party</h3>
+            <a href="/oyun/royal-couple-halloween-party/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="yummy-toast">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/yummy-toast/icon/yummy-toast.png?w=105" alt="Yummy Toast" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Games-for-girls</span>
+            <h3 class="game-card-title">Yummy Toast</h3>
+            <a href="/oyun/yummy-toast/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="dta-6">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/dta-6/icon/dta-6.png?w=105" alt="DTA 6" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">DTA 6</h3>
+            <a href="/oyun/dta-6/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="ragdoll-mega-dunk">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/ragdoll-mega-dunk/icon/ragdoll-mega-dunk.png?w=105" alt="Ragdoll Mega Dunk" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Sports</span>
+            <h3 class="game-card-title">Ragdoll Mega Dunk</h3>
+            <a href="/oyun/ragdoll-mega-dunk/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="adventure" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="push-noob">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/push-noob/icon/push-noob.png?w=105" alt="Push Noob" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Adventure</span>
+            <h3 class="game-card-title">Push Noob</h3>
+            <a href="/oyun/push-noob/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        <span class="card-badge badge-best">KIZ</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="anime-couple-dress-up">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/anime-couple-dress-up/icon/anime-couple-dress-up.png?w=105" alt="Anime Couple Dress Up" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Dress-up</span>
+            <h3 class="game-card-title">Anime Couple Dress Up</h3>
+            <a href="/oyun/anime-couple-dress-up/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="fruit-merger">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/fruit-merger/icon/fruit-merger.png?w=105" alt="Fruit Merger" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Fashion</span>
+            <h3 class="game-card-title">Fruit Merger</h3>
+            <a href="/oyun/fruit-merger/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="my-sweet-candy-outfits">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/my-sweet-candy-outfits/icon/my-sweet-candy-outfits.png?w=105" alt="My Sweet Candy Outfits" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Dress-up</span>
+            <h3 class="game-card-title">My Sweet Candy Outfits</h3>
+            <a href="/oyun/my-sweet-candy-outfits/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="adventure" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="merge-mine-idle-clicker">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/merge-mine-idle-clicker/icon/merge-mine-idle-clicker.png?w=105" alt="Merge Mine - Idle Clicker" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Adventure</span>
+            <h3 class="game-card-title">Merge Mine - Idle Clicker</h3>
+            <a href="/oyun/merge-mine-idle-clicker/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="adventure" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="flamit">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/flamit/icon/flamit.png?w=105" alt="Flamit" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Adventure</span>
+            <h3 class="game-card-title">Flamit</h3>
+            <a href="/oyun/flamit/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="stickman-street-fighting-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/stickman-street-fighting/icon/stickman-street-fighting.png?w=105" alt="Stickman Street Fighting 3D" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">Stickman Street Fighting 3D</h3>
+            <a href="/oyun/stickman-street-fighting-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+</div>
             </section>
 
             <!-- 7. Zeka & Beceri -->
@@ -287,7 +1530,188 @@
                     <h2 class="home-section-title">🧩 Zeka ve Beceri</h2>
                     <p style="color: var(--text-secondary); margin-top: 0.5rem; font-size: 0.95rem;">Hem eğlenin hem de zihninizi geliştirin. Mantık bulmacaları, eşleştirme oyunları ve klasik arcade türü el becerisi gerektiren oyunları ücretsiz deneyin.</p>
                 </div>
-                <div class="games-grid" id="skill-games-grid"></div>
+                <div class="games-grid" id="skill-games-grid">
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        <span class="card-badge badge-best">ZEKA</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="robot-band-find-the-differences">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/robot-band-find-the-differences/icon/robot-band-find-the-differences.png?w=105" alt="Robot Band - Find the differences" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Robot Band - Find the differences</h3>
+            <a href="/oyun/robot-band-find-the-differences/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="impossible-repair-shop">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/impossible-repair-shop/icon/impossible-repair-shop.png?w=105" alt="Impossible Repair Shop" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Brain</span>
+            <h3 class="game-card-title">Impossible Repair Shop</h3>
+            <a href="/oyun/impossible-repair-shop/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="gravity-merge">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/gravity-merge/icon/gravity-merge.png?w=105" alt="Gravity Merge" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Gravity Merge</h3>
+            <a href="/oyun/gravity-merge/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="tentrix">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/tentrix/icon/tentrix.png?w=105" alt="TenTrix" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Block</span>
+            <h3 class="game-card-title">TenTrix</h3>
+            <a href="/oyun/tentrix/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="everything-forge">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/everything-forge/icon/everything-forge.png?w=105" alt="Everything Forge" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Everything Forge</h3>
+            <a href="/oyun/everything-forge/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="spinning-oia-oia-cat-bricker">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/spinning-oia-oia-cat-bricker/icon/spinning-oia-oia-cat-bricker.png?w=105" alt="Spinning Oia Oia Cat Bricker" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Block</span>
+            <h3 class="game-card-title">Spinning Oia Oia Cat Bricker</h3>
+            <a href="/oyun/spinning-oia-oia-cat-bricker/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        <span class="card-badge badge-best">ZEKA</span>
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="match-mystery">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/match-mystery/icon/match-mystery.png?w=105" alt="Match Mystery" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Bejeweled</span>
+            <h3 class="game-card-title">Match Mystery</h3>
+            <a href="/oyun/match-mystery/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="puzzle-drive">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/puzzle-drive/icon/puzzle-drive.png?w=105" alt="Puzzle Drive" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Puzzle Drive</h3>
+            <a href="/oyun/puzzle-drive/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="draw-save-puzzle">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/draw-save-puzzle/icon/draw-save-puzzle.png?w=105" alt="Draw Save Puzzle" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Draw Save Puzzle</h3>
+            <a href="/oyun/draw-save-puzzle/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="candy-match-saga-2">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/candy-match-saga-2/icon/candy-match-saga-2.png?w=105" alt="Candy Match Saga 2" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Bejeweled</span>
+            <h3 class="game-card-title">Candy Match Saga 2</h3>
+            <a href="/oyun/candy-match-saga-2/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="santa-wood-cutter">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/santa-wood-cutter/icon/santa-wood-cutter.png?w=105" alt="Santa Wood Cutter" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Skill</span>
+            <h3 class="game-card-title">Santa Wood Cutter</h3>
+            <a href="/oyun/santa-wood-cutter/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="skibidi-match-master">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/skibidi-match-master/icon/skibidi-match-master.png?w=105" alt="Skibidi Match Master" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Bejeweled</span>
+            <h3 class="game-card-title">Skibidi Match Master</h3>
+            <a href="/oyun/skibidi-match-master/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+</div>
             </section>
 
             <!-- 8. Tüm Oyunlar -->
@@ -295,7 +1719,728 @@
                 <div class="home-section-header">
                     <h2 class="home-section-title">🎮 Tüm Oyunlar</h2>
                 </div>
-                <div class="games-grid" id="all-games-grid"></div>
+                <div class="games-grid" id="all-games-grid">
+<div class="game-card fade-in-stagger" data-category-type="adventure" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="merge-mine-idle-clicker">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/merge-mine-idle-clicker/icon/merge-mine-idle-clicker.png?w=105" alt="Merge Mine - Idle Clicker" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Adventure</span>
+            <h3 class="game-card-title">Merge Mine - Idle Clicker</h3>
+            <a href="/oyun/merge-mine-idle-clicker/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="adventure" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="flamit">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/flamit/icon/flamit.png?w=105" alt="Flamit" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Adventure</span>
+            <h3 class="game-card-title">Flamit</h3>
+            <a href="/oyun/flamit/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="stickman-street-fighting-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/stickman-street-fighting/icon/stickman-street-fighting.png?w=105" alt="Stickman Street Fighting 3D" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">Stickman Street Fighting 3D</h3>
+            <a href="/oyun/stickman-street-fighting-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="war" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="funny-shooter-2">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/funny-shooter-2/icon/funny-shooter-2.png?w=105" alt="Funny Shooter 2" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Shooting</span>
+            <h3 class="game-card-title">Funny Shooter 2</h3>
+            <a href="/oyun/funny-shooter-2/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="morphit">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/morphit/icon/morphit.png?w=105" alt="Morphit" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Morphit</h3>
+            <a href="/oyun/morphit/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="robot-band-find-the-differences">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/robot-band-find-the-differences/icon/robot-band-find-the-differences.png?w=105" alt="Robot Band - Find the differences" class="game-card-img" loading="eager">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Robot Band - Find the differences</h3>
+            <a href="/oyun/robot-band-find-the-differences/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="sokoballs">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/sokoballs/icon/sokoballs.png?w=105" alt="Sokoballs" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Sokoballs</h3>
+            <a href="/oyun/sokoballs/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="going-right">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/going-right/icon/going-right.png?w=105" alt="Going Right" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Animal</span>
+            <h3 class="game-card-title">Going Right</h3>
+            <a href="/oyun/going-right/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="canjump">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/canjump/icon/canjump.png?w=105" alt="Canjump" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Canjump</h3>
+            <a href="/oyun/canjump/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="moto-x3m-spooky-land">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/moto-x3m-spooky-land/icon/moto-x3m-spooky-land.png?w=105" alt="Moto X3M: Spooky Land" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Racing</span>
+            <h3 class="game-card-title">Moto X3M: Spooky Land</h3>
+            <a href="/oyun/moto-x3m-spooky-land/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="slope-racing-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/slope-racing-3d/icon/slope-racing-3d.png?w=105" alt="Slope Racing 3D" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Slope Racing 3D</h3>
+            <a href="/oyun/slope-racing-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="knockback-knights">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/knockback-knights/icon/knockback-knights.png?w=105" alt="Knockback Knights" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">Knockback Knights</h3>
+            <a href="/oyun/knockback-knights/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="royal-couple-halloween-party">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/royal-couple-halloween-party/icon/royal-couple-halloween-party.png?w=105" alt="Royal Couple Halloween Party" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Games-for-girls</span>
+            <h3 class="game-card-title">Royal Couple Halloween Party</h3>
+            <a href="/oyun/royal-couple-halloween-party/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="epic-duck">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/epic-duck/icon/epic-duck.png?w=105" alt="Epic Duck" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Epic Duck</h3>
+            <a href="/oyun/epic-duck/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="impossible-repair-shop">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/impossible-repair-shop/icon/impossible-repair-shop.png?w=105" alt="Impossible Repair Shop" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Brain</span>
+            <h3 class="game-card-title">Impossible Repair Shop</h3>
+            <a href="/oyun/impossible-repair-shop/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="val-d-agri-race">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/val-d-agri-race/icon/val-d-agri-race.png?w=105" alt="Val d'Agri Race" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Car</span>
+            <h3 class="game-card-title">Val d'Agri Race</h3>
+            <a href="/oyun/val-d-agri-race/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="injection-invasion">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/injection-invasion/icon/injection-invasion.png?w=105" alt="Injection Invasion" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Injection Invasion</h3>
+            <a href="/oyun/injection-invasion/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="santabalt">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/santabalt/icon/santabalt.png?w=105" alt="Santabalt" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Christmas</span>
+            <h3 class="game-card-title">Santabalt</h3>
+            <a href="/oyun/santabalt/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="endless-car-chase">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/endless-car-chase/icon/endless-car-chase.png?w=105" alt="Endless Car Chase" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Racing</span>
+            <h3 class="game-card-title">Endless Car Chase</h3>
+            <a href="/oyun/endless-car-chase/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="adventure" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="the-floor-is-lying">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/the-floor-is-lying/icon/the-floor-is-lying.png?w=105" alt="The Floor Is Lying" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Platformer</span>
+            <h3 class="game-card-title">The Floor Is Lying</h3>
+            <a href="/oyun/the-floor-is-lying/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="car-crash-test">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/car-crash-test/icon/car-crash-test.png?w=105" alt="Car Crash Test" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Car Crash Test</h3>
+            <a href="/oyun/car-crash-test/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="gravity-merge">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/gravity-merge/icon/gravity-merge.png?w=105" alt="Gravity Merge" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Gravity Merge</h3>
+            <a href="/oyun/gravity-merge/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="evo-pit">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/evo-pit/icon/evo-pit.png?w=105" alt="Evo Pit" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Io</span>
+            <h3 class="game-card-title">Evo Pit</h3>
+            <a href="/oyun/evo-pit/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="hoop-world">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/hoop-world/icon/hoop-world.png?w=105" alt="Hoop World" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Basketball</span>
+            <h3 class="game-card-title">Hoop World</h3>
+            <a href="/oyun/hoop-world/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="run-and-jump-jumbo-runner">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/ran-and-jump-jambo-runner/icon/ran-and-jump-jambo-runner.png?w=105" alt="Run & Jump Jumbo Runner" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Run & Jump Jumbo Runner</h3>
+            <a href="/oyun/run-and-jump-jumbo-runner/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="commando-force-2">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/commando-force-2/icon/commando-force-2.png?w=105" alt="Commando Force 2" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">First-person-shooter</span>
+            <h3 class="game-card-title">Commando Force 2</h3>
+            <a href="/oyun/commando-force-2/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="tentrix">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/tentrix/icon/tentrix.png?w=105" alt="TenTrix" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Block</span>
+            <h3 class="game-card-title">TenTrix</h3>
+            <a href="/oyun/tentrix/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="everything-forge">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/everything-forge/icon/everything-forge.png?w=105" alt="Everything Forge" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Puzzle</span>
+            <h3 class="game-card-title">Everything Forge</h3>
+            <a href="/oyun/everything-forge/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="lotl-spa">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/lotl-spa/icon/lotl-spa.png?w=105" alt="Lotl Spa" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Clicker</span>
+            <h3 class="game-card-title">Lotl Spa</h3>
+            <a href="/oyun/lotl-spa/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="strike-galaxy-attack">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/strike-galaxy-attack/icon/strike-galaxy-attack.png?w=105" alt="Strike Galaxy Attack" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Strike Galaxy Attack</h3>
+            <a href="/oyun/strike-galaxy-attack/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="dotto-botto">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/dotto-botto/icon/dotto-botto.png?w=105" alt="Dotto Botto" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Retro</span>
+            <h3 class="game-card-title">Dotto Botto</h3>
+            <a href="/oyun/dotto-botto/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="adventure" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="war-of-tanks-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/war-of-tanks-3d/icon/war-of-tanks-3d.png?w=105" alt="War of Tanks 3D" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Adventure</span>
+            <h3 class="game-card-title">War of Tanks 3D</h3>
+            <a href="/oyun/war-of-tanks-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="bouncing-egg">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/bouncing-egg/icon/bouncing-egg.png?w=105" alt="Bouncing Egg" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Bouncing Egg</h3>
+            <a href="/oyun/bouncing-egg/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="evil-invader">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/evil-invader/icon/evil-invader.png?w=105" alt="Evil Invader" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Evil Invader</h3>
+            <a href="/oyun/evil-invader/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="cauldron-counter">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/cauldron-counter/icon/cauldron-counter.png?w=105" alt="Cauldron Counter" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Driving</span>
+            <h3 class="game-card-title">Cauldron Counter</h3>
+            <a href="/oyun/cauldron-counter/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="yummy-toast">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/yummy-toast/icon/yummy-toast.png?w=105" alt="Yummy Toast" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Games-for-girls</span>
+            <h3 class="game-card-title">Yummy Toast</h3>
+            <a href="/oyun/yummy-toast/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="perimeter-legate-edition">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/perimeter/icon/perimeter.png?w=105" alt="Perimeter - Legate Edition" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Strategy</span>
+            <h3 class="game-card-title">Perimeter - Legate Edition</h3>
+            <a href="/oyun/perimeter-legate-edition/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="idle-craft-3d">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/idle-craft-3d-1/icon/idle-craft-3d-1.png?w=105" alt="Idle Craft 3D" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Idle</span>
+            <h3 class="game-card-title">Idle Craft 3D</h3>
+            <a href="/oyun/idle-craft-3d/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="spinning-oia-oia-cat-bricker">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/spinning-oia-oia-cat-bricker/icon/spinning-oia-oia-cat-bricker.png?w=105" alt="Spinning Oia Oia Cat Bricker" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Block</span>
+            <h3 class="game-card-title">Spinning Oia Oia Cat Bricker</h3>
+            <a href="/oyun/spinning-oia-oia-cat-bricker/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="robo-butcher">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/robo-butcher/icon/robo-butcher.png?w=105" alt="Robo-Butcher" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Robots</span>
+            <h3 class="game-card-title">Robo-Butcher</h3>
+            <a href="/oyun/robo-butcher/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="racing" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="demolition-derby-life">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/demolition-derby-life/icon/demolition-derby-life.png?w=105" alt="Demolition Derby Life" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Racing</span>
+            <h3 class="game-card-title">Demolition Derby Life</h3>
+            <a href="/oyun/demolition-derby-life/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="action" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="merge-battle-tactics">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/merge-battle-tactics/icon/merge-battle-tactics.png?w=105" alt="Merge Battle Tactics" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Action</span>
+            <h3 class="game-card-title">Merge Battle Tactics</h3>
+            <a href="/oyun/merge-battle-tactics/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="face-breaker">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/face-breaker/icon/face-breaker.png?w=105" alt="Face Breaker" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">Face Breaker</h3>
+            <a href="/oyun/face-breaker/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="drill-to-the-core">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/drill-to-the-core/icon/drill-to-the-core.png?w=105" alt="Drill to the Core" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Idle</span>
+            <h3 class="game-card-title">Drill to the Core</h3>
+            <a href="/oyun/drill-to-the-core/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="emberdeck">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/emberdeck/icon/emberdeck.png?w=105" alt="Emberdeck" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Card</span>
+            <h3 class="game-card-title">Emberdeck</h3>
+            <a href="/oyun/emberdeck/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="skill" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="battlebox">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/battlebox/icon/battlebox.png?w=105" alt="BattleBox" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Arcade</span>
+            <h3 class="game-card-title">BattleBox</h3>
+            <a href="/oyun/battlebox/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="spider-evolution-runner-game">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/spider-evolution-runner-game/icon/spider-evolution-runner-game.png?w=105" alt="Spider Evolution Runner Game" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Runner</span>
+            <h3 class="game-card-title">Spider Evolution Runner Game</h3>
+            <a href="/oyun/spider-evolution-runner-game/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+<div class="game-card fade-in-stagger" data-category-type="all" style="cursor: pointer;">
+        
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="ultimate-flying-car">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="https://img.gamepix.com/games/ultimate-flying-car/icon/ultimate-flying-car.png?w=105" alt="Ultimate Flying Car" class="game-card-img" loading="lazy">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">Sports</span>
+            <h3 class="game-card-title">Ultimate Flying Car</h3>
+            <a href="/oyun/ultimate-flying-car/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>
+</div>
             </section>
         </div>
 
@@ -453,18 +2598,26 @@
             </div>
             <div class="footer-links">
                 <a href="/">Anasayfa</a>
-                <a href="/kategori/aksiyon/">Aksiyon Oyunları</a>
-                <a href="/kategori/savas/">Savaş Oyunları</a>
-                <a href="/kategori/yaris/">Yarış Oyunları</a>
+                <a href="/kategori/aksiyon/">Aksiyon</a>
+                <a href="/kategori/savas/">Savaş</a>
+                <a href="/kategori/yaris/">Yarış</a>
                 <a href="/kategori/beceri/">Zeka &amp; Beceri</a>
-                <a href="/kategori/macera/">Macera Oyunları</a>
-                <a href="/kategori/kiz/">Kız Oyunları</a>
-                <a href="/kategori/iki-kisilik/">2 Kişilik Oyunlar</a>
+                <a href="/kategori/macera/">Macera</a>
+                <a href="/kategori/kiz/">Kız</a>
+                <a href="/kategori/iki-kisilik/">2 Kişilik</a>
                 <a href="/kategori/okul-oyunlari/">Okul Oyunları</a>
-                <a href="/blog.html">Blog &amp; Makaleler</a>
+                <a href="/kategori/obby-oyunlari/">Obby Oyunları</a>
+                <a href="/kategori/stickman-oyunlari/">Stickman</a>
+                <a href="/kategori/zombi-oyunlari/">Zombi</a>
+                <a href="/kategori/futbol-oyunlari/">Futbol</a>
+                <a href="/kategori/akilli-tahta-oyunlari/">Akıllı Tahta</a>
+                <a href="/kategori/drift-oyunlari/">Drift</a>
+                <a href="/kategori/makyaj-oyunlari/">Makyaj</a>
+                <a href="/kategori/strateji-oyunlari/">Strateji</a>
+                <a href="/blog.html">Blog</a>
                 <a href="/about.html">Hakkımızda</a>
-                <a href="/privacy.html">Gizlilik Politikası</a>
-                <a href="/terms.html">Kullanım Koşulları</a>
+                <a href="/privacy.html">Gizlilik</a>
+                <a href="/terms.html">Koşullar</a>
                 <a href="/contact.html">İletişim</a>
             </div>
             <p class="footer-copy">&copy; 2026 AlyaGames. Tüm Hakları Saklıdır. GameDistribution API ile güçlendirilmiştir.</p>

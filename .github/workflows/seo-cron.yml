@@ -1,0 +1,38 @@
+name: Weekly SEO Catalog & Sitemap Updater
+
+on:
+  schedule:
+    # Runs every Monday at 06:00 UTC to fetch new GamePix & GameDistribution games and update sitemap.xml
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-seo-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Generate Static SEO Pages, Pre-rendered Homepage & Sitemap
+        run: python build_seo_pages.py
+
+      - name: Commit and Push SEO Updates
+        run: |
+          git config --local user.email "github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git add -A
+          if ! git diff --staged --quiet; then
+            git commit -m "chore(seo): automated weekly catalog, pre-rendered homepage and sitemap update"
+            git push
+          else
+            echo "No new catalog changes to commit."
+          fi
+

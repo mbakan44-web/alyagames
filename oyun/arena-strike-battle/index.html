@@ -320,16 +320,6 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
-        <a href="/oyun/battle-shot-elite/" class="game-card" title="Battle Shot Elite Oyunu Oyna">
-            <div class="game-card-img-wrapper">
-                <img src="https://img.gamedistribution.com/941884f64e32420fb9791859d7d3fba3-512x384.jpg" alt="Battle Shot Elite" class="game-card-img" loading="lazy">
-            </div>
-            <div class="game-card-content">
-                <span class="game-card-category">shooting</span>
-                <h3 class="game-card-title">Battle Shot Elite</h3>
-                <span class="play-btn-pill">Oyna</span>
-            </div>
-        </a>
         <a href="/oyun/blocky-archer-run/" class="game-card" title="Blocky Archer Run Oyunu Oyna">
             <div class="game-card-img-wrapper">
                 <img src="https://img.gamedistribution.com/665328d407a547f2a003ed3723dedf16-512x512.jpg" alt="Blocky Archer Run" class="game-card-img" loading="lazy">
@@ -360,15 +350,6 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
-            </div>
-        </aside>
-    </main>
-
-    <!-- More Games in Category Section for Strong Internal Linking -->
-    <section class="more-category-games">
-        <h2>🎮 Savaş ve Silah Oyunları Kategorisindeki Diğer Oyunlar</h2>
-        <div class="games-grid" style="display: grid;">
-            
         <a href="/oyun/bubble-pillar/" class="game-card" title="Bubble Pillar Oyunu Oyna">
             <div class="game-card-img-wrapper">
                 <img src="https://img.gamedistribution.com/6fb2973d266e4c4e8404ed432d3257da-512x512.jpg" alt="Bubble Pillar" class="game-card-img" loading="lazy">
@@ -379,6 +360,15 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
+            </div>
+        </aside>
+    </main>
+
+    <!-- More Games in Category Section for Strong Internal Linking -->
+    <section class="more-category-games">
+        <h2>🎮 Savaş ve Silah Oyunları Kategorisindeki Diğer Oyunlar</h2>
+        <div class="games-grid" style="display: grid;">
+            
         <a href="/oyun/bubble-pop-frenzy/" class="game-card" title="Bubble Pop Frenzy Oyunu Oyna">
             <div class="game-card-img-wrapper">
                 <img src="https://img.gamedistribution.com/ba6c9736d8144de78c4b2bccb5ae558c-512x512.jpg" alt="Bubble Pop Frenzy" class="game-card-img" loading="lazy">
@@ -449,6 +439,16 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
+        <a href="/oyun/bubble-sky/" class="game-card" title="Bubble Sky Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/daefbd4f826a4494bf9128151235df50-512x384.jpg" alt="Bubble Sky" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">shooting</span>
+                <h3 class="game-card-title">Bubble Sky</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
         </div>
     </section>
 
@@ -461,13 +461,22 @@
             </div>
             <div class="footer-links">
                 <a href="/">Anasayfa</a>
-                <a href="/kategori/aksiyon/">Aksiyon Oyunları</a>
-                <a href="/kategori/savas/">Savaş Oyunları</a>
-                <a href="/kategori/yaris/">Yarış Oyunları</a>
+                <a href="/kategori/aksiyon/">Aksiyon</a>
+                <a href="/kategori/savas/">Savaş</a>
+                <a href="/kategori/yaris/">Yarış</a>
                 <a href="/kategori/beceri/">Zeka &amp; Beceri</a>
-                <a href="/kategori/macera/">Macera Oyunları</a>
-                <a href="/kategori/kiz/">Kız Oyunları</a>
-                <a href="/kategori/iki-kisilik/">2 Kişilik Oyunlar</a>
+                <a href="/kategori/macera/">Macera</a>
+                <a href="/kategori/kiz/">Kız</a>
+                <a href="/kategori/iki-kisilik/">2 Kişilik</a>
+                <a href="/kategori/okul-oyunlari/">Okul Oyunları</a>
+                <a href="/kategori/obby-oyunlari/">Obby Oyunları</a>
+                <a href="/kategori/stickman-oyunlari/">Stickman</a>
+                <a href="/kategori/zombi-oyunlari/">Zombi</a>
+                <a href="/kategori/futbol-oyunlari/">Futbol</a>
+                <a href="/kategori/akilli-tahta-oyunlari/">Akıllı Tahta</a>
+                <a href="/kategori/drift-oyunlari/">Drift</a>
+                <a href="/kategori/makyaj-oyunlari/">Makyaj</a>
+                <a href="/kategori/strateji-oyunlari/">Strateji</a>
                 <a href="/blog.html">Blog</a>
                 <a href="/about.html">Hakkımızda</a>
                 <a href="/privacy.html">Gizlilik</a>
@@ -479,7 +488,6 @@
     </footer>
 
     <script>
-        // Track recently played game
         try {
             const recent = JSON.parse(localStorage.getItem('alyagames_recent') || '[]');
             const currentGame = { slug: "arena-strike-battle", title: "Arena Strike Battle", img: "https://img.gamedistribution.com/1bd090f478884877be24fb1e1fea1f23-512x512.jpg", cat: "Savaş ve Silah Oyunları" };
@@ -488,7 +496,6 @@
             localStorage.setItem('alyagames_recent', JSON.stringify(filtered.slice(0, 12)));
         } catch (e) {}
 
-        // Fullscreen Toggle
         document.getElementById('fullscreen-btn').addEventListener('click', () => {
             const iframe = document.getElementById('game-frame');
             if (iframe.requestFullscreen) iframe.requestFullscreen();
@@ -496,7 +503,6 @@
             else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
         });
 
-        // Favorite Toggle
         const favBtn = document.getElementById('fav-btn');
         const favIcon = document.getElementById('fav-icon');
         const slug = "arena-strike-battle";
@@ -526,7 +532,6 @@
             updateFavUI();
         });
 
-        // Share Button
         document.getElementById('share-btn').addEventListener('click', () => {
             if (navigator.share) {
                 navigator.share({ title: "Arena Strike Battle - AlyaGames", url: window.location.href });
@@ -536,7 +541,6 @@
             }
         });
 
-        // Theme Toggle
         const themeBtn = document.getElementById('theme-toggle');
         if (localStorage.getItem('theme') === 'dark') {
             document.body.classList.add('dark-mode');
@@ -548,7 +552,6 @@
             });
         }
 
-        // Search Input Redirect
         const searchInput = document.getElementById('header-search-input');
         if (searchInput) {
             searchInput.addEventListener('keydown', (e) => {
@@ -558,7 +561,6 @@
             });
         }
 
-        // Register Service Worker
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').catch(console.warn);

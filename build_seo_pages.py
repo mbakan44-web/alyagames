@@ -1,9 +1,9 @@
 """
-AlyaGames - Static SEO Page & Sitemap Generator
-Fetches catalog games from both GameDistribution and GamePix (plus curated games) and generates:
-1. Static SEO Landing Pages for each game (/oyun/<slug>/index.html) with rich Turkish SEO content & circular internal linking
-2. Static SEO Category Landing Pages (/kategori/<category>/index.html) with full crawlable game grids
-3. Dynamic, complete sitemap.xml with all game URLs for Google Search Console
+AlyaGames - Complete Static SEO Page, Pre-Rendered Homepage & Sitemap Generator
+1. Generates Static SEO Landing Pages for each game (/oyun/<slug>/index.html) with rich Turkish content & circular internal linking
+2. Generates 16 Static SEO Category & Niche Long-Tail Landing Pages (/kategori/<category>/index.html) with CollectionPage, ItemList & FAQPage JSON-LD
+3. Pre-renders GamePix games directly into index.html showcase sections (Hero Carousel, Editors' Choice, Popular, New, War, Racing, Girls, Skill, All) for 0ms LCP + injects WebSite, ItemList & FAQPage JSON-LD into index.html
+4. Generates complete sitemap.xml with all core, category, niche category, and game URLs
 """
 
 import os
@@ -28,6 +28,16 @@ def slugify(text):
 
 CURATED_GAMES = [
     {
+        'Title': 'Bike Obby Draw Pencil',
+        'Url': 'https://play.gamepix.com/bike-obby-draw-pencil/embed?sid=M4M77',
+        'Asset': ['https://img.gamedistribution.com/ccb3b200322c4779957dfee55c68f3fc-512x384.jpg'],
+        'Category': ['Puzzle', 'Skill'],
+        'Tag': ['skill', 'puzzle', 'bike', 'obby', 'draw'],
+        'Description': 'Bike Obby Draw Pencil ile yaratıcılığınızı ve reflekslerinizi konuşturun! Platformlar arasındaki boşluklara kaleminizle köprüler ve yollar çizerek bisikletli karakterinizi düşmeden bitiş çizgisine ulaştırın.',
+        'Instructions': 'W tuşu ile zıplayın, A ve D tuşları ile sola ve sağa hareket edin. Boşlukları ve uçurumları geçmek için farenizle (veya dokunmatik ekranda parmağınızla) köprü ve yol çizin.',
+        'Source': 'GamePix'
+    },
+    {
         'Title': 'Klumen',
         'Url': 'https://html5.gamedistribution.com/e24064f9b2594b189a8f504970436040/',
         'Asset': ['https://img.gamedistribution.com/e24064f9b2594b189a8f504970436040-512x384.jpg'],
@@ -36,16 +46,6 @@ CURATED_GAMES = [
         'Description': 'Klumen ile ışık iplikçiklerini birleştirin ve dinlendirici bir bulmaca deneyimi yaşayın. Merkezdeki yıldızdan tüm panoya ışık yayılana kadar her parçayı döndürün ve komşusuyla birleştirin.',
         'Instructions': 'Kareleri döndürmek için dokunun veya farenizle tıklayın. Merkezdeki yıldızdan gelen ışığın tüm panoya yayılması için tüm ışık yollarını birleştirin.',
         'Source': 'GameDistribution'
-    },
-    {
-        'Title': 'Bike Obby Draw Pencil',
-        'Url': 'https://play.gamepix.com/bike-obby-draw-pencil/embed?sid=M4M77',
-        'Asset': ['https://img.gamedistribution.com/ccb3b200322c4779957dfee55c68f3fc-512x384.jpg'],
-        'Category': ['Puzzle', 'Skill'],
-        'Tag': ['skill', 'puzzle', 'bike', 'obby'],
-        'Description': 'Bike Obby Draw Pencil ile yaratıcılığınızı ve reflekslerinizi konuşturun! Platformlar arasındaki boşluklara kaleminizle köprüler ve yollar çizerek bisikletli karakterinizi düşmeden bitiş çizgisine ulaştırın.',
-        'Instructions': 'W tuşu ile zıplayın, A ve D tuşları ile sola ve sağa hareket edin. Boşlukları ve uçurumları geçmek için farenizle (veya dokunmatik ekranda parmağınızla) köprü ve yol çizin.',
-        'Source': 'GamePix'
     }
 ]
 
@@ -117,6 +117,7 @@ def load_existing_local_games():
                     instr = re.sub(r'<[^>]+>', '', m_instr.group(1)).strip()
                 else:
                     instr = ''
+                source = 'GamePix' if 'gamepix.com' in url else 'LocalExisting'
                 local_games.append({
                     'Title': title,
                     'Url': url,
@@ -125,14 +126,15 @@ def load_existing_local_games():
                     'Tag': [cat_map_rev.get(cat_slug, 'action')],
                     'Description': desc,
                     'Instructions': instr,
-                    'Source': 'LocalExisting'
+                    'Source': source
                 })
         except Exception as e:
             print(f"  [!] Could not parse local game {folder}: {e}")
     return local_games
 
-def fetch_games(max_gd_pages=5, max_gp_pages=1):
+def fetch_games(max_gd_pages=5, max_gp_pages=2):
     all_games = []
+    gamepix_games = []
     seen_slugs = set()
 
     # 1. Add curated games first
@@ -141,17 +143,65 @@ def fetch_games(max_gd_pages=5, max_gp_pages=1):
         if s and s not in seen_slugs:
             seen_slugs.add(s)
             all_games.append(cg)
+            if cg.get('Source') == 'GamePix':
+                gamepix_games.append(cg)
 
-    # 1b. Preserve all existing local /oyun/<slug>/ games so no existing URL becomes orphaned or outdated
+    # 2. Fetch GamePix catalog first so GamePix metadata is fresh and prioritized
+    print(f"[*] Fetching games from GamePix API (pages 1 to {max_gp_pages}, pagination=96)...")
+    for page in range(1, max_gp_pages + 1):
+        gp_url = f"https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=96&page={page}"
+        try:
+            req = urllib.request.Request(gp_url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
+            with urllib.request.urlopen(req, timeout=20) as resp:
+                data = json.loads(resp.read().decode('utf-8'))
+                raw_games = data if isinstance(data, list) else (data.get('data') or data.get('items') or [])
+                added_gp = 0
+                for g in raw_games:
+                    title = (g.get('title') or '').strip()
+                    s = slugify(title)
+                    game_url = g.get('url') or ''
+                    if not title or not s or not game_url:
+                        continue
+                    gp_cat = g.get('category') or ''
+                    if g.get('categories') and len(g['categories']) > 0:
+                        gp_cat = g['categories'][0]
+                    mapped_cat = map_gamepix_category(gp_cat)
+                    text_search = f"{title} {g.get('description', '')} {gp_cat}".lower()
+                    cat_list = [mapped_cat]
+                    if any(k in text_search for k in ['girl', 'dress', 'makeup', 'fashion', 'cooking', 'care', 'cake', 'doll', 'salon']):
+                        cat_list.append('Girls')
+                    thumb = g.get('thumbnailUrl') or g.get('thumbnailUrl100') or g.get('image') or 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500'
+                    gp_obj = {
+                        'Title': title,
+                        'Url': game_url,
+                        'Asset': [thumb],
+                        'Category': cat_list,
+                        'Tag': [str(gp_cat).lower()],
+                        'Description': g.get('description') or '',
+                        'Instructions': '',
+                        'Source': 'GamePix'
+                    }
+                    gamepix_games.append(gp_obj)
+                    if s not in seen_slugs:
+                        seen_slugs.add(s)
+                        all_games.append(gp_obj)
+                        added_gp += 1
+            print(f"  -> GP Page {page}: fetched {len(raw_games)} GamePix games, {added_gp} new unique (Total unique: {len(all_games)})")
+        except Exception as e:
+            print(f"  [!] Error fetching GP page {page}: {e}")
+
+    # 3. Preserve all existing local /oyun/<slug>/ games
     existing_local = load_existing_local_games()
     for lg in existing_local:
         s = slugify(lg.get('Title', ''))
         if s and s not in seen_slugs:
             seen_slugs.add(s)
             all_games.append(lg)
-    print(f"[*] Loaded {len(all_games)} existing/curated games from local /oyun/ directory.")
+            if lg.get('Source') == 'GamePix':
+                gamepix_games.append(lg)
+    print(f"[*] Total after merging local /oyun/ directory: {len(all_games)} games ({len(gamepix_games)} GamePix games).")
 
-    # 2. Fetch GameDistribution catalog
+    # 4. Fetch GameDistribution catalog
     print(f"[*] Fetching games from GameDistribution API (pages 1 to {max_gd_pages})...")
     for page in range(1, max_gd_pages + 1):
         url = f"https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=100&page={page}&format=json"
@@ -171,48 +221,16 @@ def fetch_games(max_gd_pages=5, max_gp_pages=1):
         except Exception as e:
             print(f"  [!] Error fetching GD page {page}: {e}")
 
-    # 3. Fetch GamePix catalog so homepage GamePix cards also have static SEO pages (GamePix max pagination is 96)
-    print(f"[*] Fetching games from GamePix API (pages 1 to {max_gp_pages}, pagination=96)...")
-    for page in range(1, max_gp_pages + 1):
-        gp_url = f"https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=96&page={page}"
-        try:
-            req = urllib.request.Request(gp_url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-            with urllib.request.urlopen(req, timeout=20) as resp:
-                data = json.loads(resp.read().decode('utf-8'))
-                raw_games = data if isinstance(data, list) else (data.get('data') or data.get('items') or [])
-                added_gp = 0
-                for g in raw_games:
-                    title = (g.get('title') or '').strip()
-                    s = slugify(title)
-                    game_url = g.get('url') or ''
-                    if not title or not s or not game_url or s in seen_slugs:
-                        continue
-                    gp_cat = g.get('category') or ''
-                    if g.get('categories') and len(g['categories']) > 0:
-                        gp_cat = g['categories'][0]
-                    mapped_cat = map_gamepix_category(gp_cat)
-                    text_search = f"{title} {g.get('description', '')} {gp_cat}".lower()
-                    cat_list = [mapped_cat]
-                    if any(k in text_search for k in ['girl', 'dress', 'makeup', 'fashion', 'cooking', 'care', 'cake', 'doll', 'salon']):
-                        cat_list.append('Girls')
-                    thumb = g.get('thumbnailUrl') or g.get('thumbnailUrl100') or g.get('image') or 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=500'
-                    seen_slugs.add(s)
-                    all_games.append({
-                        'Title': title,
-                        'Url': game_url,
-                        'Asset': [thumb],
-                        'Category': cat_list,
-                        'Tag': [ str(gp_cat).lower() ],
-                        'Description': g.get('description') or '',
-                        'Instructions': '',
-                        'Source': 'GamePix'
-                    })
-                    added_gp += 1
-            print(f"  -> GP Page {page}: added {added_gp} unique GamePix games (Total unique: {len(all_games)})")
-        except Exception as e:
-            print(f"  [!] Error fetching GP page {page}: {e}")
+    # Deduplicate gamepix_games by slug while preserving order
+    unique_gp = []
+    seen_gp = set()
+    for g in gamepix_games:
+        s = slugify(g.get('Title', ''))
+        if s and s not in seen_gp:
+            seen_gp.add(s)
+            unique_gp.append(g)
 
-    return all_games
+    return all_games, unique_gp
 
 CATEGORY_MAP = {
     'action': {
@@ -273,6 +291,66 @@ CATEGORY_MAP = {
     }
 }
 
+# High-search-volume Turkish niche long-tail categories (Tavsiye 2)
+NICHE_CATEGORY_MAP = {
+    'obby': {
+        'name': 'Obby ve Parkur Oyunları',
+        'slug': 'obby-oyunlari',
+        'icon': '🏃',
+        'desc': 'En popüler Roblox tarzı Obby parkur, engelli koşu ve kule tırmanma oyunlarını ücretsiz ve indirmeden tarayıcınızda oynayın.',
+        'keywords': ['obby', 'parkour', 'jump', 'climb', 'tower', 'runner', 'escape', 'block', 'vex', 'geometry']
+    },
+    'stickman': {
+        'name': 'Stickman (Çöp Adam) Oyunları',
+        'slug': 'stickman-oyunlari',
+        'icon': '🤺',
+        'desc': 'Çöp adam dövüş, Stickman savaş, okçuluk ve aksiyon dolu çöp adam macera oyunlarını ücretsiz online oynayın.',
+        'keywords': ['stickman', 'stick', 'duel', 'ragdoll', 'brawl', 'fighter', 'archer', 'spear', 'hook']
+    },
+    'zombie': {
+        'name': 'Zombi ve Hayatta Kalma Oyunları',
+        'slug': 'zombi-oyunlari',
+        'icon': '🧟',
+        'desc': 'Zombi istilasına karşı hayatta kalma, zombi vurma ve savunma oyunlarını ücretsiz, kurulumsuz tarayıcınızda oynayın.',
+        'keywords': ['zombie', 'undead', 'survival', 'monster', 'dead', 'apocalypse', 'infect', 'shooter', 'horror']
+    },
+    'football': {
+        'name': 'Futbol ve Spor Oyunları',
+        'slug': 'futbol-oyunlari',
+        'icon': '⚽',
+        'desc': 'Ücretsiz penaltı çekme, kafa topu, Dünya Kupası futbol maçları, basketbol ve bilardo spor oyunlarını hemen oynayın.',
+        'keywords': ['soccer', 'football', 'sport', 'ball', 'basketball', 'billiard', 'pool', 'tennis', 'golf', 'goal', 'kick', 'volleyball']
+    },
+    'smartboard': {
+        'name': 'Akıllı Tahta ve Sınıf Oyunları',
+        'slug': 'akilli-tahta-oyunlari',
+        'icon': '🖥️',
+        'desc': 'Okulda akıllı tahtada dokunmatik ekranla oynanan eğitici zeka, bulmaca, matematik ve 2 kişilik sınıf oyunları.',
+        'keywords': ['math', 'quiz', 'word', 'memory', 'chess', 'checkers', 'tictactoe', '2048', 'puzzle', 'draw', 'mahjong', 'connect']
+    },
+    'drift': {
+        'name': 'Drift ve Araba Park Oyunları',
+        'slug': 'drift-oyunlari',
+        'icon': '🚘',
+        'desc': 'Gerçekçi 3D araba drift yapma, zorlu otoparkta araba park etme, kamyon ve hız simülasyonu oyunlarını ücretsiz oynayın.',
+        'keywords': ['drift', 'parking', 'car', 'truck', 'bus', 'taxi', 'highway', 'speed', 'drive', 'driving', 'stunt']
+    },
+    'makeup': {
+        'name': 'Makyaj ve Giydirme Oyunları',
+        'slug': 'makyaj-oyunlari',
+        'icon': '💄',
+        'desc': 'Prenses giydirme, güzellik salonu, ASMR makyaj yapma, saç tasarımı ve moda kombin oyunlarını ücretsiz oynayın.',
+        'keywords': ['makeup', 'makeover', 'dress', 'fashion', 'princess', 'salon', 'beauty', 'hair', 'nail', 'barbie', 'barbee', 'girl']
+    },
+    'strategy': {
+        'name': 'Strateji ve Kule Savunma Oyunları',
+        'slug': 'strateji-oyunlari',
+        'icon': '🏰',
+        'desc': 'Kule savunma (Tower Defense), ordu yönetme, krallık kurma ve taktiksel savaş strateji oyunlarını ücretsiz oynayın.',
+        'keywords': ['strategy', 'tower', 'defense', 'kingdom', 'empire', 'army', 'merge', 'tycoon', 'idle', 'conquest', 'tactics', 'chess']
+    }
+}
+
 def categorize_game(game):
     cats = [str(c).lower() for c in game.get('Category', [])]
     tags = [str(t).lower() for t in game.get('Tag', [])]
@@ -308,12 +386,10 @@ def build_turkish_seo_texts(title, cat_info, raw_desc, raw_instructions):
     cat_name = cat_info['name']
     long_intro = cat_info['long_intro']
     
-    # Unique Turkish meta description (135-160 chars)
     meta_desc = f"{title} oyununu AlyaGames'te ücretsiz ve indirmeden online oyna! En popüler {cat_name} arasında yer alan {title} PC, telefon ve tablette seni bekliyor."
     if len(meta_desc) > 160:
         meta_desc = f"{title} oyununu AlyaGames'te ücretsiz ve indirmeden oyna! En sevilen {cat_name} kategorisindeki bu oyunu tarayıcında hemen deneyimle."
 
-    # Detailed Turkish About Paragraphs
     tr_about_p1 = (
         f"<strong>{title}</strong>, AlyaGames'in <em>{cat_name}</em> kategorisinde oyuncuların en çok tercih ettiği ücretsiz HTML5 tarayıcı oyunlarından biridir. "
         f"{long_intro} Herhangi bir dosya indirmeye veya üyelik açmaya gerek kalmadan bilgisayar, telefon ve tablet tarayıcınızdan tam ekran modunda kesintisiz oynayabilirsiniz."
@@ -324,7 +400,6 @@ def build_turkish_seo_texts(title, cat_info, raw_desc, raw_instructions):
     else:
         tr_about_p2 = f"<strong>Oyun Detayları:</strong> {title}, akıcı grafikleri, artan zorluk seviyeleri ve yüksek skor odaklı yapısıyla her yaştan oyuncuya keyifli bir deneyim sunar."
 
-    # Detailed Turkish Controls / Instructions
     clean_instr = re.sub(r'\s+', ' ', (raw_instructions or '')).strip()
     tr_controls_p1 = (
         f"<strong>{title}</strong> oyununu masaüstü bilgisayarlarda <strong>Fare (Sol Tık / Sürükle)</strong>, <strong>WASD</strong> veya <strong>Yön Tuşları (Ok Tuşları)</strong> ile; "
@@ -336,6 +411,31 @@ def build_turkish_seo_texts(title, cat_info, raw_desc, raw_instructions):
         tr_controls_p2 = "Oyun başladıktan sonra ekrandaki yönergeleri takip ederek hamlelerinizi zamanında yapabilir ve bölümleri başarıyla tamamlayabilirsiniz."
 
     return meta_desc, tr_about_p1, tr_about_p2, tr_controls_p1, tr_controls_p2
+
+FOOTER_LINKS_HTML = """            <div class="footer-links">
+                <a href="/">Anasayfa</a>
+                <a href="/kategori/aksiyon/">Aksiyon</a>
+                <a href="/kategori/savas/">Savaş</a>
+                <a href="/kategori/yaris/">Yarış</a>
+                <a href="/kategori/beceri/">Zeka &amp; Beceri</a>
+                <a href="/kategori/macera/">Macera</a>
+                <a href="/kategori/kiz/">Kız</a>
+                <a href="/kategori/iki-kisilik/">2 Kişilik</a>
+                <a href="/kategori/okul-oyunlari/">Okul Oyunları</a>
+                <a href="/kategori/obby-oyunlari/">Obby Oyunları</a>
+                <a href="/kategori/stickman-oyunlari/">Stickman</a>
+                <a href="/kategori/zombi-oyunlari/">Zombi</a>
+                <a href="/kategori/futbol-oyunlari/">Futbol</a>
+                <a href="/kategori/akilli-tahta-oyunlari/">Akıllı Tahta</a>
+                <a href="/kategori/drift-oyunlari/">Drift</a>
+                <a href="/kategori/makyaj-oyunlari/">Makyaj</a>
+                <a href="/kategori/strateji-oyunlari/">Strateji</a>
+                <a href="/blog.html">Blog</a>
+                <a href="/about.html">Hakkımızda</a>
+                <a href="/privacy.html">Gizlilik</a>
+                <a href="/terms.html">Koşullar</a>
+                <a href="/contact.html">İletişim</a>
+            </div>"""
 
 def generate_game_page(game, cat_key, sidebar_related, bottom_related):
     raw_title = (game.get('Title') or 'Oyun').strip()
@@ -359,7 +459,6 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
     )
     meta_desc_attr = meta_desc.replace('"', '&quot;')
 
-    # Deterministic rating variation based on slug so every game has realistic rich snippet data
     hash_val = sum(ord(c) for c in slug)
     rating_val = f"4.{7 + (hash_val % 3)}"
     rating_count = str(95 + (hash_val % 240))
@@ -395,24 +494,9 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
         "@context": "https://schema.org",
         "@type": "BreadcrumbList",
         "itemListElement": [
-            {
-                "@type": "ListItem",
-                "position": 1,
-                "name": "Anasayfa",
-                "item": f"{SITE_URL}/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 2,
-                "name": cat_name,
-                "item": f"{SITE_URL}/kategori/{cat_slug}/"
-            },
-            {
-                "@type": "ListItem",
-                "position": 3,
-                "name": raw_title,
-                "item": canonical_url
-            }
+            {"@type": "ListItem", "position": 1, "name": "Anasayfa", "item": f"{SITE_URL}/"},
+            {"@type": "ListItem", "position": 2, "name": cat_name, "item": f"{SITE_URL}/kategori/{cat_slug}/"},
+            {"@type": "ListItem", "position": 3, "name": raw_title, "item": canonical_url}
         ]
     }
 
@@ -795,27 +879,12 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
                 <span class="logo-icon">🎮</span>
                 <span class="logo-accent">Alya</span>Games
             </div>
-            <div class="footer-links">
-                <a href="/">Anasayfa</a>
-                <a href="/kategori/aksiyon/">Aksiyon Oyunları</a>
-                <a href="/kategori/savas/">Savaş Oyunları</a>
-                <a href="/kategori/yaris/">Yarış Oyunları</a>
-                <a href="/kategori/beceri/">Zeka &amp; Beceri</a>
-                <a href="/kategori/macera/">Macera Oyunları</a>
-                <a href="/kategori/kiz/">Kız Oyunları</a>
-                <a href="/kategori/iki-kisilik/">2 Kişilik Oyunlar</a>
-                <a href="/blog.html">Blog</a>
-                <a href="/about.html">Hakkımızda</a>
-                <a href="/privacy.html">Gizlilik</a>
-                <a href="/terms.html">Koşullar</a>
-                <a href="/contact.html">İletişim</a>
-            </div>
+{FOOTER_LINKS_HTML}
             <p class="footer-copy">&copy; 2026 AlyaGames. Tüm Hakları Saklıdır.</p>
         </div>
     </footer>
 
     <script>
-        // Track recently played game
         try {{
             const recent = JSON.parse(localStorage.getItem('alyagames_recent') || '[]');
             const currentGame = {{ slug: "{slug}", title: "{title}", img: "{image}", cat: "{cat_name}" }};
@@ -824,7 +893,6 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
             localStorage.setItem('alyagames_recent', JSON.stringify(filtered.slice(0, 12)));
         }} catch (e) {{}}
 
-        // Fullscreen Toggle
         document.getElementById('fullscreen-btn').addEventListener('click', () => {{
             const iframe = document.getElementById('game-frame');
             if (iframe.requestFullscreen) iframe.requestFullscreen();
@@ -832,7 +900,6 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
             else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
         }});
 
-        // Favorite Toggle
         const favBtn = document.getElementById('fav-btn');
         const favIcon = document.getElementById('fav-icon');
         const slug = "{slug}";
@@ -862,7 +929,6 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
             updateFavUI();
         }});
 
-        // Share Button
         document.getElementById('share-btn').addEventListener('click', () => {{
             if (navigator.share) {{
                 navigator.share({{ title: "{title} - AlyaGames", url: window.location.href }});
@@ -872,7 +938,6 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
             }}
         }});
 
-        // Theme Toggle
         const themeBtn = document.getElementById('theme-toggle');
         if (localStorage.getItem('theme') === 'dark') {{
             document.body.classList.add('dark-mode');
@@ -884,7 +949,6 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
             }});
         }}
 
-        // Search Input Redirect
         const searchInput = document.getElementById('header-search-input');
         if (searchInput) {{
             searchInput.addEventListener('keydown', (e) => {{
@@ -894,7 +958,6 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
             }});
         }}
 
-        // Register Service Worker
         if ('serviceWorker' in navigator) {{
             window.addEventListener('load', () => {{
                 navigator.serviceWorker.register('/sw.js').catch(console.warn);
@@ -912,9 +975,11 @@ def generate_category_page(cat_key, cat_info, games_in_cat):
     canonical_url = f"{SITE_URL}/kategori/{cat_slug}/"
 
     cards_html = ""
+    item_list_elements = []
     for idx, g in enumerate(games_in_cat):
-        title = (g.get('Title') or 'Oyun').replace('"', '&quot;')
-        slug = slugify(g.get('Title', ''))
+        raw_t = (g.get('Title') or 'Oyun').strip()
+        title = raw_t.replace('"', '&quot;')
+        slug = slugify(raw_t)
         img = get_best_image(g)
         cards_html += f"""
         <a href="/oyun/{slug}/" class="game-card fade-in-stagger" title="{title} Oyna">
@@ -927,6 +992,13 @@ def generate_category_page(cat_key, cat_info, games_in_cat):
                 <span class="play-btn-pill">Şimdi Oyna</span>
             </div>
         </a>"""
+        if idx < 20:
+            item_list_elements.append({
+                "@type": "ListItem",
+                "position": idx + 1,
+                "name": raw_t,
+                "url": f"{SITE_URL}/oyun/{slug}/"
+            })
 
     schema_cat = {
         "@context": "https://schema.org",
@@ -942,14 +1014,52 @@ def generate_category_page(cat_key, cat_info, games_in_cat):
         }
     }
 
+    schema_item_list = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": f"En Popüler {cat_name}",
+        "itemListOrder": "https://schema.org/ItemListOrderDescending",
+        "numberOfItems": len(item_list_elements),
+        "itemListElement": item_list_elements
+    }
+
+    top_3_names = ", ".join([(g.get('Title') or '').strip() for g in games_in_cat[:3]]) or cat_name
+    schema_faq = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": f"En popüler ücretsiz {cat_name} hangileridir?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": f"AlyaGames'te en çok oynanan {cat_name} arasında {top_3_names} gibi popüler HTML5 oyunlar yer alır. Tümünü indirmeden tarayıcınızda ücretsiz oynayabilirsiniz."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": f"{cat_name} bilgisayarda, telefonda ve akıllı tahtada açılır mı?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": f"Evet! Sitemizdeki tüm {cat_name} modern HTML5 altyapısına sahiptir; Windows/Mac bilgisayarlarda, Android telefonlarda, iPhone/iPad cihazlarda ve okul akıllı tahtalarında kurulumsuz çalışır."
+                }
+            }
+        ]
+    }
+
+    # Links to all categories & niche categories at the bottom of each category page
+    niche_pills = ""
+    for nk, ni in {**CATEGORY_MAP, **NICHE_CATEGORY_MAP}.items():
+        niche_pills += f'<a href="/kategori/{ni["slug"]}/" class="play-btn-pill" style="text-decoration:none; margin:0.2rem;">{ni["icon"]} {ni["name"]}</a>\n'
+
     html = f"""<!DOCTYPE html>
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{cat_name} - En İyi Ücretsiz Online Oyunlar | AlyaGames</title>
+    <title>{cat_name} - En İyi Ücretsiz Online Oyunlar Oyna | AlyaGames</title>
     <meta name="description" content="{cat_desc}">
-    <meta name="keywords" content="{cat_name}, ücretsiz {cat_name}, online {cat_name}, html5 oyunlar, alyagames">
+    <meta name="keywords" content="{cat_name}, ücretsiz {cat_name}, online {cat_name}, indirmeden {cat_name} oyna, html5 oyunlar, alyagames">
     <meta name="robots" content="index, follow, max-image-preview:large">
     <link rel="canonical" href="{canonical_url}">
 
@@ -965,7 +1075,10 @@ def generate_category_page(cat_key, cat_info, games_in_cat):
     <link rel="manifest" href="/manifest.json">
     <meta name="theme-color" content="#6366f1">
 
+    <!-- Structured Data JSON-LD (CollectionPage + ItemList + FAQPage) -->
     <script type="application/ld+json">{json.dumps(schema_cat, ensure_ascii=False)}</script>
+    <script type="application/ld+json">{json.dumps(schema_item_list, ensure_ascii=False)}</script>
+    <script type="application/ld+json">{json.dumps(schema_faq, ensure_ascii=False)}</script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -1020,6 +1133,17 @@ def generate_category_page(cat_key, cat_info, games_in_cat):
         <div class="games-grid" style="display: grid;">
             {cards_html}
         </div>
+
+        <section class="seo-faq-section" style="margin-top: 3rem;">
+            <div class="seo-content-card">
+                <h2>{cat_name} Hakkında &amp; Sıkça Sorulan Sorular</h2>
+                <p><strong>{cat_name}</strong> koleksiyonumuzda yer alan en popüler oyunlar ({top_3_names} ve daha fazlası), dosya indirmeden doğrudan tarayıcınızda çalışır.</p>
+                <h3 style="margin-top: 1.25rem;">Diğer Popüler Oyun Kategorileri</h3>
+                <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.75rem;">
+                    {niche_pills}
+                </div>
+            </div>
+        </section>
     </main>
 
     <footer class="main-footer">
@@ -1028,21 +1152,7 @@ def generate_category_page(cat_key, cat_info, games_in_cat):
                 <span class="logo-icon">🎮</span>
                 <span class="logo-accent">Alya</span>Games
             </div>
-            <div class="footer-links">
-                <a href="/">Anasayfa</a>
-                <a href="/kategori/aksiyon/">Aksiyon Oyunları</a>
-                <a href="/kategori/savas/">Savaş Oyunları</a>
-                <a href="/kategori/yaris/">Yarış Oyunları</a>
-                <a href="/kategori/beceri/">Zeka &amp; Beceri</a>
-                <a href="/kategori/macera/">Macera Oyunları</a>
-                <a href="/kategori/kiz/">Kız Oyunları</a>
-                <a href="/kategori/iki-kisilik/">2 Kişilik Oyunlar</a>
-                <a href="/blog.html">Blog &amp; Makaleler</a>
-                <a href="/about.html">Hakkımızda</a>
-                <a href="/privacy.html">Gizlilik Politikası</a>
-                <a href="/terms.html">Kullanım Koşulları</a>
-                <a href="/contact.html">İletişim</a>
-            </div>
+{FOOTER_LINKS_HTML}
             <p class="footer-copy">&copy; 2026 AlyaGames. Tüm Hakları Saklıdır.</p>
         </div>
     </footer>
@@ -1071,13 +1181,252 @@ def generate_category_page(cat_key, cat_info, games_in_cat):
 </html>"""
     return html
 
+def render_prerendered_home_card(game, idx, is_featured=False, badge_text=''):
+    raw_t = (game.get('Title') or 'Oyun').strip()
+    title = raw_t.replace('"', '&quot;')
+    slug = slugify(raw_t)
+    img = get_best_image(game)
+    primary_cat = game.get('Category', ['Oyun'])[0] if game.get('Category') else 'Oyun'
+    cat_lower = str(primary_cat).lower()
+    cat_map = {
+        'action': 'action', 'shooter': 'war', 'shooting': 'war', 'fighting': 'war',
+        'racing': 'racing', 'driving': 'racing',
+        'skill': 'skill', 'puzzle': 'skill', 'arcade': 'skill', 'educational': 'skill',
+        'adventure': 'adventure', 'platformer': 'adventure',
+        'girls': 'girls', 'cooking': 'girls',
+        'multiplayer': 'multiplayer'
+    }
+    cat_type = cat_map.get(cat_lower, 'all')
+    featured_cls = ' featured' if is_featured else ''
+    badge_html = ''
+    if badge_text:
+        b_cls = 'badge-new' if badge_text == 'YENİ' else ('badge-hot' if badge_text == 'POPÜLER' else 'badge-best')
+        badge_html = f'<span class="card-badge {b_cls}">{badge_text}</span>'
+
+    return f"""<div class="game-card fade-in-stagger{featured_cls}" data-category-type="{cat_type}" style="cursor: pointer;">
+        {badge_html}
+        <button class="card-fav-btn" title="Favorilere Ekle" data-slug="{slug}">🤍</button>
+        <div class="game-card-img-wrapper">
+            <img src="{img}" alt="{title}" class="game-card-img" loading="{'eager' if idx < 6 else 'lazy'}">
+        </div>
+        <div class="game-card-content">
+            <span class="game-card-category">{primary_cat}</span>
+            <h3 class="game-card-title">{title}</h3>
+            <a href="/oyun/{slug}/" class="play-btn" style="text-decoration: none;">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                Şimdi Oyna
+            </a>
+        </div>
+    </div>"""
+
+def render_section_cards_html(games_slice, section_name=''):
+    parts = []
+    for index, g in enumerate(games_slice):
+        is_feat = False
+        badge = ''
+        if section_name == 'editorsChoice':
+            if index < 2:
+                is_feat = True
+            badge = 'EDİTÖR'
+        elif section_name == 'popular':
+            if index % 5 == 0:
+                badge = 'POPÜLER'
+        elif section_name == 'new':
+            if index % 4 == 0:
+                badge = 'YENİ'
+        elif section_name == 'war':
+            if index % 6 == 0:
+                badge = 'AKSİYON'
+        elif section_name == 'racing':
+            if index % 6 == 0:
+                badge = 'YARIŞ'
+        elif section_name == 'girls':
+            if index % 6 == 0:
+                badge = 'KIZ'
+        elif section_name == 'skill':
+            if index % 6 == 0:
+                badge = 'ZEKA'
+        parts.append(render_prerendered_home_card(g, index, is_feat, badge))
+    return "\n".join(parts)
+
+def update_homepage_prerender_and_schemas(gp_games):
+    index_path = os.path.join(OUTPUT_ROOT, "index.html")
+    if not os.path.isfile(index_path) or not gp_games:
+        return
+
+    with open(index_path, "r", encoding="utf-8") as f:
+        html = f.read()
+
+    # Slice GamePix games into showcase sections
+    hero_games = gp_games[:4]
+    editors_choice = gp_games[:6]
+    popular_games = gp_games[6:24]
+    new_games = gp_games[24:42]
+
+    used_set = set(slugify(g.get('Title', '')) for g in gp_games[:42])
+    war_gp = [g for g in gp_games if categorize_game(g) in ('action', 'war') and slugify(g.get('Title', '')) not in used_set][:12]
+    racing_gp = [g for g in gp_games if categorize_game(g) == 'racing' and slugify(g.get('Title', '')) not in used_set][:12]
+    girls_gp = [g for g in gp_games if categorize_game(g) == 'girls' and slugify(g.get('Title', '')) not in used_set][:12]
+    skill_gp = [g for g in gp_games if categorize_game(g) == 'skill' and slugify(g.get('Title', '')) not in used_set][:12]
+
+    # Fill up to 12 with remaining GamePix games if needed
+    rem_pool = [g for g in gp_games[42:] if slugify(g.get('Title', '')) not in used_set]
+    for target_list in (war_gp, racing_gp, girls_gp, skill_gp):
+        while len(target_list) < 12 and rem_pool:
+            cand = rem_pool.pop(0)
+            if cand not in target_list:
+                target_list.append(cand)
+
+    all_gp = gp_games[42:90]
+
+    # 1. Hero Carousel Slides HTML
+    slides_html = ""
+    for idx, g in enumerate(hero_games):
+        raw_t = (g.get('Title') or 'Oyun').strip()
+        title = raw_t.replace('"', '&quot;')
+        slug = slugify(raw_t)
+        img = get_best_image(g)
+        desc = (g.get('Description') or f"{title} oyununu AlyaGames'te ücretsiz ve indirmeden hemen tarayıcında oyna!").replace('"', '&quot;')
+        slides_html += f"""
+                        <div class="carousel-slide">
+                            <div class="hero-card">
+                                <div class="hero-info">
+                                    <span class="hero-badge">Günün Oyunu 🌟</span>
+                                    <h2 class="hero-title">{title}</h2>
+                                    <p class="hero-description">{desc}</p>
+                                    <a href="/oyun/{slug}/" class="hero-cta" data-game-title="{urllib.parse.quote(raw_t)}" style="text-decoration: none;">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.3rem; height: 1.3rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                        Hemen Oyna
+                                    </a>
+                                </div>
+                                <div class="hero-media-wrapper">
+                                    <img src="{img}" alt="{title}" class="hero-image" fetchpriority="{'high' if idx == 0 else 'auto'}">
+                                </div>
+                            </div>
+                        </div>"""
+
+    # 2. Hide loader & show homepage-sections by default for 0ms LCP
+    html = re.sub(
+        r'<div class="loader-container" id="main-loader"[^>]*>',
+        '<div class="loader-container" id="main-loader" style="display: none;">',
+        html
+    )
+    html = re.sub(
+        r'<div id="homepage-sections"[^>]*>',
+        '<div id="homepage-sections" style="display: block;">',
+        html
+    )
+
+    # Helper to replace inner content of a div by id
+    def replace_div_by_id(doc, div_id, inner_content):
+        pattern = rf'(<div[^>]*\bid="{div_id}"[^>]*>)(.*?)(</div>\s*</section>|</div>\s*<!-- Navigation Arrows -->)'
+        m = re.search(pattern, doc, re.S)
+        if m:
+            return doc[:m.start(2)] + "\n" + inner_content + "\n" + doc[m.end(2):]
+        return doc
+
+    html = replace_div_by_id(html, "hero-carousel-slides", slides_html)
+    html = replace_div_by_id(html, "editors-choice-grid", render_section_cards_html(editors_choice, 'editorsChoice'))
+    html = replace_div_by_id(html, "popular-games-grid", render_section_cards_html(popular_games, 'popular'))
+    html = replace_div_by_id(html, "new-games-grid", render_section_cards_html(new_games, 'new'))
+    html = replace_div_by_id(html, "war-games-grid", render_section_cards_html(war_gp, 'war'))
+    html = replace_div_by_id(html, "racing-games-grid", render_section_cards_html(racing_gp, 'racing'))
+    html = replace_div_by_id(html, "girls-games-grid", render_section_cards_html(girls_gp, 'girls'))
+    html = replace_div_by_id(html, "skill-games-grid", render_section_cards_html(skill_gp, 'skill'))
+    html = replace_div_by_id(html, "all-games-grid", render_section_cards_html(all_gp, 'allGames'))
+
+    # 3. Add ItemList and FAQPage JSON-LD schemas to index.html <head>
+    home_item_list = {
+        "@context": "https://schema.org",
+        "@type": "ItemList",
+        "name": "AlyaGames Popüler Ücretsiz Online Oyunlar",
+        "itemListOrder": "https://schema.org/ItemListOrderDescending",
+        "numberOfItems": min(24, len(gp_games)),
+        "itemListElement": [
+            {
+                "@type": "ListItem",
+                "position": i + 1,
+                "name": (g.get('Title') or '').strip(),
+                "url": f"{SITE_URL}/oyun/{slugify(g.get('Title', ''))}/"
+            }
+            for i, g in enumerate(gp_games[:24])
+        ]
+    }
+    home_faq_schema = {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+            {
+                "@type": "Question",
+                "name": "AlyaGames'teki oyunlar gerçekten ücretsiz mi?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Evet! AlyaGames portalında yer alan tüm HTML5 oyunlar tamamen ücretsizdir. Hiçbir gizli ücret, abonelik veya oyun içi satın alma zorunluluğu olmadan dilediğiniz kadar oyun oynayabilirsiniz."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Oyunları oynamak için dosya indirmem gerekiyor mu?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Hayır, kesinlikle gerekmiyor. AlyaGames bulut tabanlı tarayıcı teknolojisini kullanır. Oyunlar doğrudan web tarayıcınız (Chrome, Safari, Firefox, Edge) üzerinden yüklenir ve kuruluma ihtiyaç duyulmadan anında çalışır."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "Oyunlar mobil cihazlarda (telefon/tablet) ve akıllı tahtada çalışır mı?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Evet. Web sitemizdeki tüm oyunlar mobil uyumlu (responsive) HTML5 teknolojisiyle kodlanmıştır. Android veya iOS telefonlarınız, tabletleriniz ve okul akıllı tahtaları üzerinden kesintisiz oynayabilirsiniz."
+                }
+            },
+            {
+                "@type": "Question",
+                "name": "AlyaGames çocuk oyunları için güvenli mi?",
+                "acceptedAnswer": {
+                    "@type": "Answer",
+                    "text": "Evet, sitemizdeki tüm içerikler editörlerimiz tarafından filtrelenmekte ve test edilmektedir. Çocukların gelişimine uygun, eğlenceli ve eğitici oyunlara öncelik verilmektedir."
+                }
+            }
+        ]
+    }
+
+    schema_block = (
+        f'<!-- Home ItemList & FAQPage JSON-LD -->\n'
+        f'    <script type="application/ld+json" id="home-itemlist-schema">{json.dumps(home_item_list, ensure_ascii=False)}</script>\n'
+        f'    <script type="application/ld+json" id="home-faq-schema">{json.dumps(home_faq_schema, ensure_ascii=False)}</script>'
+    )
+    if 'id="home-faq-schema"' in html:
+        html = re.sub(
+            r'<!-- Home ItemList & FAQPage JSON-LD -->.*?id="home-faq-schema">.*?</script>',
+            schema_block,
+            html,
+            flags=re.S
+        )
+    else:
+        html = html.replace('</script>\n\n    <!-- Google Analytics', f'</script>\n    {schema_block}\n\n    <!-- Google Analytics')
+        if 'id="home-faq-schema"' not in html:
+            html = html.replace('</head>', f'    {schema_block}\n</head>')
+
+    # 4. Update footer links in index.html to include niche categories
+    html = re.sub(
+        r'<div class="footer-links">.*?</div>',
+        FOOTER_LINKS_HTML.strip(),
+        html,
+        flags=re.S
+    )
+
+    with open(index_path, "w", encoding="utf-8") as f:
+        f.write(html)
+    print(f"  -> Pre-rendered {len(gp_games[:90])} GamePix games directly into index.html showcase + injected ItemList & FAQPage JSON-LD!")
+
 def generate_sitemap(games, categories):
     today = datetime.now().strftime("%Y-%m-%d")
     urls = []
 
     core_pages = [
         ("/", "1.0", "daily"),
-        ("/blog.html", "0.8", "weekly"),
+        ("/blog.html", "0.85", "weekly"),
         ("/about.html", "0.5", "monthly"),
         ("/contact.html", "0.5", "monthly"),
         ("/privacy.html", "0.3", "monthly"),
@@ -1120,12 +1469,12 @@ def generate_sitemap(games, categories):
     return sitemap_xml
 
 def main():
-    games = fetch_games(max_gd_pages=5, max_gp_pages=1)
+    games, gp_games = fetch_games(max_gd_pages=5, max_gp_pages=2)
     if not games:
         print("[!] No games fetched. Aborting.")
         return
 
-    print(f"[*] Processing {len(games)} total unique games...")
+    print(f"[*] Processing {len(games)} total unique games ({len(gp_games)} GamePix games)...")
     
     games_by_cat = {k: [] for k in CATEGORY_MAP}
     game_categories = {}
@@ -1134,10 +1483,10 @@ def main():
         cat_key = categorize_game(g)
         games_by_cat[cat_key].append(g)
         game_categories[slugify(g.get('Title', ''))] = cat_key
-        if len(games_by_cat['unblocked']) < 60 and cat_key in ['racing', 'skill', 'action', 'adventure']:
+        if len(games_by_cat['unblocked']) < 80 and cat_key in ['racing', 'skill', 'action', 'adventure']:
             games_by_cat['unblocked'].append(g)
 
-    # 1. Generate Static Game Pages with circular internal linking (no orphan pages!)
+    # 1. Generate Static Game Pages with circular internal linking
     print("[*] Generating static game landing pages...")
     oyun_dir = os.path.join(OUTPUT_ROOT, "oyun")
     os.makedirs(oyun_dir, exist_ok=True)
@@ -1149,7 +1498,6 @@ def main():
         cat_list = games_by_cat.get(cat_key, games)
         n_cat = len(cat_list)
 
-        # Find current game's index inside its category list for circular window linking
         cat_idx = 0
         for idx_c, cg in enumerate(cat_list):
             if slugify(cg.get('Title', '')) == slug:
@@ -1168,7 +1516,6 @@ def main():
             if slugify(candidate.get('Title', '')) != slug and candidate not in sidebar_related:
                 bottom_related.append(candidate)
 
-        # Fallback if category has fewer than 15 games
         if len(bottom_related) < 8:
             for offset in range(1, 15):
                 candidate = games[(i + offset) % n_total]
@@ -1186,13 +1533,16 @@ def main():
 
     print(f"  -> Generated {len(games)} static game pages under /oyun/<slug>/index.html")
 
-    # 2. Generate Category Pages
-    print("[*] Generating category landing pages...")
+    # 2. Generate Main Category Pages + Niche Long-Tail Category Pages
+    print("[*] Generating main & niche category landing pages...")
     kategori_dir = os.path.join(OUTPUT_ROOT, "kategori")
     os.makedirs(kategori_dir, exist_ok=True)
 
+    all_category_slugs = []
+
     for cat_key, cat_info in CATEGORY_MAP.items():
         cat_slug = cat_info['slug']
+        all_category_slugs.append(cat_slug)
         cat_games = games_by_cat.get(cat_key, [])
         if not cat_games:
             cat_games = games[:24]
@@ -1204,15 +1554,45 @@ def main():
             f.write(cat_html)
         print(f"  -> Generated category: /kategori/{cat_slug}/ ({len(cat_games)} games)")
 
-    # 3. Generate Sitemap XML
+    for n_key, n_info in NICHE_CATEGORY_MAP.items():
+        n_slug = n_info['slug']
+        all_category_slugs.append(n_slug)
+        kw_list = n_info['keywords']
+        n_games = []
+        for g in games:
+            combined_text = " ".join(
+                [str(g.get('Title', '')), str(g.get('Description', ''))] +
+                [str(c) for c in g.get('Category', [])] +
+                [str(t) for t in g.get('Tag', [])]
+            ).lower()
+            if any(k in combined_text for k in kw_list):
+                n_games.append(g)
+        if len(n_games) < 16:
+            for g in gp_games:
+                if g not in n_games:
+                    n_games.append(g)
+                if len(n_games) >= 24:
+                    break
+
+        n_html = generate_category_page(n_key, n_info, n_games)
+        n_folder = os.path.join(kategori_dir, n_slug)
+        os.makedirs(n_folder, exist_ok=True)
+        with open(os.path.join(n_folder, "index.html"), "w", encoding="utf-8") as f:
+            f.write(n_html)
+        print(f"  -> Generated niche category: /kategori/{n_slug}/ ({len(n_games)} games)")
+
+    # 3. Pre-render GamePix games into index.html & inject ItemList + FAQPage JSON-LD
+    print("[*] Pre-rendering GamePix showcase into index.html...")
+    update_homepage_prerender_and_schemas(gp_games)
+
+    # 4. Generate Sitemap XML
     print("[*] Generating comprehensive sitemap.xml...")
-    cat_slugs = [c['slug'] for c in CATEGORY_MAP.values()]
-    sitemap_content = generate_sitemap(games, cat_slugs)
+    sitemap_content = generate_sitemap(games, all_category_slugs)
     
     sitemap_path = os.path.join(OUTPUT_ROOT, "sitemap.xml")
     with open(sitemap_path, "w", encoding="utf-8") as f:
         f.write(sitemap_content)
-    print(f"  -> Successfully generated sitemap.xml with {len(games) + len(cat_slugs) + 6} URLs!")
+    print(f"  -> Successfully generated sitemap.xml with {len(games) + len(all_category_slugs) + 6} URLs!")
 
 if __name__ == "__main__":
     main()
