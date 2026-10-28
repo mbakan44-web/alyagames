@@ -1,0 +1,78 @@
+{
+  "posts": [
+    {
+      "id": "post-topluluk-1",
+      "title": "Bike Obby Draw Pencil'da Zorlu Bölümleri Geçme Taktikleri",
+      "author": "Emirhan_Pro",
+      "category": "Obby ve Parkur Oyunları",
+      "gameSlug": "bike-obby-draw-pencil",
+      "date": "28 Ekim 2026",
+      "likes": 24,
+      "content": "Bike Obby Draw Pencil oynarken özellikle 10. bölümden sonra uçurumlar genişliyor ve hareketli engeller çıkıyor. Çizgi çizerken mürekkebinizi tek bir düz çizgi yerine hafif yukarı eğimli rampa şeklinde çizerseniz bisikletin hızı kesilmiyor ve zıplama tuşuna (W) bastığınızda çok daha uzağa uçabiliyorsunuz. Ayrıca tekerleğin takılmaması için köprü uçlarını platformun tam üst hizasına bağlamaya dikkat edin!",
+      "comments": [
+        {
+          "id": "c-101",
+          "author": "ZeynepOyunda",
+          "date": "28 Ekim 2026",
+          "text": "Rampa taktiği gerçekten işe yaradı, 14. bölümde takılmıştım tek seferde geçtim teşekkürler!"
+        },
+        {
+          "id": "c-102",
+          "author": "Kerem_34",
+          "date": "28 Ekim 2026",
+          "text": "Telefondan oynarken parmakla çizmek bilgisayardan bile daha kolay oluyor, kesinlikle deneyin."
+        }
+      ]
+    },
+    {
+      "id": "post-topluluk-2",
+      "title": "Teneffüste Akıllı Tahtada Sınıfça Oynadığımız En Eğlenceli 3 Oyun",
+      "author": "Bora & 10-B Sınıfı",
+      "category": "Akıllı Tahta ve Sınıf Oyunları",
+      "gameSlug": "ultimate-tictactoe",
+      "date": "27 Ekim 2026",
+      "likes": 31,
+      "content": "Sınıfta öğle arasında akıllı tahtada indirmeden açılan oyunlar ararken AlyaGames'i keşfettik. Sınıfça turnuva yaptığımız ilk oyun Ultimate TicTacToe oldu çünkü dokunmatik ekranda iki kişi karşılıklı çok hızlı oynayabiliyor. İkinci favorimiz 12 MiniBattles Two Players, üçüncüsü ise Klumen bulmaca oyunu. Öğretmenimiz bile Klumen'de son bölümleri bizimle beraber çözdü!",
+      "comments": [
+        {
+          "id": "c-103",
+          "author": "MertCan",
+          "date": "28 Ekim 2026",
+          "text": "12 MiniBattles akıllı tahtada efsane oluyor, biz de her cuma turnuva yapıyoruz :)"
+        }
+      ]
+    }
+  ],
+  "articleComments": {
+    "article-1": [
+      {
+        "id": "ac-1",
+        "author": "Arda_G",
+        "date": "28 Ekim 2026",
+        "text": "Listedeki Vex 10 ve SWAT Ops Bodycamera favorim! İndirmeden açılması çok iyi."
+      },
+      {
+        "id": "ac-2",
+        "author": "SelinK",
+        "date": "28 Ekim 2026",
+        "text": "Klumen ve 2048 Bubble Shoot gerçekten çok dinlendirici, akşamları telefondan oynuyorum."
+      }
+    ],
+    "article-2": [
+      {
+        "id": "ac-3",
+        "author": "Efe_Yılmaz",
+        "date": "28 Ekim 2026",
+        "text": "Okul bilgisayarında kasmadan açılan nadir sitelerden biri, elinize sağlık."
+      }
+    ],
+    "article-3": [
+      {
+        "id": "ac-4",
+        "author": "Caner & Berk",
+        "date": "28 Ekim 2026",
+        "text": "Kardeşimle aynı klavyede Sumo Shove ve Beach Volleyball oynuyoruz çok sarıyor."
+      }
+    ]
+  }
+}
