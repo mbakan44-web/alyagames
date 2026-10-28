@@ -171,10 +171,10 @@ const CarouselManager = {
                         <span class="hero-badge">Günün Oyunu 🌟</span>
                         <h2 class="hero-title">${game.Title}</h2>
                         <p class="hero-description">${game.Description || 'Muhteşem grafikleri ve sürükleyici oynanışı ile portalımızın en çok ilgi gören oyunu! Hemen ücretsiz, indirmeden tarayıcında oyna.'}</p>
-                        <button class="hero-cta" data-game-title="${encodeURIComponent(game.Title)}">
+                        <a href="/oyun/${encodeURIComponent(slugify(game.Title))}/" class="hero-cta" data-game-title="${encodeURIComponent(game.Title)}" style="text-decoration: none;">
                             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.3rem; height: 1.3rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                             Hemen Oyna
-                        </button>
+                        </a>
                     </div>
                     <div class="hero-media-wrapper">
                         <img src="${imageSrc}" alt="${game.Title}" class="hero-image">
@@ -187,6 +187,7 @@ const CarouselManager = {
         // CTAs hooks
         slidesContainer.querySelectorAll('.hero-cta').forEach(btn => {
             btn.addEventListener('click', (e) => {
+                e.preventDefault();
                 RetroAudio.playClick();
                 const title = decodeURIComponent(btn.getAttribute('data-game-title'));
                 const game = this.items.find(g => g.Title === title);
@@ -762,9 +763,11 @@ function setupEventListeners() {
 
     // Category button filters (trigger Hash Change)
     categoryButtons.forEach(button => {
-        button.addEventListener('click', () => {
-            RetroAudio.playClick();
+        button.addEventListener('click', (e) => {
             const cat = button.getAttribute('data-category');
+            if (!cat) return;
+            e.preventDefault();
+            RetroAudio.playClick();
             const map = {
                 'all': '',
                 'unblocked': 'okul-oyunlari',
@@ -1041,7 +1044,7 @@ async function loadGamePixCategories() {
 }
 
 // Fetch games from GamePix API and map them to our internal portal structure
-async function fetchGamePixGames(limit = 250, page = 1) {
+async function fetchGamePixGames(limit = 96, page = 1) {
     try {
         // Use user's personal sid-monetized feed endpoint
         const url = `https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=${limit}&page=${page}`;
@@ -1115,7 +1118,7 @@ async function fetchGamesList(page, apiCategory = 'All') {
         }
 
         const amount = page === 1 ? 200 : 100;
-        const gpAmount = page === 1 ? 200 : 100;
+        const gpAmount = 96;
         let gdUrl = `https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=${amount}&page=${page}&format=json`;
         if (apiCategory && apiCategory !== 'All') {
             gdUrl += `&categories=${apiCategory.toUpperCase()}`;
@@ -1250,10 +1253,10 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
         <div class="game-card-content">
             <span class="game-card-category">${primaryCat}</span>
             <h3 class="game-card-title">${game.Title}</h3>
-            <button class="play-btn">
+            <a href="/oyun/${encodeURIComponent(gameSlug)}/" class="play-btn" style="text-decoration: none;">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="width: 1.1rem; height: 1.1rem;"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                 Şimdi Oyna
-            </button>
+            </a>
         </div>
     `;
 
@@ -1299,7 +1302,8 @@ function createGameCardElement(game, index, isFeatured = false, badgeText = '') 
 
     // Sound FX on Hover/Click
     card.addEventListener('mouseenter', () => RetroAudio.playHover());
-    card.addEventListener('click', () => {
+    card.addEventListener('click', (e) => {
+        e.preventDefault();
         RetroAudio.playClick();
         openGame(game);
     });

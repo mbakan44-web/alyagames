@@ -3,9 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="page-title">AlyaGames - Ücretsiz Online Oyunlar</title>
-    <meta name="description" id="page-desc" content="AlyaGames'te en popüler ücretsiz online HTML5 oyunları indirmeden hemen oynayın!">
-    <link rel="canonical" id="page-canonical" href="https://alyagames.com/">
+    <title id="page-title">Sayfa Bulunamadı (404) - AlyaGames</title>
+    <meta name="description" id="page-desc" content="Aradığınız sayfa bulunamadı. AlyaGames'te en popüler ücretsiz online HTML5 oyunları indirmeden hemen oynayın!">
+    <meta name="robots" id="page-robots" content="noindex, follow">
 
     <!-- PWA & Theme -->
     <link rel="manifest" href="/manifest.json">
@@ -438,10 +438,10 @@
                 } catch (e) {}
             }
 
-            // 5. Fetch from GamePix API
+            // 5. Fetch from GamePix API (max pagination is 96)
             if (!foundGame) {
                 try {
-                    const res = await fetch('https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=250&page=1');
+                    const res = await fetch('https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=96&page=1');
                     if (res.ok) {
                         const data = await res.json();
                         const list = Array.isArray(data) ? data : (data.data || data.items || []);
@@ -485,7 +485,16 @@
             document.title = `${title} Oyunu Oyna - Ücretsiz Online | AlyaGames`;
             document.getElementById('page-title').textContent = `${title} Oyunu Oyna - AlyaGames`;
             document.getElementById('page-desc').setAttribute('content', desc.slice(0, 160));
-            document.getElementById('page-canonical').setAttribute('href', `https://alyagames.com/oyun/${slug}/`);
+            const robotsMeta = document.getElementById('page-robots');
+            if (robotsMeta) robotsMeta.setAttribute('content', 'index, follow');
+            let canonicalEl = document.getElementById('page-canonical');
+            if (!canonicalEl) {
+                canonicalEl = document.createElement('link');
+                canonicalEl.rel = 'canonical';
+                canonicalEl.id = 'page-canonical';
+                document.head.appendChild(canonicalEl);
+            }
+            canonicalEl.setAttribute('href', `https://alyagames.com/oyun/${slug}/`);
 
             document.getElementById('crumb-title').textContent = title;
             document.getElementById('crumb-category').textContent = cat;

@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2048 Decks Oyunu Oyna - Ücretsiz Online Zeka ve Beceri Oyunları | AlyaGames</title>
+    <meta name="description" content="2048 Decks oyununu AlyaGames'te ücretsiz ve indirmeden oyna! En sevilen Zeka ve Beceri Oyunları kategorisindeki bu oyunu tarayıcında hemen deneyimle.">
+    <meta name="keywords" content="2048 Decks, 2048 Decks oyna, 2048 Decks oyunu, Zeka ve Beceri Oyunları, ücretsiz online oyunlar, html5 oyunlar, alyagames">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="https://alyagames.com/oyun/2048-decks/">
+
+    <!-- Open Graph SEO Metadata -->
+    <meta property="og:title" content="2048 Decks Oyunu Oyna - AlyaGames">
+    <meta property="og:description" content="2048 Decks oyununu AlyaGames'te ücretsiz ve indirmeden oyna! En sevilen Zeka ve Beceri Oyunları kategorisindeki bu oyunu tarayıcında hemen deneyimle.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://alyagames.com/oyun/2048-decks/">
+    <meta property="og:image" content="https://img.gamedistribution.com/7ed65185b3d64a6c9a23781176a04db9-512x384.jpg">
+    <meta property="og:site_name" content="AlyaGames">
+    <meta property="og:locale" content="tr_TR">
+
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="2048 Decks Oyunu Oyna - AlyaGames">
+    <meta name="twitter:description" content="2048 Decks oyununu AlyaGames'te ücretsiz ve indirmeden oyna! En sevilen Zeka ve Beceri Oyunları kategorisindeki bu oyunu tarayıcında hemen deneyimle.">
+    <meta name="twitter:image" content="https://img.gamedistribution.com/7ed65185b3d64a6c9a23781176a04db9-512x384.jpg">
+
+    <!-- PWA & Mobile Web App -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#6366f1">
+    <link rel="apple-touch-icon" href="https://img.gamedistribution.com/7ed65185b3d64a6c9a23781176a04db9-512x384.jpg">
+
+    <!-- Structured Data JSON-LD -->
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "VideoGame", "name": "2048 Decks", "url": "https://alyagames.com/oyun/2048-decks/", "image": "https://img.gamedistribution.com/7ed65185b3d64a6c9a23781176a04db9-512x384.jpg", "description": "2048 Decks oyununu AlyaGames'te ücretsiz ve indirmeden oyna! En sevilen Zeka ve Beceri Oyunları kategorisindeki bu oyunu tarayıcında hemen deneyimle.", "inLanguage": "tr", "genre": ["Zeka ve Beceri Oyunları", "HTML5 Oyun", "Ücretsiz Online Oyun"], "playMode": "SinglePlayer", "applicationCategory": "Game", "operatingSystem": "Web Browser, Windows, MacOS, Android, iOS", "aggregateRating": {"@type": "AggregateRating", "ratingValue": "4.9", "bestRating": "5", "worstRating": "1", "ratingCount": "148"}, "offers": {"@type": "Offer", "price": "0", "priceCurrency": "TRY", "availability": "https://schema.org/InStock"}}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "BreadcrumbList", "itemListElement": [{"@type": "ListItem", "position": 1, "name": "Anasayfa", "item": "https://alyagames.com/"}, {"@type": "ListItem", "position": 2, "name": "Zeka ve Beceri Oyunları", "item": "https://alyagames.com/kategori/beceri/"}, {"@type": "ListItem", "position": 3, "name": "2048 Decks", "item": "https://alyagames.com/oyun/2048-decks/"}]}</script>
+    <script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "2048 Decks oyunu ücretsiz mi?", "acceptedAnswer": {"@type": "Answer", "text": "Evet, 2048 Decks AlyaGames platformunda tamamen ücretsizdir. Herhangi bir indirme, kurulum veya abonelik gerekmeden doğrudan web tarayıcınızdan oynayabilirsiniz."}}, {"@type": "Question", "name": "2048 Decks nasıl oynanır ve kontrolleri nelerdir?", "acceptedAnswer": {"@type": "Answer", "text": "2048 Decks oyununu bilgisayarınızda fare ve klavye yön tuşları (WASD / Ok tuşları) ile, telefon ve tablette ise dokunmatik ekran kontrolleriyle oynayabilirsiniz. (Stack the numbers up. Do not fill the board. Mouse and touch play the same: drag the board. Arrow keys and WASD work too. Z undoes. Escape or P pauses.)"}}, {"@type": "Question", "name": "2048 Decks telefonda ve tablette çalışır mı?", "acceptedAnswer": {"@type": "Answer", "text": "Evet! 2048 Decks modern HTML5 ve WebGL teknolojisi sayesinde Android telefonlar, iPhone, iPad ve masaüstü bilgisayarlarda tam ekran uyumlu çalışır."}}]}</script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7980209202674588" crossorigin="anonymous"></script>
+
+    <style>
+        .game-detail-container {
+            max-width: 1300px;
+            margin: 1.5rem auto;
+            padding: 0 1.25rem;
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 2rem;
+        }
+        @media (max-width: 1024px) {
+            .game-detail-container { grid-template-columns: 1fr; }
+        }
+        .breadcrumbs {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 1.25rem;
+            flex-wrap: wrap;
+        }
+        .breadcrumbs a { color: var(--text-secondary); text-decoration: none; transition: color 0.2s; }
+        .breadcrumbs a:hover { color: var(--clr-primary); }
+        .game-stage {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+        }
+        .game-stage-header {
+            padding: 1.2rem 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255,255,255,0.02);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .game-stage-title {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0;
+            color: var(--text-primary);
+        }
+        .game-stage-actions {
+            display: flex;
+            gap: 0.6rem;
+            align-items: center;
+        }
+        .stage-btn {
+            background: var(--bg-surface);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 0.9rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.88rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .stage-btn:hover {
+            background: var(--clr-primary);
+            color: #fff;
+            border-color: var(--clr-primary);
+            transform: translateY(-2px);
+        }
+        .stage-btn.active {
+            background: var(--clr-red);
+            color: #fff;
+            border-color: var(--clr-red);
+        }
+        .iframe-container {
+            position: relative;
+            width: 100%;
+            height: 600px;
+            background: #000;
+        }
+        @media (max-width: 768px) {
+            .iframe-container { height: 450px; }
+        }
+        .iframe-container iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            display: block;
+        }
+        .game-info-card {
+            padding: 1.75rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+        .game-info-card h2 {
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-primary);
+            font-size: 1.3rem;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .game-info-card h2:first-of-type { margin-top: 0; }
+        .game-info-card p { margin-bottom: 0.9rem; }
+        .rating-box {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            background: var(--bg-surface);
+            border-radius: var(--radius-md);
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+        .star-rating { color: #fbbf24; font-size: 1.3rem; cursor: pointer; }
+        .play-btn-pill {
+            display: inline-block;
+            background: var(--clr-primary);
+            color: #fff;
+            padding: 0.35rem 0.85rem;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            margin-top: 0.4rem;
+        }
+        .more-category-games {
+            max-width: 1300px;
+            margin: 2rem auto 3rem;
+            padding: 0 1.25rem;
+        }
+        .more-category-games h2 {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.45rem;
+            color: var(--text-primary);
+            margin-bottom: 1.25rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="glow-bg glow-bg-1"></div>
+    <div class="glow-bg glow-bg-2"></div>
+
+    <!-- Header -->
+    <header class="main-header">
+        <div class="header-container">
+            <a href="/" class="logo">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-accent">Alya</span>Games
+            </a>
+
+            <div class="search-wrapper">
+                <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input type="text" id="header-search-input" placeholder="Oyun ara..." autocomplete="off">
+            </div>
+
+            <div class="header-controls">
+                <button id="pwa-install-btn" class="header-control-btn" style="display:none;" title="Uygulamayı İndir">📱 Yükle</button>
+                <button id="sound-toggle" class="header-control-btn" aria-label="Sesi Aç/Kapat">🔊</button>
+                <button id="theme-toggle" class="header-control-btn" aria-label="Tema Değiştir">🌙</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Categories Navigation Bar -->
+    <nav class="categories-nav">
+        <div class="categories-container">
+            <a href="/" class="category-btn">Tümü</a>
+            <a href="/kategori/aksiyon/" class="category-btn ">Aksiyon</a>
+            <a href="/kategori/savas/" class="category-btn ">Savaş</a>
+            <a href="/kategori/yaris/" class="category-btn ">Yarış</a>
+            <a href="/kategori/beceri/" class="category-btn active">Beceri & Zeka</a>
+            <a href="/kategori/macera/" class="category-btn ">Macera</a>
+            <a href="/kategori/kiz/" class="category-btn ">Kız</a>
+            <a href="/kategori/iki-kisilik/" class="category-btn ">2 Kişilik</a>
+            <a href="/kategori/okul-oyunlari/" class="category-btn ">🎯 Okulda Oyna</a>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="game-detail-container">
+        <!-- Left: Game Play Stage & Info -->
+        <div class="game-main-col">
+            <!-- Breadcrumbs -->
+            <div class="breadcrumbs">
+                <a href="/">Anasayfa</a> <span>&gt;</span>
+                <a href="/kategori/beceri/">Zeka ve Beceri Oyunları</a> <span>&gt;</span>
+                <span>2048 Decks</span>
+            </div>
+
+            <!-- Game Stage Box -->
+            <div class="game-stage">
+                <div class="game-stage-header">
+                    <h1 class="game-stage-title">2048 Decks</h1>
+                    <div class="game-stage-actions">
+                        <button class="stage-btn" id="fav-btn" title="Favorilere Ekle" data-slug="2048-decks" data-title="2048 Decks" data-img="https://img.gamedistribution.com/7ed65185b3d64a6c9a23781176a04db9-512x384.jpg" data-cat="Zeka ve Beceri Oyunları">
+                            <span id="fav-icon">🤍</span> Favori
+                        </button>
+                        <button class="stage-btn" id="share-btn" title="Oyunu Paylaş">
+                            🔗 Paylaş
+                        </button>
+                        <button class="stage-btn" id="fullscreen-btn" title="Tam Ekran Oyna">
+                            ⛶ Tam Ekran
+                        </button>
+                    </div>
+                </div>
+
+                <div class="iframe-container" id="game-container">
+                    <iframe id="game-frame" src="https://html5.gamedistribution.com/7ed65185b3d64a6c9a23781176a04db9/?gd_sdk_referrer_url=https%3A//alyagames.com/oyun/2048-decks/" frameborder="0" allowfullscreen allow="autoplay; gamepad; fullscreen; screen-wake-lock"></iframe>
+                </div>
+
+                <div class="game-info-card">
+                    <!-- Rating Widget -->
+                    <div class="rating-box">
+                        <div>
+                            <strong>Oyuncu Puanı:</strong>
+                            <div class="star-rating" id="star-rating" title="Puan Ver">★★★★★</div>
+                        </div>
+                        <div style="font-size: 0.9rem; color: var(--text-secondary);">
+                            <span id="rating-val">4.9</span> / 5 (148+ değerlendirme)
+                        </div>
+                    </div>
+
+                    <h2>📖 2048 Decks Oyunu Hakkında</h2>
+                    <p><strong>2048 Decks</strong>, AlyaGames'in <em>Zeka ve Beceri Oyunları</em> kategorisinde oyuncuların en çok tercih ettiği ücretsiz HTML5 tarayıcı oyunlarından biridir. Analitik düşünme, dikkat ve el-göz koordinasyonunu birleştiren bu zeka ve beceri oyununda her seviyede yeni bir bulmacayı çözmenin keyfini çıkarın. Herhangi bir dosya indirmeye veya üyelik açmaya gerek kalmadan bilgisayar, telefon ve tablet tarayıcınızdan tam ekran modunda kesintisiz oynayabilirsiniz.</p>
+                    <p><strong>Oyun Detayları ve Konusu:</strong> Drag, and the whole board shifts one cell — not as far as it can go. Two equal numbers double only when the tile in front has nowhere left to move, so every merge is one you set up. Nothing is random. The tiles come off a written deck you can count, and the next three are already on screen, so a jam two moves away is one you can see coming. Four decks: plain numbers, stones that block until you crack them, a wild that takes any value, and a board that grows with your biggest tile.</p>
+
+                    <h2>🕹️ 2048 Decks Nasıl Oynanır ve Kontroller</h2>
+                    <p><strong>2048 Decks</strong> oyununu masaüstü bilgisayarlarda <strong>Fare (Sol Tık / Sürükle)</strong>, <strong>WASD</strong> veya <strong>Yön Tuşları (Ok Tuşları)</strong> ile; mobil telefon ve tabletlerde ise doğrudan <strong>dokunmatik ekran kontrolleri</strong> ile kolayca yönlendirebilirsiniz.</p>
+                    <p><strong>Özel Tuş ve Kontrol Bilgisi:</strong> Stack the numbers up. Do not fill the board. Mouse and touch play the same: drag the board. Arrow keys and WASD work too. Z undoes. Escape or P pauses.</p>
+
+                    <h2>❓ Sıkça Sorulan Sorular (SSS)</h2>
+                    <div style="margin-top: 1rem;">
+                        <details style="margin-bottom: 0.75rem; background: var(--bg-surface); padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <summary style="font-weight: 600; cursor: pointer; color: var(--text-primary);">2048 Decks oyunu ücretsiz mi?</summary>
+                            <p style="margin-top: 0.5rem; font-size: 0.92rem;">Evet, 2048 Decks AlyaGames üzerinden tamamen ücretsiz ve indirmeden online olarak oynanabilir.</p>
+                        </details>
+                        <details style="margin-bottom: 0.75rem; background: var(--bg-surface); padding: 0.75rem 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                            <summary style="font-weight: 600; cursor: pointer; color: var(--text-primary);">2048 Decks mobilde (telefon ve tablet) çalışır mı?</summary>
+                            <p style="margin-top: 0.5rem; font-size: 0.92rem;">Evet, modern HTML5 altyapısı ile iPhone, iPad ve Android cihazların tümünde tam ekran uyumlu çalışır.</p>
+                        </details>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right: Related Games Sidebar -->
+        <aside class="game-sidebar">
+            <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin-bottom: 1rem; color: var(--text-primary);">🔥 Benzer Popüler Oyunlar</h3>
+            <div style="display: flex; flex-direction: column; gap: 1rem;">
+                
+        <a href="/oyun/2048-sort-factory/" class="game-card" title="2048 Sort Factory Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/94f14de101df47568ffb9b5f91fa47f8-512x512.jpg" alt="2048 Sort Factory" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">2048 Sort Factory</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/2048-voxel-worlds/" class="game-card" title="2048 Voxel Worlds Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/8742a574dec242d8b6b88c7480f19157-512x384.jpg" alt="2048 Voxel Worlds" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">2048 Voxel Worlds</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/ambidieztro/" class="game-card" title="Ambidieztro Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/49e90eef0c494cdc8c1630997b8112fc-512x512.jpg" alt="Ambidieztro" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Ambidieztro</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/animal-klotski/" class="game-card" title="Animal Klotski Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/ba097c40e304481daa8064d6e8b42f7d-512x384.jpg" alt="Animal Klotski" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Animal Klotski</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/animal-swipe/" class="game-card" title="Animal Swipe Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/96936ee47199450096ce978ca8d287e3-512x384.jpeg" alt="Animal Swipe" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Animal Swipe</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/animals-arrow/" class="game-card" title="Animals Arrow Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/36ec3da3394e42bb8e1f7c49469cbbfd-512x512.jpg" alt="Animals Arrow" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Animals Arrow</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+            </div>
+        </aside>
+    </main>
+
+    <!-- More Games in Category Section for Strong Internal Linking -->
+    <section class="more-category-games">
+        <h2>🎮 Zeka ve Beceri Oyunları Kategorisindeki Diğer Oyunlar</h2>
+        <div class="games-grid" style="display: grid;">
+            
+        <a href="/oyun/animals-jigsaw-puzzle/" class="game-card" title="Animals Jigsaw Puzzle Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/451e0b2249e1444c8a43a5a545b96a86-512x384.jpg" alt="Animals Jigsaw Puzzle" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Animals Jigsaw Puzzle</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/ant-moving-simulator/" class="game-card" title="Ant Moving Simulator Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/1c5b405030114ec6a29c47d642eca068-512x384.jpg" alt="Ant Moving Simulator" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Ant Moving Simulator</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/arrow-cube-escape/" class="game-card" title="Arrow Cube Escape Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/756ba194e9bb481e876a9d8ee3304258-512x384.jpg" alt="Arrow Cube Escape" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Arrow Cube Escape</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/arrow-escape-master/" class="game-card" title="Arrow Escape: Master Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/363948cd6f9e46708139db7e7732b913-512x384.jpg" alt="Arrow Escape: Master" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Arrow Escape: Master</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/arrow-go/" class="game-card" title="Arrow Go Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/f7be9dcb47e848178d99bffcaa396c68-512x384.jpg" alt="Arrow Go" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Arrow Go</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/arrow-legend/" class="game-card" title="Arrow Legend Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/dac45ce47c73420893b51829053b7fc4-512x384.jpg" alt="Arrow Legend" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Arrow Legend</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/arrow-out/" class="game-card" title="Arrow Out Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/8cd05c7c42be4dac92a5858d366dd10e-512x384.jpg" alt="Arrow Out" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Arrow Out</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/arrow-rescue/" class="game-card" title="Arrow Rescue Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamedistribution.com/f56ea48b72e84a3f8fefc7dee2910e25-512x384.jpg" alt="Arrow Rescue" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">puzzle</span>
+                <h3 class="game-card-title">Arrow Rescue</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-container">
+            <div class="footer-brand">
+                <span class="logo-icon">🎮</span>
+                <span class="logo-accent">Alya</span>Games
+            </div>
+            <div class="footer-links">
+                <a href="/">Anasayfa</a>
+                <a href="/kategori/aksiyon/">Aksiyon Oyunları</a>
+                <a href="/kategori/savas/">Savaş Oyunları</a>
+                <a href="/kategori/yaris/">Yarış Oyunları</a>
+                <a href="/kategori/beceri/">Zeka &amp; Beceri</a>
+                <a href="/kategori/macera/">Macera Oyunları</a>
+                <a href="/kategori/kiz/">Kız Oyunları</a>
+                <a href="/kategori/iki-kisilik/">2 Kişilik Oyunlar</a>
+                <a href="/blog.html">Blog</a>
+                <a href="/about.html">Hakkımızda</a>
+                <a href="/privacy.html">Gizlilik</a>
+                <a href="/terms.html">Koşullar</a>
+                <a href="/contact.html">İletişim</a>
+            </div>
+            <p class="footer-copy">&copy; 2026 AlyaGames. Tüm Hakları Saklıdır.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Track recently played game
+        try {
+            const recent = JSON.parse(localStorage.getItem('alyagames_recent') || '[]');
+            const currentGame = { slug: "2048-decks", title: "2048 Decks", img: "https://img.gamedistribution.com/7ed65185b3d64a6c9a23781176a04db9-512x384.jpg", cat: "Zeka ve Beceri Oyunları" };
+            const filtered = recent.filter(g => g.slug !== currentGame.slug);
+            filtered.unshift(currentGame);
+            localStorage.setItem('alyagames_recent', JSON.stringify(filtered.slice(0, 12)));
+        } catch (e) {}
+
+        // Fullscreen Toggle
+        document.getElementById('fullscreen-btn').addEventListener('click', () => {
+            const iframe = document.getElementById('game-frame');
+            if (iframe.requestFullscreen) iframe.requestFullscreen();
+            else if (iframe.webkitRequestFullscreen) iframe.webkitRequestFullscreen();
+            else if (iframe.msRequestFullscreen) iframe.msRequestFullscreen();
+        });
+
+        // Favorite Toggle
+        const favBtn = document.getElementById('fav-btn');
+        const favIcon = document.getElementById('fav-icon');
+        const slug = "2048-decks";
+        
+        function updateFavUI() {
+            const favs = JSON.parse(localStorage.getItem('alyagames_favorites') || '[]');
+            const isFav = favs.some(f => f.slug === slug);
+            if (isFav) {
+                favBtn.classList.add('active');
+                favIcon.textContent = '❤️';
+            } else {
+                favBtn.classList.remove('active');
+                favIcon.textContent = '🤍';
+            }
+        }
+        updateFavUI();
+
+        favBtn.addEventListener('click', () => {
+            let favs = JSON.parse(localStorage.getItem('alyagames_favorites') || '[]');
+            const isFav = favs.some(f => f.slug === slug);
+            if (isFav) {
+                favs = favs.filter(f => f.slug !== slug);
+            } else {
+                favs.push({ slug: "2048-decks", title: "2048 Decks", img: "https://img.gamedistribution.com/7ed65185b3d64a6c9a23781176a04db9-512x384.jpg", cat: "Zeka ve Beceri Oyunları" });
+            }
+            localStorage.setItem('alyagames_favorites', JSON.stringify(favs));
+            updateFavUI();
+        });
+
+        // Share Button
+        document.getElementById('share-btn').addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({ title: "2048 Decks - AlyaGames", url: window.location.href });
+            } else {
+                navigator.clipboard.writeText(window.location.href);
+                alert("Oyun linki kopyalandı!");
+            }
+        });
+
+        // Theme Toggle
+        const themeBtn = document.getElementById('theme-toggle');
+        if (localStorage.getItem('theme') === 'dark') {
+            document.body.classList.add('dark-mode');
+        }
+        if (themeBtn) {
+            themeBtn.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+            });
+        }
+
+        // Search Input Redirect
+        const searchInput = document.getElementById('header-search-input');
+        if (searchInput) {
+            searchInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && searchInput.value.trim()) {
+                    window.location.href = '/#/?q=' + encodeURIComponent(searchInput.value.trim());
+                }
+            });
+        }
+
+        // Register Service Worker
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').catch(console.warn);
+            });
+        }
+    </script>
+</body>
+</html>

@@ -4,7 +4,24 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" id="meta-description" content="AlyaGames'te ücretsiz oyun oyna.">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" id="page-canonical" href="https://alyagames.com/">
     <title id="meta-title">Oyun Oyna | AlyaGames</title>
+    <script>
+        (function() {
+            var params = new URLSearchParams(window.location.search);
+            var game = params.get('game');
+            if (game) {
+                var cleanSlug = game.toLowerCase().trim().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '');
+                if (cleanSlug) {
+                    var targetUrl = 'https://alyagames.com/oyun/' + encodeURIComponent(cleanSlug) + '/';
+                    var can = document.getElementById('page-canonical');
+                    if (can) can.setAttribute('href', targetUrl);
+                    window.location.replace('/oyun/' + encodeURIComponent(cleanSlug) + '/');
+                }
+            }
+        })();
+    </script>
     
     <!-- Open Graph SEO Metadata -->
     <meta property="og:title" id="og-title" content="Oyun Oyna | AlyaGames">
