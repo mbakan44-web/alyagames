@@ -422,25 +422,10 @@
                 }
             }
 
-            // 4. Fetch from GameDistribution API
+            // 4. Fetch from GamePix API (max pagination is 96)
             if (!foundGame) {
                 try {
                     document.getElementById('loading-status-text').textContent = 'Oyun kataloğu taranıyor...';
-                    const res = await fetch('https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=100&page=1&format=json');
-                    if (res.ok) {
-                        const data = await res.json();
-                        const list = Array.isArray(data) ? data : (data.items || []);
-                        const match = list.find(g => slugify(g.Title) === slug);
-                        if (match) {
-                            foundGame = match;
-                        }
-                    }
-                } catch (e) {}
-            }
-
-            // 5. Fetch from GamePix API (max pagination is 96)
-            if (!foundGame) {
-                try {
                     const res = await fetch('https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=96&page=1');
                     if (res.ok) {
                         const data = await res.json();

@@ -1100,7 +1100,7 @@ function shuffleArray(array) {
     return array;
 }
 
-// Fetch games list (Concurrently fetches GameDistribution and GamePix on page 1)
+// Fetch games list (100% Powered by GamePix API)
 async function fetchGamesList(page, apiCategory = 'All') {
     isLoadingMore = true;
     if (loadMoreBtn) loadMoreBtn.textContent = 'Yükleniyor...';
@@ -1118,52 +1118,24 @@ async function fetchGamesList(page, apiCategory = 'All') {
             await loadGamePixCategories();
         }
 
-        const amount = page === 1 ? 200 : 100;
         const gpAmount = 96;
-        let gdUrl = `https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=${amount}&page=${page}&format=json`;
-        if (apiCategory && apiCategory !== 'All') {
-            gdUrl += `&categories=${apiCategory.toUpperCase()}`;
-        }
-        
-        let uniqueNewGames = [];
-
-        // Concurrently fetch both catalogs
-        const [gdResult, gpResult] = await Promise.allSettled([
-            fetch(gdUrl).then(res => {
-                if(!res.ok) throw new Error("GD API Error");
-                return res.json();
-            }),
-            fetchGamePixGames(gpAmount, page)
-        ]);
-
-        let gdGames = [];
-        if (gdResult.status === 'fulfilled') {
-            const data = gdResult.value;
-            gdGames = Array.isArray(data) ? data : (data.items || []);
-        }
-
         let gpGames = [];
-        if (gpResult.status === 'fulfilled') {
-            gpGames = gpResult.value;
+
+        if (page === 1) {
+            // Concurrently fetch first 2 pages of GamePix (192 games) on initial load
+            const [gp1, gp2] = await Promise.all([
+                fetchGamePixGames(gpAmount, 1),
+                fetchGamePixGames(gpAmount, 2)
+            ]);
+            gpGames = [...gp1, ...gp2];
+            currentPage = 2;
+        } else {
+            gpGames = await fetchGamePixGames(gpAmount, page);
         }
 
-        // Map GameDistribution games
-        const mappedGdGames = gdGames.map(g => ({
-            Title: g.Title,
-            Url: g.Url,
-            Asset: g.Asset,
-            Category: g.Category,
-            Description: g.Description || '',
-            Instructions: g.Instructions || '',
-            Source: 'GameDistribution'
-        }));
-
-        // Put GamePix games FIRST so homepage showcase sections display GamePix games
-        const merged = [...gpGames, ...mappedGdGames];
-        
         // Filter duplicates
         const existingUrls = new Set(gamesData.map(g => g.Url));
-        uniqueNewGames = merged.filter(g => !existingUrls.has(g.Url));
+        const uniqueNewGames = gpGames.filter(g => !existingUrls.has(g.Url));
         
         if (uniqueNewGames.length > 0) {
             gamesData = [...gamesData, ...uniqueNewGames];

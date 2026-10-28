@@ -132,7 +132,7 @@ def load_existing_local_games():
             print(f"  [!] Could not parse local game {folder}: {e}")
     return local_games
 
-def fetch_games(max_gd_pages=5, max_gp_pages=2):
+def fetch_games(max_gp_pages=6):
     all_games = []
     gamepix_games = []
     seen_slugs = set()
@@ -146,7 +146,7 @@ def fetch_games(max_gd_pages=5, max_gp_pages=2):
             if cg.get('Source') == 'GamePix':
                 gamepix_games.append(cg)
 
-    # 2. Fetch GamePix catalog first so GamePix metadata is fresh and prioritized
+    # 2. Fetch GamePix catalog (100% primary game source)
     print(f"[*] Fetching games from GamePix API (pages 1 to {max_gp_pages}, pagination=96)...")
     for page in range(1, max_gp_pages + 1):
         gp_url = f"https://feeds.gamepix.com/v2/json?sid=M4M77&pagination=96&page={page}"
@@ -190,7 +190,8 @@ def fetch_games(max_gd_pages=5, max_gp_pages=2):
         except Exception as e:
             print(f"  [!] Error fetching GP page {page}: {e}")
 
-    # 3. Preserve all existing local /oyun/<slug>/ games
+    # 3. Preserve existing local /oyun/<slug>/ games so previously indexed URLs never return 404
+    # (Any game that also exists on GamePix is already replaced above by its GamePix version!)
     existing_local = load_existing_local_games()
     for lg in existing_local:
         s = slugify(lg.get('Title', ''))
@@ -199,27 +200,7 @@ def fetch_games(max_gd_pages=5, max_gp_pages=2):
             all_games.append(lg)
             if lg.get('Source') == 'GamePix':
                 gamepix_games.append(lg)
-    print(f"[*] Total after merging local /oyun/ directory: {len(all_games)} games ({len(gamepix_games)} GamePix games).")
-
-    # 4. Fetch GameDistribution catalog
-    print(f"[*] Fetching games from GameDistribution API (pages 1 to {max_gd_pages})...")
-    for page in range(1, max_gd_pages + 1):
-        url = f"https://catalog.api.gamedistribution.com/api/v2.0/rss/All/?collection=All&amount=100&page={page}&format=json"
-        try:
-            req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)'})
-            with urllib.request.urlopen(req, timeout=20) as resp:
-                data = json.loads(resp.read().decode('utf-8'))
-                items = data if isinstance(data, list) else data.get('items', [])
-                for g in items:
-                    title = (g.get('Title') or '').strip()
-                    s = slugify(title)
-                    if title and s and s not in seen_slugs and g.get('Url'):
-                        seen_slugs.add(s)
-                        g['Source'] = 'GameDistribution'
-                        all_games.append(g)
-            print(f"  -> GD Page {page}: fetched {len(items)} items (Total unique: {len(all_games)})")
-        except Exception as e:
-            print(f"  [!] Error fetching GD page {page}: {e}")
+    print(f"[*] Total after merging local /oyun/ directory (for zero-404 SEO safety): {len(all_games)} games ({len(gamepix_games)} GamePix games).")
 
     # Deduplicate gamepix_games by slug while preserving order
     unique_gp = []
@@ -1469,7 +1450,7 @@ def generate_sitemap(games, categories):
     return sitemap_xml
 
 def main():
-    games, gp_games = fetch_games(max_gd_pages=5, max_gp_pages=2)
+    games, gp_games = fetch_games(max_gp_pages=6)
     if not games:
         print("[!] No games fetched. Aborting.")
         return
