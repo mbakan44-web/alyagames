@@ -247,6 +247,9 @@
                         <button class="stage-btn" id="fav-btn" title="Favorilere Ekle" data-slug="ww2-call-of-sniper" data-title="WW2 Call of Sniper" data-img="https://img.gamepix.com/games/ww2-call-of-sniper/icon/ww2-call-of-sniper.png?w=105" data-cat="Savaş ve Silah Oyunları">
                             <span id="fav-icon">🤍</span> Favori
                         </button>
+                        <button class="stage-btn" id="challenge-btn" title="Arkadaşına Meydan Oku" style="background:linear-gradient(135deg,#ec4899,#8b5cf6); color:#fff; border:none; font-weight:700;">
+                            ⚔️ Meydan Oku
+                        </button>
                         <button class="stage-btn" id="share-btn" title="Oyunu Paylaş">
                             🔗 Paylaş
                         </button>
@@ -291,6 +294,31 @@
                             <p style="margin-top: 0.5rem; font-size: 0.92rem;">Evet, modern HTML5 altyapısı ile iPhone, iPad ve Android cihazların tümünde tam ekran uyumlu çalışır.</p>
                         </details>
                     </div>
+
+                    <!-- In-Game Player Reviews & Tips Box -->
+                    <div class="game-reviews-box">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+                            <h3 style="font-size:1.15rem; font-weight:700; color:var(--text-primary); margin:0;">💬 Oyuncu Taktikleri & Yorumları</h3>
+                            <a href="/blog.html#konu=post-topluluk-1" style="font-size:0.85rem; font-weight:700; color:var(--clr-primary); text-decoration:none;">Foruma Git &rarr;</a>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="review-author">🎮 Oyuncu_Pro</span>
+                                <span>Bugün</span>
+                            </div>
+                            <div class="review-body">Bu oyunda özellikle ilk bölümlerde sakin kalıp hız kesmeden ilerlemek çok avantaj sağlıyor. Tavsiye ederim!</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="review-author">⭐ ZeynepGamer</span>
+                                <span>Dün</span>
+                            </div>
+                            <div class="review-body">Telefonda dokunmatik kontrolleri çok akıcı, arkadaşımla sıra sıra oynuyoruz çok keyifli.</div>
+                        </div>
+                        <div style="margin-top:1.15rem; padding-top:1rem; border-top:1px solid var(--border-color);">
+                            <a href="/blog.html" class="play-btn-pill" style="text-decoration:none; display:inline-block; font-size:0.84rem;">✍️ Sen de Bu Oyun İçin Taktik Yaz</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -307,26 +335,6 @@
             <div class="game-card-content">
                 <span class="game-card-category">Strategy</span>
                 <h3 class="game-card-title">WW1 Battle Simulator</h3>
-                <span class="play-btn-pill">Oyna</span>
-            </div>
-        </a>
-        <a href="/oyun/strykon/" class="game-card" title="Strykon Oyunu Oyna">
-            <div class="game-card-img-wrapper">
-                <img src="https://img.gamepix.com/games/strykon/icon/strykon.png?w=105" alt="Strykon" class="game-card-img" loading="lazy">
-            </div>
-            <div class="game-card-content">
-                <span class="game-card-category">First-person-shooter</span>
-                <h3 class="game-card-title">Strykon</h3>
-                <span class="play-btn-pill">Oyna</span>
-            </div>
-        </a>
-        <a href="/oyun/battle-simulator-stickman-zombie/" class="game-card" title="Battle Simulator Stickman Zombie Oyunu Oyna">
-            <div class="game-card-img-wrapper">
-                <img src="https://img.gamepix.com/games/stickman-simulator-zombie-battle/icon/stickman-simulator-zombie-battle.png?w=105" alt="Battle Simulator Stickman Zombie" class="game-card-img" loading="lazy">
-            </div>
-            <div class="game-card-content">
-                <span class="game-card-category">Action</span>
-                <h3 class="game-card-title">Battle Simulator Stickman Zombie</h3>
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
@@ -360,25 +368,6 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
-            </div>
-        </aside>
-    </main>
-
-    <!-- More Games in Category Section for Strong Internal Linking -->
-    <section class="more-category-games">
-        <h2>🎮 Savaş ve Silah Oyunları Kategorisindeki Diğer Oyunlar</h2>
-        <div class="games-grid" style="display: grid;">
-            
-        <a href="/oyun/crazy-plane-shooter/" class="game-card" title="Crazy Plane Shooter Oyunu Oyna">
-            <div class="game-card-img-wrapper">
-                <img src="https://img.gamepix.com/games/crazy-plane-shooter/icon/crazy-plane-shooter.png?w=105" alt="Crazy Plane Shooter" class="game-card-img" loading="lazy">
-            </div>
-            <div class="game-card-content">
-                <span class="game-card-category">Adventure</span>
-                <h3 class="game-card-title">Crazy Plane Shooter</h3>
-                <span class="play-btn-pill">Oyna</span>
-            </div>
-        </a>
         <a href="/oyun/battle-shot-elite/" class="game-card" title="Battle Shot Elite Oyunu Oyna">
             <div class="game-card-img-wrapper">
                 <img src="https://img.gamepix.com/games/battle-shot-elite/icon/battle-shot-elite.png?w=105" alt="Battle Shot Elite" class="game-card-img" loading="lazy">
@@ -389,6 +378,25 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
+        <a href="/oyun/crazy-plane-shooter/" class="game-card" title="Crazy Plane Shooter Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamepix.com/games/crazy-plane-shooter/icon/crazy-plane-shooter.png?w=105" alt="Crazy Plane Shooter" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">Adventure</span>
+                <h3 class="game-card-title">Crazy Plane Shooter</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+            </div>
+        </aside>
+    </main>
+
+    <!-- More Games in Category Section for Strong Internal Linking -->
+    <section class="more-category-games">
+        <h2>🎮 Savaş ve Silah Oyunları Kategorisindeki Diğer Oyunlar</h2>
+        <div class="games-grid" style="display: grid;">
+            
         <a href="/oyun/guilty-sniper/" class="game-card" title="Guilty Sniper Oyunu Oyna">
             <div class="game-card-img-wrapper">
                 <img src="https://img.gamepix.com/games/guilty-sniper/icon/guilty-sniper.png?w=105" alt="Guilty Sniper" class="game-card-img" loading="lazy">
@@ -406,6 +414,16 @@
             <div class="game-card-content">
                 <span class="game-card-category">Tanks</span>
                 <h3 class="game-card-title">1941 Frozen Front</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/battle-simulator-stickman-zombie/" class="game-card" title="Battle Simulator Stickman Zombie Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamepix.com/games/stickman-simulator-zombie-battle/icon/stickman-simulator-zombie-battle.png?w=105" alt="Battle Simulator Stickman Zombie" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">Action</span>
+                <h3 class="game-card-title">Battle Simulator Stickman Zombie</h3>
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
@@ -436,6 +454,16 @@
             <div class="game-card-content">
                 <span class="game-card-category">Trivia</span>
                 <h3 class="game-card-title">Awareness Game - The Robot Bar</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/star-wing/" class="game-card" title="Star Wing Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamepix.com/games/star-wing/icon/star-wing.png?w=105" alt="Star Wing" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">Shooting</span>
+                <h3 class="game-card-title">Star Wing</h3>
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
@@ -531,6 +559,20 @@
             localStorage.setItem('alyagames_favorites', JSON.stringify(favs));
             updateFavUI();
         });
+
+        const challengeBtn = document.getElementById('challenge-btn');
+        if (challengeBtn) {
+            challengeBtn.addEventListener('click', () => {
+                const challengeUrl = window.location.href + '?ref=challenge';
+                const shareText = `⚔️ AlyaGames'te "WW2 Call of Sniper" oynuyorum! Benim rekorumu geçebilir misin? Hemen tıkla ve oyna: ${challengeUrl}`;
+                if (navigator.share) {
+                    navigator.share({ title: "WW2 Call of Sniper - Rekoruma Meydan Oku!", text: shareText, url: challengeUrl });
+                } else {
+                    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+                    window.open(waUrl, '_blank');
+                }
+            });
+        }
 
         document.getElementById('share-btn').addEventListener('click', () => {
             if (navigator.share) {

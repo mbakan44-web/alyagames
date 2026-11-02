@@ -247,6 +247,9 @@
                         <button class="stage-btn" id="fav-btn" title="Favorilere Ekle" data-slug="ice-man-3d" data-title="Ice Man 3D" data-img="https://img.gamepix.com/games/ice-man-3d/icon/ice-man-3d.png?w=105" data-cat="Aksiyon Oyunları">
                             <span id="fav-icon">🤍</span> Favori
                         </button>
+                        <button class="stage-btn" id="challenge-btn" title="Arkadaşına Meydan Oku" style="background:linear-gradient(135deg,#ec4899,#8b5cf6); color:#fff; border:none; font-weight:700;">
+                            ⚔️ Meydan Oku
+                        </button>
                         <button class="stage-btn" id="share-btn" title="Oyunu Paylaş">
                             🔗 Paylaş
                         </button>
@@ -291,6 +294,31 @@
                             <p style="margin-top: 0.5rem; font-size: 0.92rem;">Evet, modern HTML5 altyapısı ile iPhone, iPad ve Android cihazların tümünde tam ekran uyumlu çalışır.</p>
                         </details>
                     </div>
+
+                    <!-- In-Game Player Reviews & Tips Box -->
+                    <div class="game-reviews-box">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+                            <h3 style="font-size:1.15rem; font-weight:700; color:var(--text-primary); margin:0;">💬 Oyuncu Taktikleri & Yorumları</h3>
+                            <a href="/blog.html#konu=post-topluluk-1" style="font-size:0.85rem; font-weight:700; color:var(--clr-primary); text-decoration:none;">Foruma Git &rarr;</a>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="review-author">🎮 Oyuncu_Pro</span>
+                                <span>Bugün</span>
+                            </div>
+                            <div class="review-body">Bu oyunda özellikle ilk bölümlerde sakin kalıp hız kesmeden ilerlemek çok avantaj sağlıyor. Tavsiye ederim!</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="review-author">⭐ ZeynepGamer</span>
+                                <span>Dün</span>
+                            </div>
+                            <div class="review-body">Telefonda dokunmatik kontrolleri çok akıcı, arkadaşımla sıra sıra oynuyoruz çok keyifli.</div>
+                        </div>
+                        <div style="margin-top:1.15rem; padding-top:1rem; border-top:1px solid var(--border-color);">
+                            <a href="/blog.html" class="play-btn-pill" style="text-decoration:none; display:inline-block; font-size:0.84rem;">✍️ Sen de Bu Oyun İçin Taktik Yaz</a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -330,16 +358,6 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
-        <a href="/oyun/crash-glass-boom/" class="game-card" title="Crash Glass Boom Oyunu Oyna">
-            <div class="game-card-img-wrapper">
-                <img src="https://img.gamepix.com/games/crash-glass-boom/icon/crash-glass-boom.png?w=105" alt="Crash Glass Boom" class="game-card-img" loading="lazy">
-            </div>
-            <div class="game-card-content">
-                <span class="game-card-category">Arcade</span>
-                <h3 class="game-card-title">Crash Glass Boom</h3>
-                <span class="play-btn-pill">Oyna</span>
-            </div>
-        </a>
         <a href="/oyun/murder-mafia/" class="game-card" title="Murder Mafia Oyunu Oyna">
             <div class="game-card-img-wrapper">
                 <img src="https://img.gamepix.com/games/murder-mafia/icon/murder-mafia.png?w=105" alt="Murder Mafia" class="game-card-img" loading="lazy">
@@ -350,13 +368,23 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
-        <a href="/oyun/basketball-master/" class="game-card" title="Basketball Master Oyunu Oyna">
+        <a href="/oyun/crash-glass-boom/" class="game-card" title="Crash Glass Boom Oyunu Oyna">
             <div class="game-card-img-wrapper">
-                <img src="https://img.gamepix.com/games/basketball-masters/icon/basketball-masters.png?w=105" alt="Basketball Master" class="game-card-img" loading="lazy">
+                <img src="https://img.gamepix.com/games/crash-glass-boom/icon/crash-glass-boom.png?w=105" alt="Crash Glass Boom" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">Arcade</span>
+                <h3 class="game-card-title">Crash Glass Boom</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/flipper-dunk-3d/" class="game-card" title="Flipper Dunk 3D Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamepix.com/games/flipper-dunk-3d/icon/flipper-dunk-3d.png?w=105" alt="Flipper Dunk 3D" class="game-card-img" loading="lazy">
             </div>
             <div class="game-card-content">
                 <span class="game-card-category">Sports</span>
-                <h3 class="game-card-title">Basketball Master</h3>
+                <h3 class="game-card-title">Flipper Dunk 3D</h3>
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
@@ -369,6 +397,16 @@
         <h2>🎮 Aksiyon Oyunları Kategorisindeki Diğer Oyunlar</h2>
         <div class="games-grid" style="display: grid;">
             
+        <a href="/oyun/basketball-master/" class="game-card" title="Basketball Master Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamepix.com/games/basketball-masters/icon/basketball-masters.png?w=105" alt="Basketball Master" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">Sports</span>
+                <h3 class="game-card-title">Basketball Master</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
         <a href="/oyun/mad-mad-unicorn/" class="game-card" title="Mad Mad Unicorn Oyunu Oyna">
             <div class="game-card-img-wrapper">
                 <img src="https://img.gamepix.com/games/mad-mad-unicorn/icon/mad-mad-unicorn.png?w=105" alt="Mad Mad Unicorn" class="game-card-img" loading="lazy">
@@ -376,6 +414,16 @@
             <div class="game-card-content">
                 <span class="game-card-category">Action</span>
                 <h3 class="game-card-title">Mad Mad Unicorn</h3>
+                <span class="play-btn-pill">Oyna</span>
+            </div>
+        </a>
+        <a href="/oyun/ant-colony/" class="game-card" title="Ant Colony Oyunu Oyna">
+            <div class="game-card-img-wrapper">
+                <img src="https://img.gamepix.com/games/ant-colony/icon/ant-colony.png?w=105" alt="Ant Colony" class="game-card-img" loading="lazy">
+            </div>
+            <div class="game-card-content">
+                <span class="game-card-category">Action</span>
+                <h3 class="game-card-title">Ant Colony</h3>
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
@@ -389,13 +437,13 @@
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
-        <a href="/oyun/flipper-dunk-3d/" class="game-card" title="Flipper Dunk 3D Oyunu Oyna">
+        <a href="/oyun/my-kitties-catworld/" class="game-card" title="My Kitties. Catworld Oyunu Oyna">
             <div class="game-card-img-wrapper">
-                <img src="https://img.gamepix.com/games/flipper-dunk-3d/icon/flipper-dunk-3d.png?w=105" alt="Flipper Dunk 3D" class="game-card-img" loading="lazy">
+                <img src="https://img.gamepix.com/games/my-kitties-catworld/icon/my-kitties-catworld.png?w=105" alt="My Kitties. Catworld" class="game-card-img" loading="lazy">
             </div>
             <div class="game-card-content">
-                <span class="game-card-category">Sports</span>
-                <h3 class="game-card-title">Flipper Dunk 3D</h3>
+                <span class="game-card-category">Cats</span>
+                <h3 class="game-card-title">My Kitties. Catworld</h3>
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
@@ -426,26 +474,6 @@
             <div class="game-card-content">
                 <span class="game-card-category">Christmas</span>
                 <h3 class="game-card-title">Christmas Gift Unlock</h3>
-                <span class="play-btn-pill">Oyna</span>
-            </div>
-        </a>
-        <a href="/oyun/skibidi-in-the-backrooms/" class="game-card" title="Skibidi in the Backrooms Oyunu Oyna">
-            <div class="game-card-img-wrapper">
-                <img src="https://img.gamepix.com/games/skibidi-in-the-backrooms/icon/skibidi-in-the-backrooms.png?w=105" alt="Skibidi in the Backrooms" class="game-card-img" loading="lazy">
-            </div>
-            <div class="game-card-content">
-                <span class="game-card-category">Action</span>
-                <h3 class="game-card-title">Skibidi in the Backrooms</h3>
-                <span class="play-btn-pill">Oyna</span>
-            </div>
-        </a>
-        <a href="/oyun/knife-smash/" class="game-card" title="Knife Smash Oyunu Oyna">
-            <div class="game-card-img-wrapper">
-                <img src="https://img.gamepix.com/games/knife-smash/icon/knife-smash.png?w=105" alt="Knife Smash" class="game-card-img" loading="lazy">
-            </div>
-            <div class="game-card-content">
-                <span class="game-card-category">Arcade</span>
-                <h3 class="game-card-title">Knife Smash</h3>
                 <span class="play-btn-pill">Oyna</span>
             </div>
         </a>
@@ -531,6 +559,20 @@
             localStorage.setItem('alyagames_favorites', JSON.stringify(favs));
             updateFavUI();
         });
+
+        const challengeBtn = document.getElementById('challenge-btn');
+        if (challengeBtn) {
+            challengeBtn.addEventListener('click', () => {
+                const challengeUrl = window.location.href + '?ref=challenge';
+                const shareText = `⚔️ AlyaGames'te "Ice Man 3D" oynuyorum! Benim rekorumu geçebilir misin? Hemen tıkla ve oyna: ${challengeUrl}`;
+                if (navigator.share) {
+                    navigator.share({ title: "Ice Man 3D - Rekoruma Meydan Oku!", text: shareText, url: challengeUrl });
+                } else {
+                    const waUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(shareText)}`;
+                    window.open(waUrl, '_blank');
+                }
+            });
+        }
 
         document.getElementById('share-btn').addEventListener('click', () => {
             if (navigator.share) {

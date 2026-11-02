@@ -274,6 +274,20 @@ CATEGORY_MAP = {
 
 # High-search-volume Turkish niche long-tail categories (Tavsiye 2)
 NICHE_CATEGORY_MAP = {
+    'lowend': {
+        'name': 'Kasmayan Düşük Sistemli Oyunlar',
+        'slug': 'kasmayan-oyunlar',
+        'icon': '⚡',
+        'desc': 'Eski bilgisayarlarda, okul laptoplarında ve kasmadan anında açılan en iyi hafif 2D ve HTML5 tarayıcı oyunları.',
+        'keywords': ['retro', 'pixel', '2d', 'classic', 'arcade', 'bubble', 'puzzle', 'card', 'board', 'chess', 'snake']
+    },
+    'singlehand': {
+        'name': 'Tek Elle Oynanan Mobil Oyunlar',
+        'slug': 'tek-el-oyunlari',
+        'icon': '📱',
+        'desc': 'Telefonda dikey ekranda tek parmakla rahatça oynanabilen hyper-casual, zıplama ve refleks oyunları.',
+        'keywords': ['tap', 'jump', 'hop', 'fall', 'helix', 'stack', 'runner', 'ball', 'bounce', 'casual']
+    },
     'obby': {
         'name': 'Obby ve Parkur Oyunları',
         'slug': 'obby-oyunlari',
@@ -788,6 +802,9 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
                         <button class="stage-btn" id="fav-btn" title="Favorilere Ekle" data-slug="{slug}" data-title="{title}" data-img="{image}" data-cat="{cat_name}">
                             <span id="fav-icon">🤍</span> Favori
                         </button>
+                        <button class="stage-btn" id="challenge-btn" title="Arkadaşına Meydan Oku" style="background:linear-gradient(135deg,#ec4899,#8b5cf6); color:#fff; border:none; font-weight:700;">
+                            ⚔️ Meydan Oku
+                        </button>
                         <button class="stage-btn" id="share-btn" title="Oyunu Paylaş">
                             🔗 Paylaş
                         </button>
@@ -831,6 +848,31 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
                             <summary style="font-weight: 600; cursor: pointer; color: var(--text-primary);">{title} mobilde (telefon ve tablet) çalışır mı?</summary>
                             <p style="margin-top: 0.5rem; font-size: 0.92rem;">Evet, modern HTML5 altyapısı ile iPhone, iPad ve Android cihazların tümünde tam ekran uyumlu çalışır.</p>
                         </details>
+                    </div>
+
+                    <!-- In-Game Player Reviews & Tips Box -->
+                    <div class="game-reviews-box">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; flex-wrap:wrap; gap:0.5rem;">
+                            <h3 style="font-size:1.15rem; font-weight:700; color:var(--text-primary); margin:0;">💬 Oyuncu Taktikleri & Yorumları</h3>
+                            <a href="/blog.html#konu=post-topluluk-1" style="font-size:0.85rem; font-weight:700; color:var(--clr-primary); text-decoration:none;">Foruma Git &rarr;</a>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="review-author">🎮 Oyuncu_Pro</span>
+                                <span>Bugün</span>
+                            </div>
+                            <div class="review-body">Bu oyunda özellikle ilk bölümlerde sakin kalıp hız kesmeden ilerlemek çok avantaj sağlıyor. Tavsiye ederim!</div>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="review-author">⭐ ZeynepGamer</span>
+                                <span>Dün</span>
+                            </div>
+                            <div class="review-body">Telefonda dokunmatik kontrolleri çok akıcı, arkadaşımla sıra sıra oynuyoruz çok keyifli.</div>
+                        </div>
+                        <div style="margin-top:1.15rem; padding-top:1rem; border-top:1px solid var(--border-color);">
+                            <a href="/blog.html" class="play-btn-pill" style="text-decoration:none; display:inline-block; font-size:0.84rem;">✍️ Sen de Bu Oyun İçin Taktik Yaz</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -909,6 +951,20 @@ def generate_game_page(game, cat_key, sidebar_related, bottom_related):
             localStorage.setItem('alyagames_favorites', JSON.stringify(favs));
             updateFavUI();
         }});
+
+        const challengeBtn = document.getElementById('challenge-btn');
+        if (challengeBtn) {{
+            challengeBtn.addEventListener('click', () => {{
+                const challengeUrl = window.location.href + '?ref=challenge';
+                const shareText = `⚔️ AlyaGames'te "{title}" oynuyorum! Benim rekorumu geçebilir misin? Hemen tıkla ve oyna: ${{challengeUrl}}`;
+                if (navigator.share) {{
+                    navigator.share({{ title: "{title} - Rekoruma Meydan Oku!", text: shareText, url: challengeUrl }});
+                }} else {{
+                    const waUrl = `https://api.whatsapp.com/send?text=${{encodeURIComponent(shareText)}}`;
+                    window.open(waUrl, '_blank');
+                }}
+            }});
+        }}
 
         document.getElementById('share-btn').addEventListener('click', () => {{
             if (navigator.share) {{

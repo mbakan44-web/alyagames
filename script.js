@@ -1,3 +1,242 @@
+
+// ==========================================
+// RETENTION & VIRAL TRAFFIC MANAGERS
+// 1. Daily Streak Tracker
+// 2. Random Game Launcher
+// 3. Web Push & Timed Notification Scheduler
+// 4. Friend Challenge & Social Sharing
+// ==========================================
+
+const RetentionManager = {
+    init() {
+        this.updateStreak();
+        this.setupRandomGameButtons();
+        this.setupNotificationSystem();
+        this.setupChallengeSystem();
+    },
+
+    // 1. Daily Streak System
+    updateStreak() {
+        try {
+            const todayStr = new Date().toISOString().slice(0, 10);
+            const lastVisit = localStorage.getItem('alyagames_last_visit');
+            let currentStreak = parseInt(localStorage.getItem('alyagames_streak') || '0', 10);
+
+            if (!lastVisit) {
+                currentStreak = 1;
+            } else if (lastVisit !== todayStr) {
+                const lastDate = new Date(lastVisit);
+                const todayDate = new Date(todayStr);
+                const diffDays = Math.round((todayDate - lastDate) / (1000 * 60 * 60 * 24));
+
+                if (diffDays === 1) {
+                    currentStreak += 1;
+                } else if (diffDays > 1) {
+                    currentStreak = 1; // Missed a day
+                }
+            }
+
+            localStorage.setItem('alyagames_last_visit', todayStr);
+            localStorage.setItem('alyagames_streak', currentStreak.toString());
+
+            const streakCountEl = document.getElementById('streak-count');
+            if (streakCountEl) streakCountEl.textContent = currentStreak;
+
+            const streakBtn = document.getElementById('streak-btn');
+            if (streakBtn) {
+                streakBtn.addEventListener('click', () => {
+                    RetroAudio.playClick();
+                    alert(`🔥 Harika! AlyaGames'e aralıksız ${currentStreak} gündür giriyorsun.\n\nHer gün yeni bir oyun deneyerek serini koru ve rozetleri topla!`);
+                });
+            }
+        } catch (e) {
+            console.warn('Streak update warning:', e);
+        }
+    },
+
+    // 2. Random Game Launcher
+    setupRandomGameButtons() {
+        const launchRandom = () => {
+            RetroAudio.playClick();
+            if (gamesData && gamesData.length > 0) {
+                const randIndex = Math.floor(Math.random() * gamesData.length);
+                const game = gamesData[randIndex];
+                openGame(game);
+            } else {
+                window.location.href = '/#/?q=populer';
+            }
+        };
+
+        const headerBtn = document.getElementById('random-game-header-btn');
+        if (headerBtn) headerBtn.addEventListener('click', launchRandom);
+    },
+
+    // 3. Notification Scheduler & Permission Manager
+    setupNotificationSystem() {
+        const notifBtn = document.getElementById('notif-toggle-btn');
+        const notifToast = document.getElementById('notif-banner-toast');
+        const notifAccept = document.getElementById('notif-accept-btn');
+        const notifLater = document.getElementById('notif-later-btn');
+        const notifClose = document.getElementById('notif-banner-close');
+
+        const updateNotifBtnUI = () => {
+            if (!notifBtn) return;
+            if (Notification.permission === 'granted') {
+                notifBtn.innerHTML = '🔔 Bildirim Açık';
+                notifBtn.style.borderColor = '#10b981';
+            } else {
+                notifBtn.innerHTML = '🔔 Bildirim Aç';
+            }
+        };
+
+        if ('Notification' in window) {
+            updateNotifBtnUI();
+
+            // Auto prompt toast after 10 seconds if not already granted or dismissed today
+            const dismissedDate = localStorage.getItem('alyagames_notif_dismissed');
+            const todayStr = new Date().toISOString().slice(0, 10);
+
+            if (Notification.permission === 'default' && dismissedDate !== todayStr && notifToast) {
+                setTimeout(() => {
+                    notifToast.classList.add('show');
+                }, 10000);
+            }
+
+            const requestPermission = async () => {
+                RetroAudio.playClick();
+                const perm = await Notification.requestPermission();
+                if (perm === 'granted') {
+                    if (notifToast) notifToast.classList.remove('show');
+                    updateNotifBtnUI();
+                    this.sendWelcomeNotification();
+                    this.schedulePeriodicNotificationCheck();
+                }
+            };
+
+            if (notifBtn) notifBtn.addEventListener('click', requestPermission);
+            if (notifAccept) notifAccept.addEventListener('click', requestPermission);
+
+            if (notifLater) {
+                notifLater.addEventListener('click', () => {
+                    RetroAudio.playClick();
+                    if (notifToast) notifToast.classList.remove('show');
+                    localStorage.setItem('alyagames_notif_dismissed', todayStr);
+                });
+            }
+            if (notifClose) {
+                notifClose.addEventListener('click', () => {
+                    if (notifToast) notifToast.classList.remove('show');
+                    localStorage.setItem('alyagames_notif_dismissed', todayStr);
+                });
+            }
+
+            // Always check for schedule if already granted
+            if (Notification.permission === 'granted') {
+                this.schedulePeriodicNotificationCheck();
+            }
+        }
+    },
+
+    sendWelcomeNotification() {
+        try {
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.ready.then(reg => {
+                    reg.showNotification('🎮 AlyaGames Bildirimleri Aktif!', {
+                        body: 'Tebrikler! En yeni ve trend oyunlar çıktığında günün en keyifli saatlerinde sana haber vereceğiz.',
+                        icon: '/favicon.png',
+                        badge: '/favicon.png'
+                    });
+                });
+            } else {
+                new Notification('🎮 AlyaGames Bildirimleri Aktif!', {
+                    body: 'Tebrikler! En yeni ve trend oyunlar çıktığında seni haberdar edeceğiz.',
+                    icon: '/favicon.png'
+                });
+            }
+        } catch (e) {}
+    },
+
+    // Triggers a friendly reminder notification during prime gaming hours (afternoons / school exit / weekends)
+    schedulePeriodicNotificationCheck() {
+        try {
+            const lastNotifTime = parseInt(localStorage.getItem('alyagames_last_notif_time') || '0', 10);
+            const now = Date.now();
+            const fourHours = 4 * 60 * 60 * 1000;
+
+            // Only fire if at least 4 hours passed since last notification
+            if (now - lastNotifTime > fourHours) {
+                const hour = new Date().getHours();
+                // Best engagement windows: 12:00-13:30 (Lunch/break), 16:00-18:00 (After school), 20:00-22:00 (Evening)
+                if ((hour >= 12 && hour <= 13) || (hour >= 16 && hour <= 21)) {
+                    const messages = [
+                        { title: '🎮 Yeni oyun oynamaya ne dersin?', body: 'Günün en popüler oyunları AlyaGames\'te seni bekliyor. Hemen tıkla ve rekorunu kır!' },
+                        { title: '🔥 Günlük Serini Koru!', body: 'Bugün AlyaGames serini henüz tamamlamadın. 3 dakikalık hızlı bir mola verip eğlen!' },
+                        { title: '🏆 Yeni Rozetler Açıldı!', body: 'Arkadaşların oyunda, sen neredesin? Trend oyunlara göz at!' }
+                    ];
+                    const chosen = messages[Math.floor(Math.random() * messages.length)];
+
+                    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                        navigator.serviceWorker.ready.then(reg => {
+                            reg.showNotification(chosen.title, {
+                                body: chosen.body,
+                                icon: '/favicon.png',
+                                badge: '/favicon.png',
+                                data: { url: '/?ref=engagement_notif' }
+                            });
+                        });
+                    } else {
+                        new Notification(chosen.title, {
+                            body: chosen.body,
+                            icon: '/favicon.png'
+                        });
+                    }
+                    localStorage.setItem('alyagames_last_notif_time', now.toString());
+                }
+            }
+        } catch (e) {}
+    },
+
+    // 4. Friend Challenge & Social Viral Sharing
+    setupChallengeSystem() {
+        const modal = document.getElementById('challenge-modal');
+        const closeBtn = document.getElementById('close-challenge-btn');
+        const copyBtn = document.getElementById('challenge-copy-link');
+        const waBtn = document.getElementById('challenge-whatsapp');
+        const tgBtn = document.getElementById('challenge-telegram');
+        const descEl = document.getElementById('challenge-modal-desc');
+
+        if (!modal) return;
+
+        window.openFriendChallenge = (gameTitle, gameSlug) => {
+            RetroAudio.playModal();
+            const url = `https://alyagames.com/oyun/${encodeURIComponent(gameSlug)}/?ref=challenge`;
+            const text = `⚔️ AlyaGames'te "${gameTitle}" oyununda rekor kırdım! Benim skorumu geçebilir misin? Hemen oyna: ${url}`;
+
+            if (descEl) {
+                descEl.innerHTML = `<strong>${gameTitle}</strong> oyununda rekorunu kır! Arkadaşına meydan oku ve kimin daha usta olduğunu göster:`;
+            }
+
+            if (waBtn) waBtn.href = `https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`;
+            if (tgBtn) tgBtn.href = `https://t.me/share/url?url=${encodeURIComponent(url)}&text=${encodeURIComponent('⚔️ Meydan okumamı kabul ediyor musun? ' + gameTitle)}`;
+
+            if (copyBtn) {
+                copyBtn.onclick = () => {
+                    navigator.clipboard.writeText(url);
+                    copyBtn.textContent = '✅ Link Kopyalandı!';
+                    setTimeout(() => copyBtn.textContent = '🔗 Oyun Linkini Kopyala', 2000);
+                };
+            }
+
+            modal.classList.add('active');
+        };
+
+        if (closeBtn) closeBtn.addEventListener('click', () => modal.classList.remove('active'));
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('active');
+        });
+    }
+};
+
 /**
  * FUNNIESPLAY - JAVASCRIPT CONTROLLER
  * Dynamic game portal populator, filter engine, and modal controller.
@@ -550,6 +789,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
 
 // Initialize portal content
 window.addEventListener('DOMContentLoaded', () => {
+    RetentionManager.init();
     RetroAudio.updateUI();
     ThemeManager.init();
     if (document.getElementById('editors-choice-grid')) {
